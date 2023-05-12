@@ -1,7 +1,6 @@
 //Коллекция узлов
 let list = document.querySelector(".todo-list");
 let items = list.children;
-
 //Пустая задача
 let emptyListMessage = document.querySelector(".empty-tasks");
 //Элементы формы, для добавления задач
@@ -44,18 +43,21 @@ newItemForm.addEventListener("submit", function (evt) {
 
   addCheckHandler(task);
 
-  //Проверка на повторы задач
+  //Добавление важной задачи
+  let importantCheckbox = document.querySelector(".important-button");
+  if (importantCheckbox.checked === true) {
+    task.classList.add("important");
+  }
+
+  //TODO: Проверка на повторы задач - дописать поведение
   let tasksArray = Array.from(items).map((child) => child.outerText);
   let arrayCheck = tasksArray.includes(taskText);
-  console.log(tasksArray);
   if (arrayCheck == true) {
     console.log("error");
   } else {
-    console.log("okay");
+    //Вставка в DOM
+    list.appendChild(task);
+    toggleEmptyListMessage();
+    newItemTitle.value = "";
   }
-
-  //Вставка в DOM
-  list.appendChild(task);
-  toggleEmptyListMessage();
-  newItemTitle.value = "";
 });
