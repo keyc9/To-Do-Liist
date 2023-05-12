@@ -2,7 +2,6 @@
 let list = document.querySelector(".todo-list");
 let items = list.children;
 
-console.log(listContent)
 //Пустая задача
 let emptyListMessage = document.querySelector(".empty-tasks");
 //Элементы формы, для добавления задач
@@ -45,20 +44,15 @@ newItemForm.addEventListener("submit", function (evt) {
 
   addCheckHandler(task);
 
-
-
   //Проверка на повторы задач
-  // if (taskText != "") {
-
-  //   console.log(taskText + "iside if")
-  //   for (let i = 0; i < listContent .length; i++) {
-  //     if (taskText === items.textContent) {
-  //       console.log("error");
-  //     } else {
-  //       console.log(taskText, items.textContent);
-  //     }
-  //   }
-  // }
+  let tasksArray = Array.from(items).map((child) => child.outerText);
+  let arrayCheck = tasksArray.includes(taskText);
+  console.log(tasksArray);
+  if (arrayCheck == true) {
+    console.log("error");
+  } else {
+    console.log("okay");
+  }
 
   //Вставка в DOM
   list.appendChild(task);
