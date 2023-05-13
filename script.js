@@ -81,6 +81,7 @@ newItemForm.addEventListener("submit", function (e) {
   let task = newItemTemplate.cloneNode(true);
   let taskDescription = task.querySelector("span");
   let deleteButton = newItemTemplate.querySelector('.delete-button')
+  let newdeleteButton = deleteButton.cloneNode(true);
   taskDescription.textContent = taskText;
   
 
@@ -99,7 +100,7 @@ newItemForm.addEventListener("submit", function (e) {
   } else {
     //Вставка в DOM
     activeSection.appendChild(task);
-    taskDescription.appendChild(deleteButton);
+    taskDescription.appendChild(newdeleteButton);
     toggleEmptyListMessage();
     newItemTitle.value = "";
   }
