@@ -8,33 +8,13 @@
 
   <body>
     <h1 class="visually-hidden">Список дел</h1>
-    <ul class="todo-list">
-      <li class="todo-list-item">
-        <label>
-          <input class="todo-list-input" type="checkbox" />
-          <span>Покормить кота</span>
-        </label>
-      </li>
-      <li class="todo-list-item">
-        <label>
-          <input class="todo-list-input" type="checkbox" />
-          <span>Уехать из страны</span>
-        </label>
-      </li>
-      <li class="todo-list-item">
-        <label>
-          <input class="todo-list-input" type="checkbox" />
-          <span>Вдариться в бега</span>
-        </label>
-      </li>
-    </ul>
-    <p class="empty-tasks hidden">Все задачи выполнены. Новых задач нет.</p>
+    
+    <!-- ! Форма ввода-->
+    
     <form
       class="add-form"
       method="post"
     >
-
-  <!-- ! Форма ввода-->
       <input
         class="add-form-input"
         type="text"
@@ -46,16 +26,48 @@
         <input class="important-button" type="checkbox" ><span></span>
      </label>
            <button class="add-form-button" type="submit">Добавить задачу</button>
-      
-
     </form>
+ <!-- !------------------------------------>
+
+    <section class="active-tasks">
+    <ul class="todo-list">
+      <li class="todo-list-item">
+        <label>
+          <input class="todo-list-input" type="checkbox" />
+          <span>Покормить кота <button class="delete-button">Del</button> </span>
+        </label>
+      </li>
+      <li class="todo-list-item">
+        <label>
+          <input class="todo-list-input" type="checkbox" />
+          <span>Уехать из страны <button class="delete-button">Del</button></span>
+        </label>
+      </li>
+      <li class="todo-list-item">
+        <label>
+          <input class="todo-list-input" type="checkbox" />
+          <span>Вдариться в бега <button class="delete-button">Del</button></span>
+        </label>
+      </li>
+    </ul>
+    <p class="empty-tasks hidden">Все задачи выполнены. Новых задач нет.</p>
+
+  </section>
+
+  <section class="finished-tasks">
+    
+
+  </section>
+
+
+
 
 <!---------------------------------------------------------------->
     <template id="task-template">
       <li class="todo-list-item">
         <label>
           <input type="checkbox" class="todo-list-input" />
-          <span></span>
+          <span><button class="delete-button">Del</button></span>
         </label>
       </li>
     </template>
