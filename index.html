@@ -29,24 +29,25 @@
     </form>
  <!-- !------------------------------------>
 
-    <section class="active-tasks">
-    <ul class="todo-list">
-      <li class="todo-list-item">
+    <section>
+      <h2>Активные задачи</h2>
+    <ul class="todo-list active-tasks">
+      <li class="todo-list-item  active-todo">
         <label>
           <input class="todo-list-input" type="checkbox" />
-          <span>Покормить кота <button class="delete-button">Del</button> </span>
+          <span>Покормить кота <button class="delete-button"></button> </span>
         </label>
       </li>
-      <li class="todo-list-item">
+      <li class="todo-list-item  active-todo">
         <label>
           <input class="todo-list-input" type="checkbox" />
-          <span>Уехать из страны <button class="delete-button">Del</button></span>
+          <span>Уехать из страны <button class="delete-button"></button></span>
         </label>
       </li>
-      <li class="todo-list-item">
+      <li class="todo-list-item  active-todo">
         <label>
           <input class="todo-list-input" type="checkbox" />
-          <span>Вдариться в бега <button class="delete-button">Del</button></span>
+          <span>Вдариться в бега <button class="delete-button "></button></span>
         </label>
       </li>
     </ul>
@@ -54,20 +55,20 @@
 
   </section>
 
-  <section class="finished-tasks">
-    
+  <section>
+    <h2>Завершенные задачи</h2>
+    <ul class="todo-list finished-tasks">
+    </ul>
 
   </section>
 
 
-
-
 <!---------------------------------------------------------------->
     <template id="task-template">
-      <li class="todo-list-item">
+      <li class="todo-list-item active-todo">
         <label>
-          <input type="checkbox" class="todo-list-input" />
-          <span><button class="delete-button">Del</button></span>
+          <input type="checkbox" class="todo-list-input active-todo" />
+          <span> <button class="delete-button"></button></span>
         </label>
       </li>
     </template>
