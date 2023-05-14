@@ -30,7 +30,6 @@ let toggleEmptyListMessage = function () {
 //Обработчик нажатия на чекбокс
 document.querySelector('.active-tasks').onclick = function(e) {
   if(e.target.value) {
-    console.log(e.target.checked, e.target, e.target.parentNode.parentNode);
     doneSection.appendChild(e.target.parentNode.parentNode);
     e.target.parentNode.parentNode.classList.remove("active-todo");
     e.target.parentNode.parentNode.classList.add("finished-task");
@@ -39,39 +38,65 @@ document.querySelector('.active-tasks').onclick = function(e) {
   }
 }
 
-// let addCheckHandler = function (item) {
-//   let checkbox = item.querySelector(".todo-list-input");
-//   checkbox.addEventListener("change", function () {
-//     console.log ('checked')
-
-//   });
-// };
-
-
-
-
 //TODO Удаление задачи
+/* ---------------- Рабочий вариант с обработчиком на всем контейнере
+const container = document.querySelector('.container')
 
-document.querySelector('.delete-button').onclick = function(e) {
+container.addEventListener('click', (e) => {
+   const isRemoveButton = e.target.classList.contains('delete-button')
+
+   if (isRemoveButton) {
+      console.log ('deleted')
+   }
+}) 
+
+*/
+
+
+
+let removeButton = document.getElementsByClassName('delete-button');
+let deleteItem = function (item) {
+  let buttons = item.querySelector(".delete-button");
+  buttons.addEventListener("click", function () {
     console.log ('deleted')
+  });
+};
+
+for (let i = 0; i < removeButton.length; i++) {
+  deleteItem(removeButton[i]);
 }
-// let deleteTask = function(item) {
-// let deleteButton = item.querySelector(".delete-button");
-// deleteButton.addEventListener("click", function() {
-//   item.remove();
-//   toggleEmptyListMessage();
+
+
+
+
+// let removeButton = document.getElementsByClassName('delete-button');
+
+// for (let i = 0; i < removeButton.length; i++) {
+//   removeButton[i].onclick = function(e) {
+//     console.log ('deleted')
+//     // e.target.parentNode.parentNode.parentNode.remove();
+//     // toggleEmptyListMessage();
+// }
+// }
+
+// removeButtonArray.forEach(item => {
+//   item.addEventListener('click', event => {
+//     console.log ('deleted')
+//   })})
+
+// let removeItem = function() {
+//   console.log ('deleted')
+// }
+// removeButton.forEach(el => el.addEventListener('click', removeItem));
+
+
+// removeButton.forEach.call((item) => {
+//   item.onclick = function(e) {
+//     console.log ('deleted')
+//     e.target.parentNode.parentNode.parentNode.remove();
+//     toggleEmptyListMessage();
+// }
 // });
-// };
-
-//Перебор элементов с обработчиками
-// for (let i = 0; i < activeItems.length; i++) {
-//   addCheckHandler(activeItems[i]);
-// }
-
-// for (let i = 0; i < items.length; i++) {
-//   deleteTask(items[i]);
-// }
-
 
 //Добавление новой задачи
 newItemForm.addEventListener("submit", function (e) {
@@ -84,7 +109,6 @@ newItemForm.addEventListener("submit", function (e) {
   let newdeleteButton = deleteButton.cloneNode(true);
   taskDescription.textContent = taskText;
   
-
   //Добавление важной задачи
   let importantCheckbox = document.querySelector(".important-button");
   if (importantCheckbox.checked === true) {
