@@ -1,13 +1,13 @@
 1. Change style
 1.2 A plus button with a popup window for adding tasks
-1.3 Check if a task already exists
-2. Important button (add a class to the new list item)
-3. A list of done tasks 
+--- 1.3 Check if a task already exists
+--- 2. Important button (add a class to the new list item)
+--- 3. A list of done tasks 
 4. Groups of tasks (with icons and divisions)
-5. Time limist for the tasks (with counters)
+5. Time limits for the tasks (with counters)
 6. Encouraging messages
 7. English version
-8. Счетчик задач
+--- 8. Счетчик задач
 
 Менеджер задач (список дел)
 Поле ввода задачи + кнопка добавления задачи (лучше всего в верхней части приложения)

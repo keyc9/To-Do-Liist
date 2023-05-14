@@ -8,13 +8,10 @@
 
   <body class="container">
     <h1 class="visually-hidden">Список дел</h1>
-    
+
     <!-- ! Форма ввода-->
-    
-    <form
-      class="add-form"
-      method="post"
-    >
+
+    <form class="add-form" method="post">
       <input
         class="add-form-input"
         type="text"
@@ -22,48 +19,51 @@
         placeholder="Например, купить слона"
         required
       />
+
       <label>
-        <input class="important-button" type="checkbox" ><span></span>
-     </label>
-           <button class="add-form-button" type="submit">Добавить задачу</button>
+        <input class="important-button" type="checkbox" /><span></span>
+      </label>
+      <button class="add-form-button" type="submit">Добавить задачу</button>
     </form>
- <!-- !------------------------------------>
+    <p class="task-exists hidden">Такая задача уже есть, придумай новую.</p>
+
+    <!-- !------------------------------------>
 
     <section>
-      <h2>Активные задачи</h2>
-    <ul class="todo-list active-tasks">
-      <li class="todo-list-item  active-todo">
-        <label>
-          <input class="todo-list-input" type="checkbox" />
-          <span>Покормить кота <button class="delete-button"></button> </span>
-        </label>
-      </li>
-      <li class="todo-list-item  active-todo">
-        <label>
-          <input class="todo-list-input" type="checkbox" />
-          <span>Уехать из страны <button class="delete-button"></button></span>
-        </label>
-      </li>
-      <li class="todo-list-item  active-todo">
-        <label>
-          <input class="todo-list-input" type="checkbox" />
-          <span>Вдариться в бега <button class="delete-button "></button></span>
-        </label>
-      </li>
-    </ul>
-    <p class="empty-tasks hidden">Все задачи выполнены. Новых задач нет.</p>
+      <h2>Активные задачи: <span id="counter"></span></h2>
+      <ul class="todo-list active-tasks">
+        <li class="todo-list-item active-todo">
+          <label>
+            <input class="todo-list-input" type="checkbox" />
+            <span>Покормить кота <button class="delete-button"></button> </span>
+          </label>
+        </li>
+        <li class="todo-list-item active-todo">
+          <label>
+            <input class="todo-list-input" type="checkbox" />
+            <span
+              >Уехать из страны <button class="delete-button"></button
+            ></span>
+          </label>
+        </li>
+        <li class="todo-list-item active-todo">
+          <label>
+            <input class="todo-list-input" type="checkbox" />
+            <span
+              >Вдариться в бега <button class="delete-button"></button
+            ></span>
+          </label>
+        </li>
+      </ul>
+      <p class="empty-tasks hidden">Все задачи выполнены. Новых задач нет.</p>
+    </section>
 
-  </section>
+    <section>
+      <h2>Завершенные задачи</h2>
+      <ul class="todo-list finished-tasks"></ul>
+    </section>
 
-  <section>
-    <h2>Завершенные задачи</h2>
-    <ul class="todo-list finished-tasks">
-    </ul>
-
-  </section>
-
-
-<!---------------------------------------------------------------->
+    <!---------------------------------------------------------------->
     <template id="task-template">
       <li class="todo-list-item active-todo">
         <label>

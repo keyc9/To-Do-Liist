@@ -7,7 +7,7 @@
 }
 
 .active-todo {
-  border: 2px solid #5aa045;
+  /* border: 2px solid #5aa045; */
 }
 
 .important {
@@ -66,7 +66,6 @@ body {
 .todo-list-item label {
   display: block;
   padding: 12px 18px;
-
   background-color: #ffffff;
   border-radius: 4px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
@@ -106,6 +105,10 @@ body {
 .todo-list-input:not(:checked):hover + span::before,
 .todo-list-input:not(:checked):focus + span::before {
   background-color: rgba(105, 178, 83, 0.2);
+}
+
+.task-exists {
+  color: #1371bf;
 }
 
 .empty-tasks {
