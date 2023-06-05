@@ -23,94 +23,96 @@ let setCounter = function () {
 };
 setCounter();
 
-
 //TODO Таймер
 //Вставка текущей даты в инпут
 let date = new Date();
 
 let userDay = date.getDate(),
-userMonth = date.getMonth() + 1,
-    userYear = date.getFullYear(),
-    userHour = date.getHours(),
-    userMin  = date.getMinutes();
+  userMonth = date.getMonth() + 1,
+  userYear = date.getFullYear(),
+  userHour = date.getHours(),
+  userMin = date.getMinutes();
 
-    userMonth = (userMonth < 10 ? "0" : "") + userMonth;
-    userDay = (userDay < 10 ? "0" : "") + userDay;
-    userHour = (userHour < 10 ? "0" : "") + userHour;
-    userMin = (userMin < 10 ? "0" : "") + userMin;
+userMonth = (userMonth < 10 ? "0" : "") + userMonth;
+userDay = (userDay < 10 ? "0" : "") + userDay;
+userHour = (userHour < 10 ? "0" : "") + userHour;
+userMin = (userMin < 10 ? "0" : "") + userMin;
 
-let today =  userYear + "-" + userMonth + "-" + userDay,
-    displayTime = userHour + ":" + userMin; 
+let today = userYear + "-" + userMonth + "-" + userDay,
+  displayTime = userHour + ":" + userMin;
 
-document.querySelector('.date').value = today;      
-document.querySelector(".time").value = displayTime; 
-
-
+document.querySelector(".date").value = today;
+document.querySelector(".time").value = displayTime;
 
 //TODO Вставить переменную
 
 //TODO
 
-
 // !Расчет разницы и обновление документа
 
-
-
 function updateCountdown() {
-  
-let userDate = document.querySelector('.date').valueAsDate;
-let userTime = document.querySelector('.time').value;
-userTime.split(":");
-userDate.setHours(userTime[0])
-userDate.setHours(userTime[1])
-let a = new Date(userDate);
+  let userDate = document.querySelector(".date").valueAsDate;
+  let userTime = document.querySelector(".time").value;
+  userDate.setHours(userTime.split(":")[0]);
+  userDate.setMinutes(userTime.split(":")[1]);
+  let a = new Date(userDate);
 
-const showMonths = document.getElementById('months');
-const ShowDays = document.getElementById('days');
-const showHours = document.getElementById('hours');
-const showMinutes = document.getElementById('minutes');
+  const showMonths = document.getElementById("months");
+  const ShowDays = document.getElementById("days");
+  const showHours = document.getElementById("hours");
+  const showMinutes = document.getElementById("minutes");
 
-let currentDate = new Date();
-// get total seconds between the times
-let delta = Math.abs(a - currentDate) / 1000;
-
-// calculate (and subtract) whole days
-let days = Math.floor(delta / 86400);
-delta -= days * 86400;
-
-let months = Math.floor(days / 30);
-days -= months * 30;
-
-// calculate (and subtract) whole hours
-let hours = Math.floor(delta / 3600) % 24;
-delta -= hours * 3600;
-
-// calculate (and subtract) whole minutes
-let minutes = Math.floor(delta / 60) % 60;
-delta -= minutes * 60;
-
-console. log (`months: ${months}, days: ${days}, hours: ${hours}, min: ${minutes}`)
-
-let innerDate  = function () {
-if (months <= 0) {
-  if (days <= 0) {
-
+  let currentDate = new Date();
+  // get total seconds between the times
+  let delta = (a - currentDate) / 1000;
+  if (delta < 0) {
+    showMonths.innerHTML = "Время вышло";
+    return
   }
-} else {
-  return (`${months} мес. ${days} д. ${days} д. ${days} д.`)
-}
-}
 
+  // calculate (and subtract) whole days
+  let days = Math.floor(delta / 86400);
+  delta -= days * 86400;
 
-showMonths.innerHTML = `${months} мес.`;
-ShowDays.innerHTML = `${days} д.`;
-showHours.innerHTML = `${days} д.`;
-showMinutes.innerHTML = `${days} д.`;
+  let months = Math.floor(days / 30);
+  days -= months * 30;
+
+  // calculate (and subtract) whole hours
+  let hours = Math.floor(delta / 3600) % 24;
+  delta -= hours * 3600;
+
+  // calculate (and subtract) whole minutes
+  let minutes = Math.floor(delta / 60) % 60;
+  delta -= minutes * 60;
+
+  let seconds = delta % 60;
+
+  console.log(`delta: ${delta}`)
+  console.log(`seconds: ${seconds}`)
+  console.log(
+    `months: ${months}, days: ${days}, hours: ${hours}, min: ${minutes}`
+  );
+
+  if (months <= 0) {
+    if (days <= 0) {
+      if (hours <= 0) {
+        if (seconds <= 0) {
+          showMonths.innerHTML = "Время вышло";
+        } else {
+          showMonths.innerHTML = `${minutes} мин.`;
+        }
+      } else {
+        showMonths.innerHTML = `${hours} ч. ${minutes} мин.`;
+      }
+    } else {
+      showMonths.innerHTML = `${days} д. ${hours} ч. ${minutes} мин.`;
+    }
+  } else {
+    showMonths.innerHTML = `${months} мес. ${days} д. ${hours} ч. ${minutes} мин.`;
+  }
 }
 
 setInterval(updateCountdown, 1000);
-
-
 
 //Сообщение о выполнении всех задач
 let toggleEmptyListMessage = function () {
@@ -159,11 +161,7 @@ newItemForm.addEventListener("submit", function (e) {
   let tasksArray = Array.from(items).map((child) => child.outerText);
   let arrayCheck = tasksArray.includes(taskText);
 
-  newItemTitle.addEventListener('change', () => {
-    
-  }
- 
-  )
+  newItemTitle.addEventListener("change", () => {});
 
   if (arrayCheck == true) {
     existedTask.classList.remove("hidden");
