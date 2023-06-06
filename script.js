@@ -41,78 +41,62 @@ userMin = (userMin < 10 ? "0" : "") + userMin;
 let today = userYear + "-" + userMonth + "-" + userDay,
   displayTime = userHour + ":" + userMin;
 
+document.querySelector(".date").min = today; 
 document.querySelector(".date").value = today;
 document.querySelector(".time").value = displayTime;
 
-//TODO Вставить переменную
-
-//TODO
-
 // !Расчет разницы и обновление документа
-
 function updateCountdown() {
   let userDate = document.querySelector(".date").valueAsDate;
   let userTime = document.querySelector(".time").value;
   userDate.setHours(userTime.split(":")[0]);
   userDate.setMinutes(userTime.split(":")[1]);
-  let a = new Date(userDate);
+  let innitialDate = new Date(userDate);
 
-  const showMonths = document.getElementById("months");
-  const ShowDays = document.getElementById("days");
-  const showHours = document.getElementById("hours");
-  const showMinutes = document.getElementById("minutes");
+  const showDate = document.querySelector(".showdate");
 
   let currentDate = new Date();
-  // get total seconds between the times
-  let delta = (a - currentDate) / 1000;
+  let delta = (innitialDate - currentDate) / 1000;
   if (delta < 0) {
-    showMonths.innerHTML = "Время вышло";
+    showDate.innerHTML = "Время вышло";
     return
   }
 
-  // calculate (and subtract) whole days
   let days = Math.floor(delta / 86400);
   delta -= days * 86400;
 
-  let months = Math.floor(days / 30);
-  days -= months * 30;
+  let months = Math.floor(days / 31);
+  days -= months * 31;
 
-  // calculate (and subtract) whole hours
   let hours = Math.floor(delta / 3600) % 24;
   delta -= hours * 3600;
 
-  // calculate (and subtract) whole minutes
   let minutes = Math.floor(delta / 60) % 60;
   delta -= minutes * 60;
 
-  let seconds = delta % 60;
-
-  console.log(`delta: ${delta}`)
-  console.log(`seconds: ${seconds}`)
-  console.log(
-    `months: ${months}, days: ${days}, hours: ${hours}, min: ${minutes}`
-  );
+  let seconds = Math.round(delta % 60);
 
   if (months <= 0) {
     if (days <= 0) {
       if (hours <= 0) {
-        if (seconds <= 0) {
-          showMonths.innerHTML = "Время вышло";
+        if (seconds <= 0 && minutes <= 0) {
+          showDate.innerHTML = "Время вышло";
         } else {
-          showMonths.innerHTML = `${minutes} мин.`;
+          showDate.innerHTML = `${minutes +1} мин.`;
         }
       } else {
-        showMonths.innerHTML = `${hours} ч. ${minutes} мин.`;
+        showDate.innerHTML = `${hours + Math.floor(minutes/60)} ч. ${minutes +1} мин.`;
       }
     } else {
-      showMonths.innerHTML = `${days} д. ${hours} ч. ${minutes} мин.`;
+      showDate.innerHTML = `${days} д. ${hours  + Math.floor(minutes/60)} ч. ${minutes+1} мин.`;
     }
   } else {
-    showMonths.innerHTML = `${months} мес. ${days} д. ${hours} ч. ${minutes} мин.`;
+    showDate.innerHTML = `${months} мес. ${days} д. ${hours + Math.floor(minutes/60)} ч. ${minutes+1} мин.`;
   }
 }
 
 setInterval(updateCountdown, 1000);
+
 
 //Сообщение о выполнении всех задач
 let toggleEmptyListMessage = function () {
