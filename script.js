@@ -1,7 +1,6 @@
 //Коллекция узлов
 let list = document.querySelector(".todo-list");
 let items = list.children;
-console.log(items);
 //Высплывающие подсказки
 let emptyListMessage = document.querySelector(".empty-tasks");
 let existedTask = document.querySelector(".task-exists");
@@ -107,26 +106,24 @@ let toggleEmptyListMessage = function () {
   }
 };
 
-// Перенос задачи в выполненное
-document.querySelector(".active-tasks").onclick = function (e) {
-  if (e.target.value) {
-    doneSection.appendChild(e.target.parentNode.parentNode);
-    e.target.parentNode.parentNode.classList.remove("active-todo");
-    e.target.parentNode.parentNode.classList.add("finished-task");
-    e.target.remove();
-    setCounter();
-    toggleEmptyListMessage();
-  }
-};
-
 // Удаление задачи
 // Рабочий вариант с обработчиком на всем контейнере
 const container = document.querySelector(".container");
 container.addEventListener("click", (e) => {
   const isRemoveButton = e.target.classList.contains("delete-button");
+  const isDoneButton = e.target.classList.contains("done-button");
   if (isRemoveButton) {
     e.target.parentNode.parentNode.parentNode.remove();
     setCounter();
+  }
+  // Перенос задачи в выполненное
+  if (isDoneButton) {
+    doneSection.appendChild(e.target.parentNode.parentNode.parentNode);
+    e.target.parentNode.parentNode.parentNode.classList.remove("active-todo");
+    e.target.parentNode.parentNode.parentNode.classList.add("finished-task");
+    e.target.remove();
+    setCounter();
+    toggleEmptyListMessage();
   }
 });
 
@@ -136,13 +133,13 @@ newItemForm.addEventListener("submit", function (e) {
 
   let taskText = newItemTitle.value;
   let task = newItemTemplate.cloneNode(true);
-  let taskDescription = task.querySelector("span");
-  let deleteButton = newItemTemplate.querySelector(".delete-button");
-  let newdeleteButton = deleteButton.cloneNode(true);
+  let taskDescription = task.querySelector("h3");
   taskDescription.textContent = taskText;
 
   //Проверка на повторы задач
-  let tasksArray = Array.from(items).map((child) => child.outerText);
+
+
+  let tasksArray = Array.from(list.children).map((child) => child.innerText);
   let arrayCheck = tasksArray.includes(taskText);
 
   newItemTitle.addEventListener("change", () => {});
@@ -161,14 +158,12 @@ newItemForm.addEventListener("submit", function (e) {
 
       //Вставка в DOM в начало
       activeSection.insertBefore(task, activeSection.firstChild);
-      taskDescription.appendChild(newdeleteButton);
       toggleEmptyListMessage();
       setCounter();
       newItemTitle.value = "";
     } else {
       //Вставка в DOM в конец
       activeSection.appendChild(task);
-      taskDescription.appendChild(newdeleteButton);
       toggleEmptyListMessage();
       setCounter();
       newItemTitle.value = "";

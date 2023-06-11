@@ -1,15 +1,24 @@
-@font-face {
-  font-weight: 400;
-  font-family: "Muller";
-  font-style: normal;
-  font-display: swap;
-  /* src: url("fonts/Muller.woff") format("woff"); */
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Londrina+Outline&display=swap"); /* styles reset =============================================================================== */
+
+/*! color-pallete ================================================================================================== */
+
+:root {
+  /* Light theme */
+  --light-main: #d9d9d9;
+  --important-light: #f13d3c;
+  --timer-light: #f2762e;
+  --done-light: #347318;
+
+  /* Dark theme */
+  --dark-main: #262626;
+  --important-dark: #ff2424;
+  --timer-dark: #df7f49;
+  --done-dark: #4bab29;
 }
 
 .active-todo {
   /* border: 2px solid #5aa045; */
 }
-
 .important {
   border: 3px solid #e3070a;
 }
@@ -23,29 +32,117 @@ li {
 }
 
 body {
-  margin: 40px 32px;
-
-  font-size: 18px;
-  line-height: normal;
-  font-family: "Muller", sans-serif;
+  margin: 0 auto;
+  max-width: 1200px;
+  font-family: "Comfortaa";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--dark-main);
 }
 
-.visually-hidden,
-.todo-list-input {
-  position: absolute;
+.title-text {
+  position: relative;
+  display: block;
+  float: none;
+  width: 330px;
+  margin: 0 auto;
+}
 
-  width: 1px;
-  height: 1px;
-  margin: -1px;
+h1 {
+  font-family: "Londrina Outline";
+  font-weight: 400;
+  line-height: 0;
+  font-size: 150px;
+  letter-spacing: 0.02em;
+  color: var(--dark-main);
+}
+
+.tasks-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.list-container {
+  display: flex;
+  /* flex: 40px 40px 720px 40px 40px; */
+  justify-content: space-between;
+  align-items: start;
+}
+
+.task-text {
+  width: 720px;
+}
+
+h3 {
+  display: block;
+  width: 100%;
+  line-height: 70px;
+  position: relative;
+  text-align: start;
+  margin: -12px 0 0 0;
+  padding-left: 10px;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 54px,
+    var(--dark-main) 54px,
+    var(--dark-main) 56.3px,
+    transparent 56.3px,
+    transparent 71px
+  );
+}
+
+button {
+  border: none;
+  background: none;
+  margin: 0;
   padding: 0;
-  overflow: hidden;
+}
 
-  white-space: nowrap;
+button:hover {
+  cursor: pointer;
+}
 
-  border: 0;
+.done-button {
+  fill: var(--dark-main);
+}
 
-  clip: rect(0 0 0 0);
-  clip-path: inset(100%);
+.timer-button {
+}
+
+.important-button {
+}
+
+.important-label:hover {
+  cursor: pointer;
+}
+
+.important-button:checked {
+  fill: var(--important-light);
+}
+
+.submit-button {
+  width: 40px;
+  height: 40px;
+  margin-right: 50px;
+}
+
+.submit-circle {
+  color: var(--dark-main);
+}
+
+.submit-arrow {
+  color: var(--dark-main);
+  position: relative;
+  left: -14px;
+  top: -72%;
+}
+
+.list-container > button,
+.list-container > h3,
+.list-container > input,
+.list-container > label {
+  display: inline-flex;
 }
 
 .hidden {
@@ -55,24 +152,10 @@ body {
 .todo-list {
   margin: 0;
   padding: 0;
-
-  list-style: none;
 }
 
 .todo-list-item {
   margin-bottom: 12px;
-}
-
-.todo-list-item label {
-  display: block;
-  padding: 12px 18px;
-  background-color: #ffffff;
-  border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-
-  cursor: pointer;
-
-  user-select: none;
 }
 
 .todo-list-item span {
@@ -80,86 +163,34 @@ body {
   align-items: center;
 }
 
-.todo-list-input + span::before {
-  content: "";
-
-  display: inline-block;
-
-  width: 16px;
-  height: 16px;
-
-  margin-right: 16px;
-
-  background-color: #ffffff;
-  border: 2px solid #69b253;
-  border-radius: 4px;
-}
-
-.todo-list-input:checked + span::before {
-  background-color: #69b253;
-  background-image: url("");
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.todo-list-input:not(:checked):hover + span::before,
-.todo-list-input:not(:checked):focus + span::before {
-  background-color: rgba(105, 178, 83, 0.2);
-}
-
 .task-exists {
   color: #1371bf;
 }
 
-.empty-tasks {
-  color: #69b253;
-}
-
-.empty-tasks::before {
-  content: "";
-
-  width: 14px;
-  height: 13px;
-
-  margin-right: 13px;
-
-  background-image: url("");
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.delete-button {
-margin-left: 30px;
-padding: 10px;
-background-image: url("delete.svg");
-
-}
-
-.add-form {
-  display: flex;
-}
-
 .add-form-input {
   flex-grow: 1;
-
+  max-width: 720px;
   box-sizing: border-box;
   height: 46px;
   margin-right: 16px;
-  padding: 12px;
-
+  padding-left: 10px;
   font: inherit;
+  border: none;
+}
 
-  border: 1px solid #a1b5c4;
-  border-radius: 4px;
+.input-border {
+  position: relative;
+  left: 120px;
+  bottom: 13px;
 }
 
 .add-form-input:focus {
-  border: 1px solid #69b253;
+  
   outline: none;
 }
 
 .add-form-input:hover {
-  box-shadow: 0 0 6px rgba(105, 178, 83, 0.6);
+  
 }
 
 .add-form-input::placeholder {
@@ -169,7 +200,7 @@ background-image: url("delete.svg");
 /*TODO Кнопка важное */
 
 .important-button {
-  position: absolute;
+  /* position: absolute; */
 
   width: 1px;
   height: 1px;
@@ -184,7 +215,6 @@ background-image: url("delete.svg");
   clip: rect(0 0 0 0);
   clip-path: inset(100%);
 }
-
 
 .important-button label {
   display: block;
@@ -199,20 +229,17 @@ background-image: url("delete.svg");
   user-select: none;
 }
 
-
 .important-button + span::before {
   content: "";
   display: inline-block;
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   margin-right: 16px;
-  background-color: #ffffff;
-  background-image: url(large-exclamation-mark-svgrepo-com.svg);
-  border: 2px solid #e3070a;
+  background-image: url(media/important.svg);
   border-radius: 50%;
 }
 
-.important-button:checked + span::before {
+/* .important-button:checked + span::before {
   background-color: #e98080;
   background-repeat: no-repeat;
   background-position: center;
@@ -221,33 +248,18 @@ background-image: url("delete.svg");
 .important-button:not(:checked):hover + span::before,
 .important-button:not(:checked):focus + span::before {
   background-color: rgba(249, 202, 202, 0.2);
-}
+} */
 
 /* ! Форма */
 
 .add-form-button {
-  flex-shrink: 0;
-  padding: 12px;
-
-  font: inherit;
-  color: #ffffff;
-
-  background-color: #69b253;
-  border: none;
-  border-radius: 4px;
-
   user-select: none;
   touch-action: manipulation;
 }
 
 .add-form-button:hover,
 .add-form-button:focus {
-  background-color: #5aa045;
-  outline: none;
 }
 
 .add-form-button:active {
-  background-color: #42862e;
 }
-
-
