@@ -1,3 +1,6 @@
+import AirDatepicker from 'air-datepicker.js';
+import 'air-datepicker.css';
+
 //Коллекция узлов
 let list = document.querySelector(".todo-list");
 let items = list.children;
@@ -14,6 +17,8 @@ let newItemTemplate = taskTemplate.querySelector(".todo-list-item");
 let activeSection = document.querySelector(".active-tasks");
 let activeItems = activeSection.children;
 let doneSection = document.querySelector(".finished-tasks");
+
+new AirDatepicker('#airdatepicker')
 
 //Счетчик задач
 let counter = document.getElementById("counter");
@@ -121,7 +126,7 @@ container.addEventListener("click", (e) => {
     doneSection.appendChild(e.target.parentNode.parentNode.parentNode);
     e.target.parentNode.parentNode.parentNode.classList.remove("active-todo");
     e.target.parentNode.parentNode.parentNode.classList.add("finished-task");
-    e.target.remove();
+    // e.target.remove();
     setCounter();
     toggleEmptyListMessage();
   }

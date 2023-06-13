@@ -39,6 +39,7 @@ body {
   font-weight: 400;
   font-size: 20px;
   color: var(--dark-main);
+  background-color: var(--light-main);
 }
 
 .title-text {
@@ -92,56 +93,113 @@ h3 {
   );
 }
 
+.tabs-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tab span {
+  padding: 0 20px;
+}
+
+.tabs-border {
+  width: 100%;
+  height: 2.3px;
+  background-color: var(--dark-main);
+  border-radius: 30px;
+}
+
+.add-tub svg {
+  position: relative;
+  top: -3px;
+}
+
+/* ! Buttons */
 button {
   border: none;
   background: none;
   margin: 0;
   padding: 0;
-}
-
-button:hover {
   cursor: pointer;
 }
 
-.done-button {
-  fill: var(--dark-main);
+.theme-buttons {
+  position: absolute;
+  top: 60px;
+  right: 120px;
 }
 
 .timer-button {
+ fill: var(--timer-light);
 }
 
-.important-button {
-}
-
-.important-label:hover {
-  cursor: pointer;
-}
-
-.important-button:checked {
+.important-button-svg {
   fill: var(--important-light);
 }
 
-.submit-button {
+.add-form-button {
   width: 40px;
   height: 40px;
   margin-right: 50px;
 }
 
+.submit-arrow {
+  position: absolute;
+  margin-top: 12px;
+  margin-left: 0;
+  transition: margin-left 0.3s;
+}
+
 .submit-circle {
+  position: absolute;
+  margin-left: 17px;
+
+}
+
+.add-form-button:hover .submit-arrow {
+  margin-left: 6px; 
+
+}
+
+
+.submit-circle, .submit-arrow, .input-border {
   color: var(--dark-main);
 }
 
-.submit-arrow {
+.active-todo .done-button {
   color: var(--dark-main);
-  position: relative;
-  left: -14px;
-  top: -72%;
 }
+
+.checkmark {
+  opacity: 0;
+}
+
+.done-button:hover .checkmark{
+opacity: 100;}
+
+
+
+.add-sticker-button, .edit-button, .delete-button, .goblin-theme, .color-theme {
+  color: var(--dark-main);
+  opacity: 40%;
+}
+
+.add-sticker-button:hover, .edit-button:hover, .delete-button:hover, .goblin-theme:hover, .color-theme:hover {
+  opacity: 100%;
+}
+
 
 .list-container > button,
 .list-container > h3,
-.list-container > input,
-.list-container > label {
+.list-container > .input-container
+{
   display: inline-flex;
 }
 
@@ -185,70 +243,15 @@ button:hover {
 }
 
 .add-form-input:focus {
-  
   outline: none;
 }
+.add-form-input
+{background-color: var(--light-main);}
 
-.add-form-input:hover {
-  
-}
 
 .add-form-input::placeholder {
-  color: #a1b5c4;
+  opacity: 40%;
 }
-
-/*TODO Кнопка важное */
-
-.important-button {
-  /* position: absolute; */
-
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-
-  white-space: nowrap;
-
-  border: 0;
-
-  clip: rect(0 0 0 0);
-  clip-path: inset(100%);
-}
-
-.important-button label {
-  display: block;
-  padding: 12px 18px;
-
-  background-color: #ffffff;
-  border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-
-  cursor: pointer;
-
-  user-select: none;
-}
-
-.important-button + span::before {
-  content: "";
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  margin-right: 16px;
-  background-image: url(media/important.svg);
-  border-radius: 50%;
-}
-
-/* .important-button:checked + span::before {
-  background-color: #e98080;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.important-button:not(:checked):hover + span::before,
-.important-button:not(:checked):focus + span::before {
-  background-color: rgba(249, 202, 202, 0.2);
-} */
 
 /* ! Форма */
 
@@ -257,9 +260,34 @@ button:hover {
   touch-action: manipulation;
 }
 
-.add-form-button:hover,
-.add-form-button:focus {
+.important-button {
+    display: none;
+}
+.checkbox {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s all;
 }
 
-.add-form-button:active {
+.important-button:checked + .checkbox {
+    background: var(--important-light);
+}
+
+.important-button:checked + .checkbox svg path.cirle{
+  fill: var(--important-light);
+}
+
+.important-button:checked + .checkbox svg path {
+  fill: var(--light-main);
+}
+
+
+/*! Color themes */
+
+.finished-task .done-button, .finished-task .checkmark {
+  color: var(--done-light);
+  opacity: 100%;
+  cursor: default;
 }
