@@ -14,6 +14,8 @@
   --important-dark: #ff2424;
   --timer-dark: #df7f49;
   --done-dark: #4bab29;
+
+  --main-font: "Comfortaa"
 }
 
 .active-todo {
@@ -34,7 +36,7 @@ li {
 body {
   margin: 0 auto;
   max-width: 1200px;
-  font-family: "Comfortaa";
+  font-family: var(--main-font);
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
@@ -73,6 +75,11 @@ h1 {
 
 .task-text {
   width: 720px;
+}
+
+h2 {
+  font-weight: 700;
+  font-size: 18px;
 }
 
 h3 {
@@ -142,6 +149,10 @@ button {
 
 .important-button-svg {
   fill: var(--important-light);
+}
+
+.add-form {
+  position: relative;
 }
 
 .add-form-button {
@@ -283,6 +294,30 @@ opacity: 100;}
   fill: var(--light-main);
 }
 
+.date-picker {
+  position: absolute;
+  z-index: 100;
+  top: 60px;
+  left: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  display: none;
+}
+
+.date-picker input {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+.date-picker input[type=text]{
+  color: var(--timer-light);
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+}
+
 
 /*! Color themes */
 
@@ -291,3 +326,4 @@ opacity: 100;}
   opacity: 100%;
   cursor: default;
 }
+

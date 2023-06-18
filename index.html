@@ -113,7 +113,7 @@
               </svg>
             </label>
           </div>
-          <button class="timer-button">
+          <button class="timer-button" type="button">
             <svg
               width="40"
               height="40"
@@ -183,18 +183,10 @@
           />
         </svg>
       </div>
+      <div class="date-picker">
+      <input type="text" id="airdatepicker" value="" />
+    </div>
     </form>
-
-    <div class="timer-input">
-      <input type="date" class="date" />
-      <input type="time" class="time" />
-    </div>
-
-    <div class="date-picker">
-      <input type="text" id="airdatepicker"/>
-    </div>
-
-
 
     <div class="countdown">
       <span class="showdate"></span>
@@ -546,7 +538,7 @@
         </div>
       </li>
     </template>
-    <script src="script.js"></script>
     <script src="air-datepicker.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>

@@ -1,6 +1,3 @@
-import AirDatepicker from 'air-datepicker.js';
-import 'air-datepicker.css';
-
 //Коллекция узлов
 let list = document.querySelector(".todo-list");
 let items = list.children;
@@ -18,7 +15,19 @@ let activeSection = document.querySelector(".active-tasks");
 let activeItems = activeSection.children;
 let doneSection = document.querySelector(".finished-tasks");
 
-new AirDatepicker('#airdatepicker')
+// new AirDatepicker('#airdatepicker')
+
+new AirDatepicker('#airdatepicker', {
+  inline: true,
+  selectedDates: [new Date()],
+  isMobile: true,
+  autoClose: true,
+  timepicker: true,
+  buttons: ['today', 'clear'],
+  keyboardNav: true
+});
+
+
 
 //Счетчик задач
 let counter = document.getElementById("counter");
