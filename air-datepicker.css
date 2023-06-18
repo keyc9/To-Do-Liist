@@ -187,7 +187,7 @@
   left: 6px;
 }
 .air-datepicker-nav--action path {
-  fill: var(--dark-main);
+  fill: var(--secondary-color);
   opacity: 40%;
 }
 .air-datepicker-nav--title {
@@ -196,7 +196,7 @@
 }
 .air-datepicker-nav--title i {
   font-style: normal;
-  color: var(--dark-main);
+  color: var(--secondary-color);
   margin-left: 0.3em;
 }
 .air-datepicker-nav--title:hover {
@@ -245,7 +245,7 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  color: var(--dark-main);
+  color: var(--secondary-color);
   font-family: var( --main-font), sans-serif;
   font-size: 18px;
   font-weight: 700;
@@ -372,7 +372,7 @@
   width: 12px;
   border-radius: 30px;
   border: 3px solid var(--adp-time-track-color);
-  background: var(--light-main);
+  background: var(--main-color);
   cursor: pointer;
   -webkit-transition: background var(--adp-transition-duration);
   transition: background var(--adp-transition-duration);
@@ -383,7 +383,7 @@
   width: 12px;
   border-radius: 30px;
   border: 3px solid var(--adp-time-track-color);
-  background: var(--light-main);
+  background: var(--main-color);
   cursor: pointer;
   -moz-transition: background var(--adp-transition-duration);
   transition: background var(--adp-transition-duration);
@@ -394,7 +394,7 @@
   width: 12px;
   border-radius: 30px;
   border: 2.3px solid var(--adp-time-track-color);
-  background: var(--light-main);
+  background: var(--main-color);
   cursor: pointer;
   -ms-transition: background var(--adp-transition-duration);
   transition: background var(--adp-transition-duration);
@@ -440,31 +440,31 @@
   --adp-transition-duration: 0.3s;
   --adp-transition-ease: ease-out;
   --adp-transition-offset: 8px;
-  --adp-background-color: var(--light-main);
+  --adp-background-color: var(--main-color);
   --adp-background-color-hover: #f0f0f0;
   --adp-background-color-active: #eaeaea;
-  --adp-background-color-in-range: #7d7c7c;
-  --adp-background-color-in-range-focused: #7d7c7c;
-  --adp-background-color-selected-other-month-focused: #7d7c7c;
-  --adp-background-color-selected-other-month: #7d7c7c;
-  --adp-color: var(--dark-main);
+  --adp-background-color-in-range: var(--calendar-highlight);
+  --adp-background-color-in-range-focused: var(--calendar-highlight);
+  --adp-background-color-selected-other-month-focused: var(--calendar-highlight);
+  --adp-background-color-selected-other-month: var(--calendar-highlight);
+  --adp-color: var(--secondary-color);
   --adp-color-secondary: #9c9c9c;
-  --adp-accent-color: #7d7c7c;
+  --adp-accent-color: var(--calendar-highlight);
   --adp-color-current-date: var(--adp-accent-color);
   --adp-color-other-month: #bab6b6;
   --adp-color-disabled: #aeaeae;
-  --adp-color-disabled-in-range: #7d7c7c;
-  --adp-color-other-month-hover: #7d7c7c;
-  --adp-border-color: var(--dark-main);
-  --adp-border-color-inner: var(--dark-main);
+  --adp-color-disabled-in-range: var(--calendar-highlight);
+  --adp-color-other-month-hover: var(--calendar-highlight);
+  --adp-border-color: var(--secondary-color);
+  --adp-border-color-inner: var(--secondary-color);
   --adp-border-radius: 30px;
-  --adp-border-color-inline: var(--dark-main);
+  --adp-border-color-inline: var(--secondary-color);
   --adp-nav-height: 32px;
   --adp-nav-arrow-color: var(--adp-color-secondary);
   --adp-nav-action-size: 32px;
   --adp-nav-color-secondary: var(--adp-color-secondary);
-  --adp-day-name-color: var(--timer-light);
-  --adp-day-name-color-hover: #7d7c7c;
+  --adp-day-name-color: var(--time-color);
+  --adp-day-name-color-hover: var(--calendar-highlight);
   --adp-day-cell-width: 1fr;
   --adp-day-cell-height: 33px;
   --adp-month-cell-height: 42px;
@@ -474,10 +474,10 @@
   --adp-pointer-offset: 14px;
   --adp-cell-border-radius: 30px;
   --adp-cell-background-color-hover: var(--adp-background-color-hover);
-  --adp-cell-background-color-selected: #7d7c7c;
-  --adp-cell-background-color-selected-hover: #7d7c7c;
-  --adp-cell-background-color-in-range: #7d7c7c;
-  --adp-cell-background-color-in-range-hover: #7d7c7c;
+  --adp-cell-background-color-selected: var(--calendar-highlight);
+  --adp-cell-background-color-selected-hover: var(--calendar-highlight);
+  --adp-cell-background-color-in-range: var(--calendar-highlight);
+  --adp-cell-background-color-in-range-hover: var(--calendar-highlight);
   --adp-cell-border-color-in-range: var(--adp-cell-background-color-selected);
   --adp-btn-height: 32px;
   --adp-btn-color: var(--adp-accent-color);
@@ -486,8 +486,8 @@
   --adp-btn-background-color-hover: var(--adp-background-color-hover);
   --adp-btn-background-color-active: var(--adp-background-color-active);
   --adp-time-track-height: 2.3px;
-  --adp-time-track-color: var(--dark-main);
-  --adp-time-track-color-hover: #7d7c7c;
+  --adp-time-track-color: var(--secondary-color);
+  --adp-time-track-color-hover: var(--calendar-highlight);
   --adp-time-thumb-size: 12px;
   --adp-time-padding-inner: 10px;
   --adp-time-day-period-color: var(--adp-color-secondary);

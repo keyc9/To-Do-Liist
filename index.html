@@ -55,12 +55,12 @@
 
     <div class="tabs-container">
       <div class="tab">
-        <span class="tab-name"> Основной </span>
+        <span class="tab-name lang-maintab"> Основной </span>
         <div class="tabs-border"></div>
       </div>
 
       <div class="tab">
-        <span class="tab-name"> Работа </span>
+        <span class="tab-name lang-worktab"> Работа </span>
         <div class="tabs-border"></div>
       </div>
 
@@ -86,7 +86,7 @@
     </div>
 
     <!-- ! Форма ввода-->
-
+<main>
     <form class="add-form" method="post">
       <div class="tasks-container">
         <div class="list-container">
@@ -195,8 +195,8 @@
 
     <!-- !------------------------------------>
 
-    <section>
-      <h2>Активные задачи: <span id="counter"></span></h2>
+    <section class="active-tasks_section">
+      <h2>Активные задачи: <span id="active-counter"></span></h2>
       <div class="tasks-container">
         <ul class="todo-list active-tasks">
           <li class="todo-list-item active-todo">
@@ -218,6 +218,46 @@
                   />
                 </svg>
               </button>
+              <div class="stickers-section">
+                <div class="stickers_container">
+                  <!-- <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text">
+                  <img src="image-url" alt="alternative-text"> -->
+                </div>
+              </div>
+              
               <button>
                 <svg
                   class="done-button"
@@ -242,16 +282,18 @@
               </button>
 
               <div class="task-text">
-                <h3>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Phasellus sapien magna, volutpat non egestas ut, tempor eu
-                  nulla.
-                </h3>
+                <textarea
+                class="tasks-text"
+                autocomplete = "off"
+                spellcheck="false"
+                readonly
+                minlength = "1"
+                 >Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, volutpat non egestas ut, tempor eunulla.</textarea>
               </div>
 
               <button>
                 <svg
-                  class="edit-button"
+                  class="edit-button unclicked"
                   width="40"
                   height="40"
                   viewBox="0 0 40 40"
@@ -450,13 +492,13 @@
       <p class="empty-tasks hidden">Все задачи выполнены. Новых задач нет.</p>
     </section>
 
-    <section>
-      <h2>Завершенные задачи</h2>
+    <section class="done-tasks_section">
+      <h2>Завершенные задачи <span id="done-counter"></span></h2>
       <div class="tasks-container">
         <ul class="todo-list finished-tasks"></ul>
       </div>
     </section>
-
+  </main>
     <!---------------------------------------------------------------->
     <template id="task-template">
       <li class="todo-list-item active-todo">

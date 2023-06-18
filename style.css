@@ -4,18 +4,21 @@
 
 :root {
   /* Light theme */
-  --light-main: #d9d9d9;
-  --important-light: #f13d3c;
-  --timer-light: #f2762e;
-  --done-light: #347318;
+  --main-color: #d9d9d9;
+  --secondary-color: #262626;
+  --important-color: #ff2424;
+  --time-color: #f2762e;
+  --done-color: #347318;
+  --calendar-highlight: #7d7c7c;
+  --main-font: "Comfortaa";
+}
 
-  /* Dark theme */
-  --dark-main: #262626;
-  --important-dark: #ff2424;
-  --timer-dark: #df7f49;
-  --done-dark: #4bab29;
-
-  --main-font: "Comfortaa"
+.dark-theme {
+  --main-color: #262626;
+  --secondary-color: #d9d9d9;
+  --main-color: #262626;
+  --time-color: #df7f49;
+  --done-color: #4bab29;
 }
 
 .active-todo {
@@ -40,8 +43,8 @@ body {
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
-  color: var(--dark-main);
-  background-color: var(--light-main);
+  color: var(--secondary-color);
+  background-color: var(--main-color);
 }
 
 .title-text {
@@ -58,7 +61,7 @@ h1 {
   line-height: 0;
   font-size: 150px;
   letter-spacing: 0.02em;
-  color: var(--dark-main);
+  color: var(--secondary-color);
 }
 
 .tasks-container {
@@ -82,7 +85,14 @@ h2 {
   font-size: 18px;
 }
 
-h3 {
+.tasks-text {
+  resize: none;
+  overflow: hidden;
+  outline: none;
+  border: none;
+  color: var(--secondary-color);
+  font: var(--main-font);
+  background-color: transparent;
   display: block;
   width: 100%;
   line-height: 70px;
@@ -93,11 +103,25 @@ h3 {
   background-image: repeating-linear-gradient(
     transparent,
     transparent 54px,
-    var(--dark-main) 54px,
-    var(--dark-main) 56.3px,
+    var(--secondary-color) 54px,
+    var(--secondary-color) 56.3px,
     transparent 56.3px,
     transparent 71px
   );
+}
+
+.stickers-section {
+  border: 2px solid #1371bf;
+  background-color: #262626;
+}
+
+.stickers-section img {
+  width: 50px;
+  height: auto;
+  color: #e3070a;
+  fill: #e3070a;
+  stroke: #e3070a;
+  display: none;
 }
 
 .tabs-container {
@@ -119,7 +143,7 @@ h3 {
 .tabs-border {
   width: 100%;
   height: 2.3px;
-  background-color: var(--dark-main);
+  background-color: var(--secondary-color);
   border-radius: 30px;
 }
 
@@ -144,11 +168,11 @@ button {
 }
 
 .timer-button {
- fill: var(--timer-light);
+  fill: var(--time-color);
 }
 
 .important-button-svg {
-  fill: var(--important-light);
+  fill: var(--important-color);
 }
 
 .add-form {
@@ -171,46 +195,50 @@ button {
 .submit-circle {
   position: absolute;
   margin-left: 17px;
-
 }
 
 .add-form-button:hover .submit-arrow {
-  margin-left: 6px; 
-
+  margin-left: 6px;
 }
 
-
-.submit-circle, .submit-arrow, .input-border {
-  color: var(--dark-main);
+.submit-circle,
+.submit-arrow,
+.input-border {
+  color: var(--secondary-color);
 }
 
 .active-todo .done-button {
-  color: var(--dark-main);
+  color: var(--secondary-color);
 }
 
 .checkmark {
   opacity: 0;
 }
 
-.done-button:hover .checkmark{
-opacity: 100;}
+.done-button:hover .checkmark {
+  opacity: 100;
+}
 
-
-
-.add-sticker-button, .edit-button, .delete-button, .goblin-theme, .color-theme {
-  color: var(--dark-main);
+.add-sticker-button,
+.edit-button,
+.delete-button,
+.goblin-theme,
+.color-theme {
+  color: var(--secondary-color);
   opacity: 40%;
 }
 
-.add-sticker-button:hover, .edit-button:hover, .delete-button:hover, .goblin-theme:hover, .color-theme:hover {
+.add-sticker-button:hover,
+.edit-button:hover,
+.delete-button:hover,
+.goblin-theme:hover,
+.color-theme:hover {
   opacity: 100%;
 }
 
-
 .list-container > button,
 .list-container > h3,
-.list-container > .input-container
-{
+.list-container > .input-container {
   display: inline-flex;
 }
 
@@ -245,6 +273,8 @@ opacity: 100;}
   padding-left: 10px;
   font: inherit;
   border: none;
+  background-color: transparent;
+  color: var(--secondary-color)
 }
 
 .input-border {
@@ -256,9 +286,6 @@ opacity: 100;}
 .add-form-input:focus {
   outline: none;
 }
-.add-form-input
-{background-color: var(--light-main);}
-
 
 .add-form-input::placeholder {
   opacity: 40%;
@@ -272,26 +299,26 @@ opacity: 100;}
 }
 
 .important-button {
-    display: none;
+  display: none;
 }
 .checkbox {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.3s all;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s all;
 }
 
 .important-button:checked + .checkbox {
-    background: var(--important-light);
+  background: var(--important-color);
 }
 
-.important-button:checked + .checkbox svg path.cirle{
-  fill: var(--important-light);
+.important-button:checked + .checkbox svg path.cirle {
+  fill: var(--important-color);
 }
 
 .important-button:checked + .checkbox svg path {
-  fill: var(--light-main);
+  fill: var(--main-color);
 }
 
 .date-picker {
@@ -311,19 +338,18 @@ opacity: 100;}
   background-color: transparent;
 }
 
-.date-picker input[type=text]{
-  color: var(--timer-light);
+.date-picker input[type="text"] {
+  color: var(--time-color);
   text-align: center;
   font-size: 18px;
   font-weight: 400;
 }
 
-
 /*! Color themes */
 
-.finished-task .done-button, .finished-task .checkmark {
-  color: var(--done-light);
+.finished-task .done-button,
+.finished-task .checkmark {
+  color: var(--done-color);
   opacity: 100%;
   cursor: default;
 }
-
