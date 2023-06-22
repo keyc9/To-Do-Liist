@@ -10,6 +10,8 @@
   --time-color: #f2762e;
   --done-color: #347318;
   --calendar-highlight: #7d7c7c;
+  --calendar-hover: #f0f0f0;
+  --calendar-non-active: #262626;
   --main-font: "Comfortaa";
 }
 
@@ -19,6 +21,9 @@
   --main-color: #262626;
   --time-color: #df7f49;
   --done-color: #4bab29;
+  --calendar-highlight: #515050;
+  --calendar-hover: #4a4949;
+  --calendar-non-active: #bab6b6;
 }
 
 .active-todo {
@@ -71,6 +76,7 @@ h1 {
 
 .list-container {
   display: flex;
+  position: relative;
   /* flex: 40px 40px 720px 40px 40px; */
   justify-content: space-between;
   align-items: start;
@@ -111,17 +117,24 @@ h2 {
 }
 
 .stickers-section {
-  border: 2px solid #1371bf;
-  background-color: #262626;
+  display: none;
+  border: 3px solid var(--secondary-color);
+  color: var(--secondary-color);
+  /* display: grid; */
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  position: absolute;
+  left: 50px;
+  background-color: var(--main-color);
+  z-index: 3;
+  padding: 10px;
+  border-radius: 5px 30px 30px 30px;
 }
 
-.stickers-section img {
-  width: 50px;
-  height: auto;
-  color: #e3070a;
-  fill: #e3070a;
-  stroke: #e3070a;
-  display: none;
+.stickers-section svg {
+  width: 30px;
+  height: 30px;
 }
 
 .tabs-container {
@@ -274,7 +287,7 @@ button {
   font: inherit;
   border: none;
   background-color: transparent;
-  color: var(--secondary-color)
+  color: var(--secondary-color);
 }
 
 .input-border {
@@ -324,7 +337,7 @@ button {
 .date-picker {
   position: absolute;
   z-index: 100;
-  top: 60px;
+  top: 50px;
   left: 70px;
   display: flex;
   flex-direction: column;

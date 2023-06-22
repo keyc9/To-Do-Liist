@@ -40,6 +40,7 @@ new AirDatepicker("#airdatepicker", {
   timepicker: true,
   buttons: ["today", "clear"],
   keyboardNav: true,
+  minDate: new Date(),
 });
 
 //Счетчики задач
@@ -53,78 +54,85 @@ setCounter(activeCounter, activeItems);
 setCounter(doneCounter, doneItems);
 
 //TODO Таймер
-//Вставка текущей даты в инпут
-// let date = new Date();
+//Получение текущей даты
+let data = document.getElementById("airdatepicker").value;
+let a = data.split(" ");
+console.log(a);
 
-// let userDay = date.getDate(),
-//   userMonth = date.getMonth() + 1,
-//   userYear = date.getFullYear(),
-//   userHour = date.getHours(),
-//   userMin = date.getMinutes();
+let b = a[0].split(".");
+console.log(b);
 
-// userMonth = (userMonth < 10 ? "0" : "") + userMonth;
-// userDay = (userDay < 10 ? "0" : "") + userDay;
-// userHour = (userHour < 10 ? "0" : "") + userHour;
-// userMin = (userMin < 10 ? "0" : "") + userMin;
+let d = b[0];
+let m = b[1];
+let y = b[2];
+console.log(d, m, y);
 
-// let today = userYear + "-" + userMonth + "-" + userDay,
-//   displayTime = userHour + ":" + userMin;
+let c = a[1].split(":");
+let h = c[0];
+let mm = c[1];
+console.log(h, mm);
 
-// document.querySelector(".date").min = today;
-// document.querySelector(".date").value = today;
-// document.querySelector(".time").value = displayTime;
+let userDate = new Date();
+userDate.setFullYear(y);
+userDate.setMonth(m - 1);
+userDate.setDate(d);
+userDate.setHours(h);
+userDate.setMinutes(mm);
+console.log(userDate);
 
-// // !Расчет разницы и обновление документа
-// function updateCountdown() {
-//   let userDate = document.querySelector(".date").valueAsDate;
-//   let userTime = document.querySelector(".time").value;
-//   userDate.setHours(userTime.split(":")[0]);
-//   userDate.setMinutes(userTime.split(":")[1]);
-//   let innitialDate = new Date(userDate);
+// !Расчет разницы и обновление документа
+function updateCountdown() {
+  let innitialDate = new Date(userDate);
 
-//   const showDate = document.querySelector(".showdate");
+  const showDate = document.querySelector(".showdate");
 
-//   let currentDate = new Date();
-//   let delta = (innitialDate - currentDate) / 1000;
-//   if (delta < 0) {
-//     showDate.innerHTML = "Время вышло";
-//     return
-//   }
+  let currentDate = new Date();
+  let delta = (innitialDate - currentDate) / 1000;
+  if (delta < 0) {
+    showDate.innerHTML = "Время вышло";
+    return;
+  }
 
-//   let days = Math.floor(delta / 86400);
-//   delta -= days * 86400;
+  let days = Math.floor(delta / 86400);
+  delta -= days * 86400;
 
-//   let months = Math.floor(days / 31);
-//   days -= months * 31;
+  let months = Math.floor(days / 31);
+  days -= months * 31;
 
-//   let hours = Math.floor(delta / 3600) % 24;
-//   delta -= hours * 3600;
+  let hours = Math.floor(delta / 3600) % 24;
+  delta -= hours * 3600;
 
-//   let minutes = Math.floor(delta / 60) % 60;
-//   delta -= minutes * 60;
+  let minutes = Math.floor(delta / 60) % 60;
+  delta -= minutes * 60;
 
-//   let seconds = Math.round(delta % 60);
+  let seconds = Math.round(delta % 60);
 
-//   if (months <= 0) {
-//     if (days <= 0) {
-//       if (hours <= 0) {
-//         if (seconds <= 0 && minutes <= 0) {
-//           showDate.innerHTML = "Время вышло";
-//         } else {
-//           showDate.innerHTML = `${minutes +1} мин.`;
-//         }
-//       } else {
-//         showDate.innerHTML = `${hours + Math.floor(minutes/60)} ч. ${minutes +1} мин.`;
-//       }
-//     } else {
-//       showDate.innerHTML = `${days} д. ${hours  + Math.floor(minutes/60)} ч. ${minutes+1} мин.`;
-//     }
-//   } else {
-//     showDate.innerHTML = `${months} мес. ${days} д. ${hours + Math.floor(minutes/60)} ч. ${minutes+1} мин.`;
-//   }
-// }
+  if (months <= 0) {
+    if (days <= 0) {
+      if (hours <= 0) {
+        if (seconds <= 0 && minutes <= 0) {
+          showDate.innerHTML = "Время вышло";
+        } else {
+          showDate.innerHTML = `${minutes + 1} мин.`;
+        }
+      } else {
+        showDate.innerHTML = `${hours + Math.floor(minutes / 60)} ч. ${
+          minutes + 1
+        } мин.`;
+      }
+    } else {
+      showDate.innerHTML = `${days} д. ${hours + Math.floor(minutes / 60)} ч. ${
+        minutes + 1
+      } мин.`;
+    }
+  } else {
+    showDate.innerHTML = `${months} мес. ${days} д. ${
+      hours + Math.floor(minutes / 60)
+    } ч. ${minutes + 1} мин.`;
+  }
+}
 
-// setInterval(updateCountdown, 1000);
+setInterval(updateCountdown, 1000);
 
 //Сообщение о выполнении всех задач
 let toggleEmptyListMessage = function () {
@@ -180,42 +188,7 @@ activeonly.addEventListener("click", (e) => {
 });
 
 //! Стикеры
-// let images = [
-//   "media/stickers/bandaid.svg",
-//   "media/stickers/bicycling.svg",
-//   "media/stickers/bone.svg",
-//   "media/stickers/bonfire.svg",
-//   "media/stickers/book.svg",
-//   "media/stickers/bottle.svg",
-//   "media/stickers/calendar.svg",
-//   "media/stickers/call-chat.svg",
-//   "media/stickers/camera.svg",
-//   "media/stickers/cart.svg",
-//   "media/stickers/case.svg",
-//   "media/stickers/cat.svg",
-//   "media/stickers/clothes.svg",
-//   "media/stickers/computer.svg",
-//   "media/stickers/confetti.svg",
-//   "media/stickers/cup.svg",
-//   "media/stickers/dollar.svg",
-//   "media/stickers/earphones.svg",
-//   "media/stickers/gamepad.svg",
-//   "media/stickers/globe.svg",
-//   "media/stickers/heart.svg",
-//   "media/stickers/home.svg",
-//   "media/stickers/letter.svg",
-//   "media/stickers/location.svg",
-//   "media/stickers/map.svg",
-//   "media/stickers/meditation.svg",
-//   "media/stickers/photo.svg",
-//   "media/stickers/pills.svg",
-//   "media/stickers/study.svg",
-//   "media/stickers/tea.svg",
-//   "media/stickers/tram.svg",
-//   "media/stickers/volleyball.svg",
-//   "media/stickers/walking.svg",
-//   "media/stickers/wineglass.svg",
-//   "media/stickers/workout.svg",
+// let images = [ 
 // ];
 
 // const stickersContainer = document.querySelector(".stickers_container");
@@ -299,25 +272,30 @@ colorIcon.onclick = () => {
 
 const langIcon = document.querySelector(".goblin-theme");
 const langArr = {
-  "maintab" : {
-    "ru" : "Основной",
-    "gb" : "Херня",
+  maintab: {
+    ru: "Основной",
+    gb: "Херня",
   },
 
-  "worktab" : {
-    "ru" : "Работа",
-    "gb" : "Хуета",
+  worktab: {
+    ru: "Работа",
+    gb: "Хуета",
   },
 };
 
 langIcon.onclick = () => {
-  console.log("Toggled")
+  console.log("Toggled");
   for (let key in langArr) {
     let element = document.querySelector(".lang-" + key);
-  if (element) {
-    element.innerHTML = langArr[key]["gb"];
-    console.log(element + ' Key: ' + langArr[key]["gb"] + " InnerHTML: " + element.innerHTML)
+    if (element) {
+      element.innerHTML = langArr[key]["gb"];
+      console.log(
+        element +
+          " Key: " +
+          langArr[key]["gb"] +
+          " InnerHTML: " +
+          element.innerHTML
+      );
+    }
   }
-}
 };
-
