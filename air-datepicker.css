@@ -1,7 +1,7 @@
 .air-datepicker-cell.-year-.-other-decade-,
 .air-datepicker-cell.-day-.-other-month- {
   color: var(--adp-color-other-month);
-  opacity: 40%;
+  opacity: 60%;
 }
 .air-datepicker-cell.-year-.-other-decade-:hover,
 .air-datepicker-cell.-day-.-other-month-:hover {
@@ -59,19 +59,19 @@
 .air-datepicker-cell.-disabled- {
   cursor: default;
   color: var(--adp-color-disabled);
-  opacity: 40%;
+  opacity: 60%;
 }
 .air-datepicker-cell.-disabled-.-focus- {
   color: var(--adp-color-disabled);
-  opacity: 40%;
+  opacity: 60%;
 }
 .air-datepicker-cell.-disabled-.-in-range- {
   color: var(--adp-color-disabled-in-range);
-  opacity: 40%;
+  opacity: 60%;
 }
 .air-datepicker-cell.-disabled-.-current-.-focus- {
   color: var(--adp-color-disabled);
-  opacity: 40%;
+  opacity: 60%;
 }
 .air-datepicker-cell.-in-range- {
   background: var(--adp-cell-background-color-in-range);
@@ -193,7 +193,7 @@
 }
 .air-datepicker-nav--action path {
   fill: var(--secondary-color);
-  opacity: 40%;
+  opacity: 60%;
 }
 .air-datepicker-nav--title {
   border-radius: var(--adp-border-radius);

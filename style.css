@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Londrina+Outline&display=swap"); /* styles reset =============================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&family=Londrina+Outline&display=swap"); /* styles reset =============================================================================== */
 
 /*! color-pallete ================================================================================================== */
 
@@ -234,29 +234,57 @@ button {
 
 .add-sticker-button,
 .edit-button,
-.delete-button,
-.goblin-theme,
-.color-theme {
+.delete-button {
   color: var(--secondary-color);
-  opacity: 40%;
+  opacity: 60%;
 }
 
 .add-sticker-button:hover,
 .edit-button:hover,
-.delete-button:hover,
-.goblin-theme:hover,
-.color-theme:hover {
+.delete-button:hover
+ {
   opacity: 100%;
+}
+
+.goblin-theme, .color-theme {
+  position: relative;
+  display: inline-block;
+}
+
+.goblin-theme span {
+position: absolute;
+text-align: center;
+bottom: 50%;
+right: 50%;
+font-size: 1.75rem;
+font-family: Comfortaa;
+font-weight: 300;
+
+}
+
+.goblin-theme,
+.color-theme {
+  color: var(--secondary-color);
+ 
+}
+
+.goblin-theme:hover {
+
+}
+
+.goblin-theme:hover span{
+  font-weight: 500;
+}
+
+.light-theme_special {
+  position: absolute;
+  left: 0;
 }
 
 .list-container > button,
 .list-container > h3,
 .list-container > .input-container {
   display: inline-flex;
-}
-
-.hidden {
-  display: none;
 }
 
 .todo-list {
@@ -301,7 +329,7 @@ button {
 }
 
 .add-form-input::placeholder {
-  opacity: 40%;
+  opacity: 60%;
 }
 
 /* ! Форма */
@@ -342,7 +370,6 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  display: none;
 }
 
 .date-picker input {
@@ -365,4 +392,9 @@ button {
   color: var(--done-color);
   opacity: 100%;
   cursor: default;
+}
+
+
+.hidden {
+  display: none;
 }
