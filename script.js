@@ -15,6 +15,19 @@ let activeSection = document.querySelector(".active-tasks");
 let activeItems = activeSection.children;
 let doneSection = document.querySelector(".finished-tasks");
 let doneItems = doneSection.children;
+//Элементы
+let dateInput = document.getElementById("airdatepicker")
+let datePicker = document.querySelector(".date-picker");
+let timerButton = document.querySelector(".timer-button");
+let inputValue;
+let dateNow = new Date();
+const colorIcon = document.querySelector(".color-theme");
+const langIcon = document.querySelector(".goblin-theme");
+
+function OnInput() {
+  this.style.height = 0;
+  this.style.height = this.scrollHeight + "px";
+}
 
 const tx = document.getElementsByTagName("textarea");
 for (let i = 0; i < tx.length; i++) {
@@ -25,9 +38,51 @@ for (let i = 0; i < tx.length; i++) {
   tx[i].addEventListener("input", OnInput, false);
 }
 
-function OnInput() {
-  this.style.height = 0;
-  this.style.height = this.scrollHeight + "px";
+let getUserDate = function (data) {
+  let a = data.split(" ");
+  console.log(a);
+
+  let b = a[0].split(".");
+  console.log(b);
+
+  let d = b[0];
+  let m = b[1];
+  let y = b[2];
+  console.log(d, m, y);
+
+  let c = a[1].split(":");
+  let h = c[0];
+  let mm = c[1];
+  console.log(h, mm);
+
+  let userDate = new Date();
+  userDate.setFullYear(y);
+  userDate.setMonth(m - 1);
+  userDate.setDate(d);
+  userDate.setHours(h);
+  userDate.setMinutes(mm);
+  console.log("Input value: " + data);
+  console.log("User date :  " + userDate);
+  return userDate;
+};
+
+
+let onSelectEvent = function () {
+  inputValue = dateInput.value;
+  dateNow = new Date();
+  console.log("Input changed");
+    if (inputValue != "" ) {
+      console.log("Not 0");
+      if (getUserDate(inputValue) - dateNow > 60000){
+    timerButton.classList.add("timer_active")
+    console.log("Second condition: " + (getUserDate(inputValue) - dateNow));
+}
+    else {
+      timerButton.classList.remove("timer_active")
+    }
+  } else {
+    timerButton.classList.remove("timer_active")
+  }
 }
 
 new AirDatepicker("#airdatepicker", {
@@ -39,6 +94,7 @@ new AirDatepicker("#airdatepicker", {
   buttons: ["today", "clear"],
   keyboardNav: true,
   minDate: new Date(),
+  onSelect : onSelectEvent,
 });
 
 //Счетчики задач
@@ -51,8 +107,6 @@ const doneCounter = document.getElementById("done-counter");
 setCounter(activeCounter, activeItems);
 setCounter(doneCounter, doneItems);
 
-let datePicker = document.querySelector(".date-picker");
-let timerButton = document.querySelector(".timer-button");
 
 timerButton.onclick = () => {
   datePicker.classList.toggle("hidden");
@@ -164,41 +218,15 @@ newItemForm.addEventListener("submit", function (e) {
     existedTask.classList.add("hidden");
 
     //TODO Таймер ====> При выполнении скрывать таймер
-    const data = document.getElementById("airdatepicker").value;
+    // const data = document.getElementById("airdatepicker").value;
     const showDate = task.childNodes[3].childNodes[1];
 
     //TODO Дописать условие с нажатой кнопкой
-    if (data != "" ) {
-      // Получение даты из инпута и перевод в объект
-
-      let a = data.split(" ");
-      console.log(a);
-
-      let b = a[0].split(".");
-      console.log(b);
-
-      let d = b[0];
-      let m = b[1];
-      let y = b[2];
-      console.log(d, m, y);
-
-      let c = a[1].split(":");
-      let h = c[0];
-      let mm = c[1];
-      console.log(h, mm);
-
-      let userDate = new Date();
-      userDate.setFullYear(y);
-      userDate.setMonth(m - 1);
-      userDate.setDate(d);
-      userDate.setHours(h);
-      userDate.setMinutes(mm);
-      console.log("Input value: " + data);
-      console.log("User date :  " + userDate);
-
+    if (inputValue != "") {
+      inputValue = dateInput.value;
       dateNow = new Date();
-      console.log("date now : " + dateNow);
-      if (userDate > dateNow) {
+      const userDate = getUserDate(inputValue)
+      if (userDate - dateNow > 60000) {
         // !Расчет разницы и обновление документа
         function updateCountdown() {
           let innitialDate = new Date(userDate);
@@ -273,13 +301,16 @@ newItemForm.addEventListener("submit", function (e) {
       newItemTitle.value = "";
     }
   }
+  dateInput.value = new Date();
+  timerButton.classList.remove("timer_active");
+  datePicker.classList.add("hidden");
 });
 
 // TODO onload logic
 window.addEventListener("load", () => {});
 
 // TODO themes
-const colorIcon = document.querySelector(".color-theme");
+
 colorIcon.onclick = () => {
   document.body.classList.toggle("dark-theme");
   if (document.body.classList.contains("dark-theme")) {
@@ -321,7 +352,17 @@ colorIcon.onmouseout = () => {
   }
 };
 
-const langIcon = document.querySelector(".goblin-theme");
+langIcon.onmouseover = () => {
+  document.getElementById("Vector_2-active").classList.remove("hidden");
+  document.getElementById("Vector_2").classList.add("hidden");
+
+}
+
+langIcon.onmouseout = () => {
+  document.getElementById("Vector_2-active").classList.add("hidden");
+  document.getElementById("Vector_2").classList.remove("hidden");
+}
+
 const langArr = {
   maintab: {
     ru: "Основной",
