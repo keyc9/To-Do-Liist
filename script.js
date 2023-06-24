@@ -7,16 +7,21 @@ let existedTask = document.querySelector(".task-exists");
 //Элементы формы, для добавления задач
 let newItemForm = document.querySelector(".add-form");
 let newItemTitle = newItemForm.querySelector(".add-form-input");
-//Темплейт для задачи
+//Темплейты
 let taskTemplate = document.querySelector("#task-template").content;
 let newItemTemplate = taskTemplate.querySelector(".todo-list-item");
+let stickersTemplate = document.querySelector("#stickers-template").content;
+let tabTemplate = document.querySelector("#tab-template").content;
+let pageTemplate = document.querySelector("#page-template").content;
+
 //Разделы
 let activeSection = document.querySelector(".active-tasks");
 let activeItems = activeSection.children;
 let doneSection = document.querySelector(".finished-tasks");
 let doneItems = doneSection.children;
 //Элементы
-let dateInput = document.getElementById("airdatepicker")
+let importantCheckbox = document.querySelector(".important-button");
+let dateInput = document.getElementById("airdatepicker");
 let datePicker = document.querySelector(".date-picker");
 let timerButton = document.querySelector(".timer-button");
 let inputValue;
@@ -66,24 +71,22 @@ let getUserDate = function (data) {
   return userDate;
 };
 
-
 let onSelectEvent = function () {
   inputValue = dateInput.value;
   dateNow = new Date();
   console.log("Input changed");
-    if (inputValue != "" ) {
-      console.log("Not 0");
-      if (getUserDate(inputValue) - dateNow > 60000){
-    timerButton.classList.add("timer_active")
-    console.log("Second condition: " + (getUserDate(inputValue) - dateNow));
-}
-    else {
-      timerButton.classList.remove("timer_active")
+  if (inputValue != "") {
+    console.log("Not 0");
+    if (getUserDate(inputValue) - dateNow > 60000) {
+      timerButton.classList.add("timer_active");
+      console.log("Second condition: " + (getUserDate(inputValue) - dateNow));
+    } else {
+      timerButton.classList.remove("timer_active");
     }
   } else {
-    timerButton.classList.remove("timer_active")
+    timerButton.classList.remove("timer_active");
   }
-}
+};
 
 new AirDatepicker("#airdatepicker", {
   inline: true,
@@ -94,7 +97,7 @@ new AirDatepicker("#airdatepicker", {
   buttons: ["today", "clear"],
   keyboardNav: true,
   minDate: new Date(),
-  onSelect : onSelectEvent,
+  onSelect: onSelectEvent,
 });
 
 //Счетчики задач
@@ -106,7 +109,6 @@ const activeCounter = document.getElementById("active-counter");
 const doneCounter = document.getElementById("done-counter");
 setCounter(activeCounter, activeItems);
 setCounter(doneCounter, doneItems);
-
 
 timerButton.onclick = () => {
   datePicker.classList.toggle("hidden");
@@ -169,29 +171,37 @@ activeonly.addEventListener("click", (e) => {
 });
 
 //! Стикеры
-// let images = [
-// ];
+let defaultSticker;
+activeSection.addEventListener("click", (e) => {
+  const isStickerButton = e.target.classList.contains("add-sticker-button");
+  if (isStickerButton) {
+    e.target.parentElement.nextElementSibling.appendChild(stickersTemplate);
+    e.target.parentNode.nextElementSibling.classList.toggle("hidden");
+    defaultSticker = e.target;
+    return defaultSticker;
+  }
+});
 
-// const stickersContainer = document.querySelector(".stickers_container");
-
-// for (let i = 0; i < images.length; i++) {
-//   const img = document.createElement("img");
-//   img.src = images[i];
-//   stickersContainer.appendChild(img);
-// }
-
-// let thumbnails = document.querySelectorAll(".gallery__picture-preview");
-// let fullPhoto = document.querySelector(".full-picture");
-
-// let addThumbnailClickHandler = function (preview, pictures) {
-//   preview.addEventListener("click", function () {
-//     fullPhoto.src = pictures;
-//   });
-// };
-
-// for (let i = 0; i < thumbnails.length; i++) {
-//   addThumbnailClickHandler(thumbnails[i], pictures[i]);
-// }
+document.querySelector(".stickers-container").addEventListener("click", (e) => {
+  const isSticker = e.target.classList.contains("sticker_item");
+  if (isSticker) {
+   const children = document.querySelector(".stickers-container").children[0].children;
+   for (let i = 0; i < children.length; i++) {
+  children[i].classList.remove("sticker_item-active");
+}
+    let swap = e.target.childNodes[1].getAttribute("xlink:href");
+    if (swap == defaultSticker.childNodes[1].getAttribute("xlink:href")) {
+      e.target.classList.remove("sticker_item-active");
+      defaultSticker.childNodes[1].setAttribute(
+        "xlink:href",
+        "media/stickers/sticker-default.svg#sticker"
+      );
+    } else {
+      defaultSticker.childNodes[1].setAttribute("xlink:href", swap);
+      e.target.classList.add("sticker_item-active");
+    }
+  }
+});
 
 //! Добавление новой задачи
 newItemForm.addEventListener("submit", function (e) {
@@ -199,8 +209,8 @@ newItemForm.addEventListener("submit", function (e) {
 
   let taskText = newItemTitle.value;
   let task = newItemTemplate.cloneNode(true);
-  let taskDescription = task.querySelector("h3");
-  taskDescription.textContent = taskText;
+  let taskDescription = task.querySelector("textarea");
+  taskDescription.value = taskText;
 
   //Проверка на повторы задач
 
@@ -217,15 +227,14 @@ newItemForm.addEventListener("submit", function (e) {
   } else {
     existedTask.classList.add("hidden");
 
-    //TODO Таймер ====> При выполнении скрывать таймер
+    //TODO Таймер
     // const data = document.getElementById("airdatepicker").value;
     const showDate = task.childNodes[3].childNodes[1];
 
-    //TODO Дописать условие с нажатой кнопкой
     if (inputValue != "") {
       inputValue = dateInput.value;
       dateNow = new Date();
-      const userDate = getUserDate(inputValue)
+      const userDate = getUserDate(inputValue);
       if (userDate - dateNow > 60000) {
         // !Расчет разницы и обновление документа
         function updateCountdown() {
@@ -284,7 +293,6 @@ newItemForm.addEventListener("submit", function (e) {
     }
 
     //Добавление важной задачи
-    let importantCheckbox = document.querySelector(".important-button");
     if (importantCheckbox.checked === true) {
       task.classList.add("important");
 
@@ -304,6 +312,7 @@ newItemForm.addEventListener("submit", function (e) {
   dateInput.value = new Date();
   timerButton.classList.remove("timer_active");
   datePicker.classList.add("hidden");
+  importantCheckbox.checked = false;
 });
 
 // TODO onload logic
@@ -355,13 +364,12 @@ colorIcon.onmouseout = () => {
 langIcon.onmouseover = () => {
   document.getElementById("Vector_2-active").classList.remove("hidden");
   document.getElementById("Vector_2").classList.add("hidden");
-
-}
+};
 
 langIcon.onmouseout = () => {
   document.getElementById("Vector_2-active").classList.add("hidden");
   document.getElementById("Vector_2").classList.remove("hidden");
-}
+};
 
 const langArr = {
   maintab: {
