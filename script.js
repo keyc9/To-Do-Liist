@@ -42,6 +42,7 @@ for (let i = 0; i < tx.length; i++) {
     "height:" + tx[i].scrollHeight + "px;overflow-y:hidden;"
   );
   tx[i].addEventListener("input", OnInput, false);
+  tx[i].addEventListener("load", onload, false);
 }
 
 let getUserDate = function (data) {
@@ -213,7 +214,7 @@ newItemForm.addEventListener("submit", function (e) {
   taskDescription.value = taskText;
 
   //Проверка на повторы задач
-  let tasksArray = Array.from(list.children).map((child) => child.innerText);
+  let tasksArray = Array.from(list.children).map((child) => child.children[0].children[3].children[0].value);
   let arrayCheck = tasksArray.includes(taskText);
 
   newItemTitle.addEventListener("change", () => {});
