@@ -11,6 +11,7 @@ let newItemTitle = newItemForm.querySelector(".add-form-input");
 let taskTemplate = document.querySelector("#task-template").content;
 let newItemTemplate = taskTemplate.querySelector(".todo-list-item");
 let stickersTemplate = document.querySelector("#stickers-template").content;
+let newStickersTemplate = stickersTemplate.querySelector(".stickers-section");
 let tabTemplate = document.querySelector("#tab-template").content;
 let pageTemplate = document.querySelector("#page-template").content;
 
@@ -137,9 +138,41 @@ container.addEventListener("click", (e) => {
   }
 });
 
-// Перенос задачи в выполненное (только секция активных)
-const activeonly = document.querySelector(".active-tasks_section");
-activeonly.addEventListener("click", (e) => {
+// TODO Manipulating active tasks
+activeSection.addEventListener("click", (e) => {
+  //! Стикеры
+  // Show stickers section
+  const isStickerButton = e.target.classList.contains("add-sticker-button");
+  if (isStickerButton) {
+    if (e.target.parentElement.nextElementSibling.children.length == 0) {
+      let stickers = newStickersTemplate.cloneNode(true);
+      e.target.parentElement.nextElementSibling.appendChild(stickers);
+    }
+    e.target.parentNode.nextElementSibling.classList.toggle("hidden");
+  }
+
+  // Set sticker to the task
+  const isSticker = e.target.classList.contains("sticker_item");
+  if (isSticker) {
+    const children = e.target.parentElement.children;
+    for (let i = 0; i < children.length; i++) {
+      children[i].classList.remove("sticker_item-active");
+    }
+    let defaultSticker = e.target.parentElement.parentElement.previousElementSibling;
+    let swap = e.target.childNodes[1].getAttribute("xlink:href");
+    if (swap == defaultSticker.childNodes[1].childNodes[1].getAttribute("xlink:href")) {
+      e.target.classList.remove("sticker_item-active");
+      defaultSticker.childNodes[1].childNodes[1].setAttribute(
+        "xlink:href",
+        "media/stickers/sticker-default.svg#sticker"
+      );
+    } else {
+      defaultSticker.childNodes[1].childNodes[1].setAttribute("xlink:href", swap);
+      e.target.classList.add("sticker_item-active");
+    }
+  }
+
+  // Перенос задачи в выполненное
   const isDoneButton = e.target.classList.contains("done-button");
   const isEditButton = e.target.classList.contains("edit-button");
   if (isDoneButton) {
@@ -170,39 +203,6 @@ activeonly.addEventListener("click", (e) => {
   }
 });
 
-//! Стикеры
-let defaultSticker;
-activeSection.addEventListener("click", (e) => {
-  const isStickerButton = e.target.classList.contains("add-sticker-button");
-  if (isStickerButton) {
-    e.target.parentElement.nextElementSibling.appendChild(stickersTemplate);
-    e.target.parentNode.nextElementSibling.classList.toggle("hidden");
-    defaultSticker = e.target;
-    return defaultSticker;
-  }
-});
-
-document.querySelector(".stickers-container").addEventListener("click", (e) => {
-  const isSticker = e.target.classList.contains("sticker_item");
-  if (isSticker) {
-   const children = document.querySelector(".stickers-container").children[0].children;
-   for (let i = 0; i < children.length; i++) {
-  children[i].classList.remove("sticker_item-active");
-}
-    let swap = e.target.childNodes[1].getAttribute("xlink:href");
-    if (swap == defaultSticker.childNodes[1].getAttribute("xlink:href")) {
-      e.target.classList.remove("sticker_item-active");
-      defaultSticker.childNodes[1].setAttribute(
-        "xlink:href",
-        "media/stickers/sticker-default.svg#sticker"
-      );
-    } else {
-      defaultSticker.childNodes[1].setAttribute("xlink:href", swap);
-      e.target.classList.add("sticker_item-active");
-    }
-  }
-});
-
 //! Добавление новой задачи
 newItemForm.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -213,7 +213,6 @@ newItemForm.addEventListener("submit", function (e) {
   taskDescription.value = taskText;
 
   //Проверка на повторы задач
-
   let tasksArray = Array.from(list.children).map((child) => child.innerText);
   let arrayCheck = tasksArray.includes(taskText);
 
@@ -319,7 +318,6 @@ newItemForm.addEventListener("submit", function (e) {
 window.addEventListener("load", () => {});
 
 // TODO themes
-
 colorIcon.onclick = () => {
   document.body.classList.toggle("dark-theme");
   if (document.body.classList.contains("dark-theme")) {

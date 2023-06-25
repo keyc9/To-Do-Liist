@@ -187,6 +187,10 @@ button {
   border-radius: 10px;
 }
 
+.stickers-container {
+position: absolute;
+}
+
 .theme-buttons {
   position: absolute;
   top: 60px;
