@@ -142,9 +142,20 @@ tabSection.addEventListener("click", (e) => {
       e.target.parentElement.children[i].classList.remove("active-tab");
     }
     e.target.classList.add("active-tab");
-
-  
-
+    let classArray = e.target.classList.value;
+    console.log(classArray);
+    let key = classArray.match(/list-\w{4,}/);
+    let lists = document.querySelectorAll(".todo-list")
+    console.log(lists);
+    for (let i = 0; i < lists.length; i++) {
+    if (lists[i].classList.contains(key)) {
+          lists[i].classList.remove("hidden")
+          console.log(lists[i].classList)
+    } else {
+          lists[i].classList.add("hidden")
+          console.log(lists[i].classList)
+    }
+  }
 
   }
 
