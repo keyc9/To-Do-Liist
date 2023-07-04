@@ -124,9 +124,21 @@ const doneCounter = document.getElementById("done-counter");
 setCounter(activeCounter, activeSection);
 setCounter(doneCounter, doneSection);
 
+//Сообщение о выполнении всех задач
+let toggleEmptyListMessage = function () {
+  if (activeCounter.textContent == "0") {
+    emptyListMessage.classList.remove("hidden");
+    console.log(activeCounter.textContent)
+  } else {
+    emptyListMessage.classList.add("hidden");
+    console.log(activeCounter.textContent)
+  }
+};
+
 timerButton.onclick = () => {
   datePicker.classList.toggle("hidden");
 };
+
 
 // TODO: Tabs =================================================================
 tabSection.addEventListener("click", (e) => {
@@ -159,6 +171,7 @@ tabSection.addEventListener("click", (e) => {
   }
   setCounter(activeCounter, activeSection);
   setCounter(doneCounter, doneSection);
+  toggleEmptyListMessage();
 });
 
 const addTab = document.querySelector(".add-tab");
@@ -179,19 +192,14 @@ activeSection.children[1].insertBefore(activeList, notice);
 activeList.classList.add(className);
 doneSection.children[1].appendChild(doneList);
 doneList.classList.add(className);
+
+
 });
 
 //!Таймер =================================================================
 //Получение текущей даты
 
-//Сообщение о выполнении всех задач
-let toggleEmptyListMessage = function () {
-  if (activeCounter.textContent === "0") {
-    emptyListMessage.classList.remove("hidden");
-  } else {
-    emptyListMessage.classList.add("hidden");
-  }
-};
+
 
 // Удаление задачи
 const container = document.querySelector("main");
@@ -403,14 +411,15 @@ newItemForm.addEventListener("submit", function (e) {
       task.classList.add("important");
       //Вставка в DOM в начало
       insertPlace.insertBefore(task, insertPlace.firstChild);
-      toggleEmptyListMessage();
       setCounter(activeCounter, activeSection);
+      toggleEmptyListMessage();
       newItemTitle.value = "";
     } else {
       //Вставка в DOM в конец
       insertPlace.appendChild(task);
-      toggleEmptyListMessage();
       setCounter(activeCounter, activeSection);
+      toggleEmptyListMessage();
+
       newItemTitle.value = "";
     }
   }
