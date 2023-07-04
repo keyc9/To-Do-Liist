@@ -13,11 +13,11 @@ let newItemTemplate = taskTemplate.querySelector(".todo-list-item");
 let stickersTemplate = document.querySelector("#stickers-template").content;
 let newStickersTemplate = stickersTemplate.querySelector(".stickers-section");
 let tabTemplate = document.querySelector("#tab-template").content;
-let newTabTemplate = tabTemplate.querySelector(".tab")
+let newTabTemplate = tabTemplate.querySelector(".tab");
 let activeTemplate = document.querySelector("#active-template").content;
-let newActiveTemplate = activeTemplate.querySelector(".todo-list")
+let newActiveTemplate = activeTemplate.querySelector(".todo-list");
 let doneTemplate = document.querySelector("#done-template").content;
-let newDoneTemplate = doneTemplate.querySelector(".todo-list")
+let newDoneTemplate = doneTemplate.querySelector(".todo-list");
 
 //Разделы
 let activeSection = document.querySelector(".active-tasks_section");
@@ -48,9 +48,6 @@ for (let i = 0; i < tx.length; i++) {
   );
   resizeInput(tx[i]);
 }
-
-
-
 
 let getUserDate = function (data) {
   let a = data.split(" ");
@@ -105,16 +102,17 @@ let setCounter = function (counter, array) {
   let arr = array.children[1].children;
   let count = 0;
   for (let i = 0; i < arr.length; i++) {
-    if (arr[i].classList.contains("active-tasks") &&
-      !arr[i].classList.contains("hidden") 
+    if (
+      arr[i].classList.contains("active-tasks") &&
+      !arr[i].classList.contains("hidden")
     ) {
       count = arr[i].children.length;
-
-    } else if (arr[i].classList.contains("finished-tasks") &&
-    !arr[i].classList.contains("hidden")) {
+    } else if (
+      arr[i].classList.contains("finished-tasks") &&
+      !arr[i].classList.contains("hidden")
+    ) {
       count = arr[i].children.length;
-
-    } 
+    }
   }
   counter.textContent = count;
 };
@@ -128,10 +126,8 @@ setCounter(doneCounter, doneSection);
 let toggleEmptyListMessage = function () {
   if (activeCounter.textContent == "0") {
     emptyListMessage.classList.remove("hidden");
-    console.log(activeCounter.textContent)
   } else {
     emptyListMessage.classList.add("hidden");
-    console.log(activeCounter.textContent)
   }
 };
 
@@ -139,28 +135,27 @@ timerButton.onclick = () => {
   datePicker.classList.toggle("hidden");
 };
 
-
-// TODO: Tabs =================================================================
+// !Tabs =============================================================================================================================================================================================
 tabSection.addEventListener("click", (e) => {
+  //Changing between Tabs
   const isTab = e.target.classList.contains("tab");
   if (isTab) {
     let tabs = e.target.parentElement.children;
     for (i = 0; i < tabs.length; i++) {
       if (tabs[i].classList.contains("active-tab"))
-      e.target.parentElement.children[i].classList.remove("active-tab");
+        e.target.parentElement.children[i].classList.remove("active-tab");
     }
     e.target.classList.add("active-tab");
     let classArray = e.target.classList.value;
     let key = classArray.match(/list-\w{4,}/);
-    let lists = document.querySelectorAll(".todo-list")
+    let lists = document.querySelectorAll(".todo-list");
     for (let i = 0; i < lists.length; i++) {
-    if (lists[i].classList.contains(key)) {
-          lists[i].classList.remove("hidden")
-    } else {
-          lists[i].classList.add("hidden")
+      if (lists[i].classList.contains(key)) {
+        lists[i].classList.remove("hidden");
+      } else {
+        lists[i].classList.add("hidden");
+      }
     }
-  }
-
   }
   for (let i = 0; i < tx.length; i++) {
     tx[i].setAttribute(
@@ -174,32 +169,61 @@ tabSection.addEventListener("click", (e) => {
   toggleEmptyListMessage();
 });
 
-const addTab = document.querySelector(".add-tab");
+//TODO: Tab menu
+const menu = document.getElementById("context-menu");
+tabSection.addEventListener("contextmenu", (e) => {
+  const isTab = e.target.classList.contains("tab");
+  if (isTab) {
+    console.log("contextmenu");
+    e.preventDefault();
+    // Set the position for menu
+    const rect = tabSection.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    menu.style.top = `${y}px`;
+    menu.style.left = `${x}px`;
+    menu.classList.remove("hidden");
 
-addTab .addEventListener("click", (e) => {
-let tab = newTabTemplate.cloneNode(true);
-let activeList = newActiveTemplate.cloneNode(true);
-let doneList = newDoneTemplate.cloneNode(true);
-
-let index = tabSection.children.length - 1;
-let className = `list-new${index}` 
-
-tabSection.insertBefore(tab, addTab);
-tab.classList.add(className);
-tab.querySelector(".tab-name").value = "Новый"
-let notice = activeSection.querySelector("p")
-activeSection.children[1].insertBefore(activeList, notice);
-activeList.classList.add(className);
-doneSection.children[1].appendChild(doneList);
-doneList.classList.add(className);
-
-
+    // Hide the menu
+    const documentClickHandler = function (e) {
+      const isClickedOutside = !menu.contains(e.target);
+      if (isClickedOutside) {
+        menu.classList.add("hidden");
+        document.removeEventListener("click", documentClickHandler);
+      }
+    };
+    document.addEventListener("click", documentClickHandler);
+  }
 });
 
-//!Таймер =================================================================
-//Получение текущей даты
+menu.addEventListener("click", (e) => {
+  const button = e.target.innerHTML;
+  if (button == "Редактировать") {
+    console.log("edit");
+  } else if (button == "Удалить") {
+    console.log("delete");
+  }
+});
 
+const addTab = document.querySelector(".add-tab");
+// Add new Tabs
+addTab.addEventListener("click", (e) => {
+  let tab = newTabTemplate.cloneNode(true);
+  let activeList = newActiveTemplate.cloneNode(true);
+  let doneList = newDoneTemplate.cloneNode(true);
 
+  let index = tabSection.children.length - 1;
+  let className = `list-new${index}`;
+
+  tabSection.insertBefore(tab, addTab);
+  tab.classList.add(className);
+  tab.querySelector(".tab-name").value = "Новый";
+  let notice = activeSection.querySelector("p");
+  activeSection.children[1].insertBefore(activeList, notice);
+  activeList.classList.add(className);
+  doneSection.children[1].appendChild(doneList);
+  doneList.classList.add(className);
+});
 
 // Удаление задачи
 const container = document.querySelector("main");
@@ -212,9 +236,9 @@ container.addEventListener("click", (e) => {
   }
 });
 
-// TODO Manipulating active tasks
+//!Manipulating active tasks
 activeSection.addEventListener("click", (e) => {
-  //! Стикеры
+  // Стикеры
   // Show stickers section
   const isStickerButton = e.target.classList.contains("add-sticker-button");
   if (isStickerButton) {
@@ -259,17 +283,15 @@ activeSection.addEventListener("click", (e) => {
   if (isDoneButton) {
     let insertPlace;
     let activeList = () => {
-    let a = doneSection.children[1].children;
-  console.log (a)
-    for (let i = 0; i < a.length; i++) {
-    if (!a[i].classList.contains("hidden")) {
-      insertPlace = a[i];
-    }
-  }
-    }
-  activeList();
+      let a = doneSection.children[1].children;
+      for (let i = 0; i < a.length; i++) {
+        if (!a[i].classList.contains("hidden")) {
+          insertPlace = a[i];
+        }
+      }
+    };
+    activeList();
 
-  console.log (insertPlace)
     insertPlace.appendChild(e.target.parentNode.parentNode.parentNode);
     e.target.parentNode.parentNode.parentNode.classList.remove("active-todo");
     e.target.parentNode.parentNode.parentNode.classList.add("finished-task");
@@ -329,8 +351,7 @@ newItemForm.addEventListener("submit", function (e) {
   } else {
     existedTask.classList.add("hidden");
 
-    //TODO Таймер
-    // const data = document.getElementById("airdatepicker").value;
+    // Таймер
     const showDate = task.childNodes[3].childNodes[1];
 
     if (inputValue != "") {
@@ -338,7 +359,7 @@ newItemForm.addEventListener("submit", function (e) {
       dateNow = new Date();
       const userDate = getUserDate(inputValue);
       if (userDate - dateNow > 60000) {
-        // !Расчет разницы и обновление документа
+        //Расчет разницы и обновление документа
         function updateCountdown() {
           let innitialDate = new Date(userDate);
 
@@ -395,17 +416,20 @@ newItemForm.addEventListener("submit", function (e) {
     }
 
     //Добавление важной задачи
-    
+
     let insertPlace;
     let activeList = () => {
-    let a = activeSection.children[1].children;
-    for (let i = 0; i < a.length; i++) {
-    if (!a[i].classList.contains("hidden") && a[i].classList.contains("active-tasks")) {
-      insertPlace = a[i];
-    }
-  }
-    }
-  activeList();
+      let a = activeSection.children[1].children;
+      for (let i = 0; i < a.length; i++) {
+        if (
+          !a[i].classList.contains("hidden") &&
+          a[i].classList.contains("active-tasks")
+        ) {
+          insertPlace = a[i];
+        }
+      }
+    };
+    activeList();
 
     if (importantCheckbox.checked === true) {
       task.classList.add("important");
@@ -431,13 +455,7 @@ newItemForm.addEventListener("submit", function (e) {
 });
 
 // TODO onload logic
-window.addEventListener("load", () => {
-
-
-
-
-
-});
+window.addEventListener("load", () => {});
 
 // TODO themes
 
