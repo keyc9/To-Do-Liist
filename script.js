@@ -13,10 +13,11 @@ let newItemTemplate = taskTemplate.querySelector(".todo-list-item");
 let stickersTemplate = document.querySelector("#stickers-template").content;
 let newStickersTemplate = stickersTemplate.querySelector(".stickers-section");
 let tabTemplate = document.querySelector("#tab-template").content;
-let newTabTemplate = document.querySelector("tab")
-let pageTemplate = document.querySelector("#page-template").content;
-let newPageTemplate = document.querySelector("todo-list")
-
+let newTabTemplate = tabTemplate.querySelector(".tab")
+let activeTemplate = document.querySelector("#active-template").content;
+let newActiveTemplate = activeTemplate.querySelector(".todo-list")
+let doneTemplate = document.querySelector("#done-template").content;
+let newDoneTemplate = doneTemplate.querySelector(".todo-list")
 
 //Разделы
 let activeSection = document.querySelector(".active-tasks_section");
@@ -34,9 +35,9 @@ let dateNow = new Date();
 const colorIcon = document.querySelector(".color-theme");
 const langIcon = document.querySelector(".goblin-theme");
 
-function OnInput() {
-  this.style.height = 0;
-  this.style.height = this.scrollHeight + "px";
+function resizeInput(e) {
+  e.style.height = 0;
+  e.style.height = e.scrollHeight + "px";
 }
 
 const tx = document.getElementsByTagName("textarea");
@@ -45,26 +46,24 @@ for (let i = 0; i < tx.length; i++) {
     "style",
     "height:" + tx[i].scrollHeight + "px;overflow-y:hidden;"
   );
-  tx[i].addEventListener("input", OnInput, false);
-  tx[i].addEventListener("load", onload, false);
+  resizeInput(tx[i]);
 }
+
+
+
 
 let getUserDate = function (data) {
   let a = data.split(" ");
-  console.log(a);
 
   let b = a[0].split(".");
-  console.log(b);
 
   let d = b[0];
   let m = b[1];
   let y = b[2];
-  console.log(d, m, y);
 
   let c = a[1].split(":");
   let h = c[0];
   let mm = c[1];
-  console.log(h, mm);
 
   let userDate = new Date();
   userDate.setFullYear(y);
@@ -72,20 +71,15 @@ let getUserDate = function (data) {
   userDate.setDate(d);
   userDate.setHours(h);
   userDate.setMinutes(mm);
-  console.log("Input value: " + data);
-  console.log("User date :  " + userDate);
   return userDate;
 };
 
 let onSelectEvent = function () {
   inputValue = dateInput.value;
   dateNow = new Date();
-  console.log("Input changed");
   if (inputValue != "") {
-    console.log("Not 0");
     if (getUserDate(inputValue) - dateNow > 60000) {
       timerButton.classList.add("timer_active");
-      console.log("Second condition: " + (getUserDate(inputValue) - dateNow));
     } else {
       timerButton.classList.remove("timer_active");
     }
@@ -108,17 +102,19 @@ new AirDatepicker("#airdatepicker", {
 
 //Счетчики задач
 let setCounter = function (counter, array) {
-  let arr = array.children[1].children[0].children;
+  let arr = array.children[1].children;
   let count = 0;
   for (let i = 0; i < arr.length; i++) {
-    if ( arr[i].classList.contains("active-todo") &&
+    if (arr[i].classList.contains("active-tasks") &&
       !arr[i].classList.contains("hidden") 
     ) {
-      count ++;
-    } else if (arr[i].classList.contains("finished-task") &&
+      count = arr[i].children.length;
+
+    } else if (arr[i].classList.contains("finished-tasks") &&
     !arr[i].classList.contains("hidden")) {
-      count ++;
-    }
+      count = arr[i].children.length;
+
+    } 
   }
   counter.textContent = count;
 };
@@ -132,7 +128,7 @@ timerButton.onclick = () => {
   datePicker.classList.toggle("hidden");
 };
 
-// TODO: Tabs
+// TODO: Tabs =================================================================
 tabSection.addEventListener("click", (e) => {
   const isTab = e.target.classList.contains("tab");
   if (isTab) {
@@ -143,25 +139,47 @@ tabSection.addEventListener("click", (e) => {
     }
     e.target.classList.add("active-tab");
     let classArray = e.target.classList.value;
-    console.log(classArray);
     let key = classArray.match(/list-\w{4,}/);
     let lists = document.querySelectorAll(".todo-list")
-    console.log(lists);
     for (let i = 0; i < lists.length; i++) {
     if (lists[i].classList.contains(key)) {
           lists[i].classList.remove("hidden")
-          console.log(lists[i].classList)
     } else {
           lists[i].classList.add("hidden")
-          console.log(lists[i].classList)
     }
   }
 
   }
-
-
+  for (let i = 0; i < tx.length; i++) {
+    tx[i].setAttribute(
+      "style",
+      "height:" + tx[i].scrollHeight + "px;overflow-y:hidden;"
+    );
+    resizeInput(tx[i]);
+  }
+  setCounter(activeCounter, activeSection);
+  setCounter(doneCounter, doneSection);
 });
 
+const addTab = document.querySelector(".add-tab");
+
+addTab .addEventListener("click", (e) => {
+let tab = newTabTemplate.cloneNode(true);
+let activeList = newActiveTemplate.cloneNode(true);
+let doneList = newDoneTemplate.cloneNode(true);
+
+let index = tabSection.children.length - 1;
+let className = `list-new${index}` 
+
+tabSection.insertBefore(tab, addTab);
+tab.classList.add(className);
+tab.querySelector(".tab-name").value = "Новый"
+let notice = activeSection.querySelector("p")
+activeSection.children[1].insertBefore(activeList, notice);
+activeList.classList.add(className);
+doneSection.children[1].appendChild(doneList);
+doneList.classList.add(className);
+});
 
 //!Таймер =================================================================
 //Получение текущей даты
@@ -231,7 +249,20 @@ activeSection.addEventListener("click", (e) => {
   const isDoneButton = e.target.classList.contains("done-button");
   const isEditButton = e.target.classList.contains("edit-button");
   if (isDoneButton) {
-    doneSection.children[1].children[0].appendChild(e.target.parentNode.parentNode.parentNode);
+    let insertPlace;
+    let activeList = () => {
+    let a = doneSection.children[1].children;
+  console.log (a)
+    for (let i = 0; i < a.length; i++) {
+    if (!a[i].classList.contains("hidden")) {
+      insertPlace = a[i];
+    }
+  }
+    }
+  activeList();
+
+  console.log (insertPlace)
+    insertPlace.appendChild(e.target.parentNode.parentNode.parentNode);
     e.target.parentNode.parentNode.parentNode.classList.remove("active-todo");
     e.target.parentNode.parentNode.parentNode.classList.add("finished-task");
     // e.target.remove();
@@ -243,6 +274,7 @@ activeSection.addEventListener("click", (e) => {
   // Редактирование задачи
   if (isEditButton) {
     const editingField = e.target.parentNode.previousElementSibling.children[0];
+    editingField.addEventListener("input", resizeInput(editingField), false);
     if (e.target.classList.contains("unclicked")) {
       editingField.removeAttribute("readonly");
       editingField.focus();
@@ -355,7 +387,18 @@ newItemForm.addEventListener("submit", function (e) {
     }
 
     //Добавление важной задачи
-    let insertPlace = activeSection.children[1].children[0]
+    
+    let insertPlace;
+    let activeList = () => {
+    let a = activeSection.children[1].children;
+    for (let i = 0; i < a.length; i++) {
+    if (!a[i].classList.contains("hidden") && a[i].classList.contains("active-tasks")) {
+      insertPlace = a[i];
+    }
+  }
+    }
+  activeList();
+
     if (importantCheckbox.checked === true) {
       task.classList.add("important");
       //Вставка в DOM в начало
@@ -375,10 +418,17 @@ newItemForm.addEventListener("submit", function (e) {
   timerButton.classList.remove("timer_active");
   datePicker.classList.add("hidden");
   importantCheckbox.checked = false;
+  resizeInput(taskDescription);
 });
 
 // TODO onload logic
-window.addEventListener("load", () => {});
+window.addEventListener("load", () => {
+
+
+
+
+
+});
 
 // TODO themes
 

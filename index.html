@@ -38,7 +38,7 @@
       <div class="tabs-border"></div>
     </div>
 
-    <div class="add-tub">
+    <div class="add-tab">
       <button>
       <svg class="icon">
         <use xlink:href="media/main-sprite.svg#add-tub"></use>
@@ -290,17 +290,17 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, 
 
         <p class="empty-tasks hidden">Все задачи выполнены. Новых задач нет.</p>
 
-
+</div>
+</section>
         <section class="done-tasks_section">
           <h2>Завершенные задачи <span id="done-counter"></span></h2>
           <div class="tasks-container">
             <ul class="todo-list finished-tasks list-main"></ul>
-          </div>
+        
 
           <ul class="todo-list finished-tasks list-work hidden">
-            <li class="finished-task">Пам пам</li>
           </ul>
-
+  </div>
         </section>
   </main>
   <!---------------------------------------------------------------->
@@ -474,8 +474,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, 
 
   </template>
 
-  <template id="page-template">
-    <ul class="todo-list">
+  <template id="active-template">
+    <ul class="todo-list active-tasks">
+    </ul>
+  </template>
+
+  <template id="done-template">
+    <ul class="todo-list finished-tasks">
     </ul>
   </template>
 
