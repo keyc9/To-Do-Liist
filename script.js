@@ -170,8 +170,10 @@ tabSection.addEventListener("click", (e) => {
 });
 
 //TODO: Tab menu
+let tabClicked;
 const menu = document.getElementById("context-menu");
 tabSection.addEventListener("contextmenu", (e) => {
+tabClicked = e.target;
   const isTab = e.target.classList.contains("tab");
   if (isTab) {
     console.log("contextmenu");
@@ -183,12 +185,12 @@ tabSection.addEventListener("contextmenu", (e) => {
     menu.style.top = `${y}px`;
     menu.style.left = `${x}px`;
     menu.classList.remove("hidden");
-
     // Hide the menu
     const documentClickHandler = function (e) {
       const isClickedOutside = !menu.contains(e.target);
       if (isClickedOutside) {
         menu.classList.add("hidden");
+        tabClicked.children[0].setAttribute("readonly", "readonly");
         document.removeEventListener("click", documentClickHandler);
       }
     };
@@ -200,8 +202,13 @@ menu.addEventListener("click", (e) => {
   const button = e.target.innerHTML;
   if (button == "Редактировать") {
     console.log("edit");
+    tabClicked.children[0].removeAttribute("readonly");
+    tabClicked.children[0].focus();
+    console.log (tabClicked.children[0])
   } else if (button == "Удалить") {
     console.log("delete");
+    tabClicked.remove();
+    menu.classList.add("hidden");
   }
 });
 
