@@ -778,10 +778,10 @@
         }
       }
       show() {
-        (this.isVisible = !0), this.$el.classList.remove("-hidden-");
+        (this.isVisible = !0), this.$el.classList.remove("-_hidden-");
       }
       hide() {
-        (this.isVisible = !1), this.$el.classList.add("-hidden-");
+        (this.isVisible = !1), this.$el.classList.add("-_hidden-");
       }
       destroyCells() {
         this.cells.forEach((e) => e.destroy()),

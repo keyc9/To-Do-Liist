@@ -1,39 +1,52 @@
 //Коллекция узлов
-let list = document.querySelector(".todo-list");
+const list = document.querySelector(".__todo-list");
 let items = list.children;
 //Высплывающие подсказки
-let emptyListMessage = document.querySelector(".empty-tasks");
-let existedTask = document.querySelector(".task-exists");
+const emptyListMessage = document.querySelector(".__notifs__empty-tasks-tasks");
+const existedTask = document.querySelector(".__notifs__task-exists");
 //Элементы формы, для добавления задач
-let newItemForm = document.querySelector(".add-form");
-let newItemTitle = newItemForm.querySelector(".add-form-input");
+const newItemForm = document.querySelector(".task-form");
+const newItemTitle = newItemForm.querySelector(".task-form__input");
 //Темплейты
-let taskTemplate = document.querySelector("#task-template").content;
-let newItemTemplate = taskTemplate.querySelector(".todo-list-item");
-let stickersTemplate = document.querySelector("#stickers-template").content;
-let newStickersTemplate = stickersTemplate.querySelector(".stickers-section");
-let tabTemplate = document.querySelector("#tab-template").content;
-let newTabTemplate = tabTemplate.querySelector(".tab");
-let activeTemplate = document.querySelector("#active-template").content;
-let newActiveTemplate = activeTemplate.querySelector(".todo-list");
-let doneTemplate = document.querySelector("#done-template").content;
-let newDoneTemplate = doneTemplate.querySelector(".todo-list");
+const taskTemplate = document
+  .querySelector("#task-template")
+  .content.querySelector(".__list-item");
+const stickersTemplate = document
+  .querySelector("#stickers-template")
+  .content.querySelector(".active-section__stickers-section");
+const tabTemplate = document
+  .querySelector("#tab-template")
+  .content.querySelector(".tabs-container__tab");
+const activeTemplate = document
+  .querySelector("#active-template")
+  .content.querySelector(".__todo-list");
+const doneTemplate = document
+  .querySelector("#done-template")
+  .content.querySelector(".__todo-list");
+const deleteBtnTemplate = `<button class="active-section__delete-button">
+<svg class="__icon ">
+   <use xlink:href="sprite.svg#delete"></use>
+</svg>
+</button>`;
 
 //Разделы
-let activeSection = document.querySelector(".active-tasks_section");
+const activeSection = document.querySelector(".active-section");
 let activeItems = activeSection.children;
-let doneSection = document.querySelector(".done-tasks_section");
+const doneSection = document.querySelector(".done-tasks_section");
 let doneItems = doneSection.children;
-let tabSection = document.querySelector(".tabs-container");
+const tabSection = document.querySelector(".tabs-container");
 //Элементы
-let importantCheckbox = document.querySelector(".important-button");
-let dateInput = document.getElementById("airdatepicker");
-let datePicker = document.querySelector(".date-picker");
-let timerButton = document.querySelector(".timer-button");
+const importantCheckbox = document.querySelector(
+  ".task-form__important-button"
+);
+const dateInput = document.getElementById("airdatepicker");
+const datePicker = document.querySelector(".date-picker");
+const timerButton = document.querySelector(".task-form__timer-button");
+const timerIcon = timerButton.children[0].children[0];
 let inputValue;
 let dateNow = new Date();
-const colorIcon = document.querySelector(".color-theme");
-const langIcon = document.querySelector(".goblin-theme");
+const colorIcon = document.querySelector(".theme-buttons__color-theme");
+const langIcon = document.querySelector(".theme-buttons__goblin-theme");
 
 function resizeInput(e) {
   e.style.height = 0;
@@ -44,23 +57,23 @@ const tx = document.getElementsByTagName("textarea");
 for (let i = 0; i < tx.length; i++) {
   tx[i].setAttribute(
     "style",
-    "height:" + tx[i].scrollHeight + "px;overflow-y:hidden;"
+    "height:" + tx[i].scrollHeight + "px;overflow-y:_hidden;"
   );
   resizeInput(tx[i]);
 }
 
-let getUserDate = function (data) {
-  let a = data.split(" ");
+const getUserDate = function (data) {
+  const a = data.split(" ");
 
-  let b = a[0].split(".");
+  const b = a[0].split(".");
 
-  let d = b[0];
-  let m = b[1];
-  let y = b[2];
+  const d = b[0];
+  const m = b[1];
+  const y = b[2];
 
-  let c = a[1].split(":");
-  let h = c[0];
-  let mm = c[1];
+  const c = a[1].split(":");
+  const h = c[0];
+  const mm = c[1];
 
   let userDate = new Date();
   userDate.setFullYear(y);
@@ -71,17 +84,17 @@ let getUserDate = function (data) {
   return userDate;
 };
 
-let onSelectEvent = function () {
+const onSelectEvent = function () {
   inputValue = dateInput.value;
   dateNow = new Date();
   if (inputValue != "") {
     if (getUserDate(inputValue) - dateNow > 60000) {
-      timerButton.classList.add("timer_active");
+      timerIcon.setAttribute("xlink:href", "sprite.svg#timer-active");
     } else {
-      timerButton.classList.remove("timer_active");
+      timerIcon.setAttribute("xlink:href", "sprite.svg#timer-inactive");
     }
   } else {
-    timerButton.classList.remove("timer_active");
+    timerIcon.setAttribute("xlink:href", "sprite.svg#timer-inactive");
   }
 };
 
@@ -98,18 +111,18 @@ new AirDatepicker("#airdatepicker", {
 });
 
 //Счетчики задач
-let setCounter = function (counter, array) {
-  let arr = array.children[1].children;
+const setCounter = function (counter, array) {
+  const arr = array.children[1].children;
   let count = 0;
   for (let i = 0; i < arr.length; i++) {
     if (
-      arr[i].classList.contains("active-tasks") &&
-      !arr[i].classList.contains("hidden")
+      arr[i].classList.contains("_active-tasks") &&
+      !arr[i].classList.contains("_hidden")
     ) {
       count = arr[i].children.length;
     } else if (
-      arr[i].classList.contains("finished-tasks") &&
-      !arr[i].classList.contains("hidden")
+      arr[i].classList.contains("_finished-tasks") &&
+      !arr[i].classList.contains("_hidden")
     ) {
       count = arr[i].children.length;
     }
@@ -123,44 +136,75 @@ setCounter(activeCounter, activeSection);
 setCounter(doneCounter, doneSection);
 
 //Сообщение о выполнении всех задач
-let toggleEmptyListMessage = function () {
+const toggleEmptyListMessage = function () {
   if (activeCounter.textContent == "0") {
-    emptyListMessage.classList.remove("hidden");
+    emptyListMessage.classList.remove("_hidden");
   } else {
-    emptyListMessage.classList.add("hidden");
+    emptyListMessage.classList.add("_hidden");
   }
 };
 
 timerButton.onclick = () => {
-  datePicker.classList.toggle("hidden");
+  datePicker.classList.toggle("_hidden");
 };
 
 // !Tabs =============================================================================================================================================================================================
+function resizeTab(x) {
+  let numberOfCharacters = x.value.length;
+  if (numberOfCharacters >= 10) {
+    let length = numberOfCharacters + "ch";
+    x.style.width = length;
+  }
+}
+
+let tabChosen;
+let tabClicked;
+const menu = document.getElementById("context-menu");
+
+// Set the position for menu
+const setTabMenuPosition = function (e) {
+  const rect = tabSection.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  menu.style.top = `${y}px`;
+  menu.style.left = `${x}px`;
+  menu.classList.toggle("_hidden");
+};
+
 tabSection.addEventListener("click", (e) => {
   //Changing between Tabs
-  const isTab = e.target.classList.contains("tab");
+  const isTab = e.target.classList.contains("tabs-container__tab");
   if (isTab) {
-    let tabs = e.target.parentElement.children;
+    tabChosen = e.target;
+    const tabs = e.target.parentElement.children;
     for (i = 0; i < tabs.length; i++) {
-      if (tabs[i].classList.contains("active-tab"))
-        e.target.parentElement.children[i].classList.remove("active-tab");
+      if (tabs[i].classList.contains("_active-tab"))
+        tabs[i].classList.remove("_active-tab");
     }
-    e.target.classList.add("active-tab");
-    let classArray = e.target.classList.value;
-    let key = classArray.match(/list-\w{4,}/);
-    let lists = document.querySelectorAll(".todo-list");
+    e.target.classList.add("_active-tab");
+    const classArray = e.target.classList.value;
+    const key = classArray.match(/_list-\w{4,}/);
+    const lists = document.querySelectorAll(".__todo-list");
     for (let i = 0; i < lists.length; i++) {
       if (lists[i].classList.contains(key)) {
-        lists[i].classList.remove("hidden");
+        lists[i].classList.remove("_hidden");
       } else {
-        lists[i].classList.add("hidden");
+        lists[i].classList.add("_hidden");
       }
     }
+  }
+  const isTabSettings = e.target.classList.contains(
+    "tabs-container__tab-settings"
+  );
+  if (isTabSettings) {
+    tabClicked = e.target.parentNode.parentNode;
+    console.log(menu);
+    setTabMenuPosition(e);
   }
   for (let i = 0; i < tx.length; i++) {
     tx[i].setAttribute(
       "style",
-      "height:" + tx[i].scrollHeight + "px;overflow-y:hidden;"
+      "height:" + tx[i].scrollHeight + "px;overflow-y:_hidden;"
     );
     resizeInput(tx[i]);
   }
@@ -170,166 +214,216 @@ tabSection.addEventListener("click", (e) => {
 });
 
 //TODO: Tab menu
-let tabClicked;
-const menu = document.getElementById("context-menu");
 tabSection.addEventListener("contextmenu", (e) => {
-tabClicked = e.target;
-  const isTab = e.target.classList.contains("tab");
-  if (isTab) {
+  tabClicked = e.target;
+  const isTab = e.target.classList.contains("tabs-container__tab");
+  const mainTab = e.target.classList.contains("_list-main");
+  if (isTab && !mainTab) {
     console.log("contextmenu");
     e.preventDefault();
-    // Set the position for menu
-    const rect = tabSection.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    menu.style.top = `${y}px`;
-    menu.style.left = `${x}px`;
-    menu.classList.remove("hidden");
+    setTabMenuPosition(e);
     // Hide the menu
-    const documentClickHandler = function (e) {
+    const documentOuterClickHandler = function (e) {
       const isClickedOutside = !menu.contains(e.target);
+      console.log(e.target);
       if (isClickedOutside) {
-        menu.classList.add("hidden");
-        tabClicked.children[0].setAttribute("readonly", "readonly");
-        document.removeEventListener("click", documentClickHandler);
+        menu.classList.add("_hidden");
+        document.removeEventListener("click", documentOuterClickHandler);
       }
     };
-    document.addEventListener("click", documentClickHandler);
+    document.addEventListener("click", documentOuterClickHandler);
   }
+
+  e.target.addEventListener("keypress", function (e) {
+    console.log(e.target);
+    if (e.key === "Enter") {
+      e.preventDefault();
+      tabClicked.children[0].setAttribute("readonly", "readonly");
+      tabClicked.id = "";
+      tabChosen.children[0].setAttribute("readonly", "readonly");
+      tabChosen.id = "";
+    }
+  });
 });
 
 menu.addEventListener("click", (e) => {
   const button = e.target.innerHTML;
   if (button == "Редактировать") {
-    console.log("edit");
     tabClicked.children[0].removeAttribute("readonly");
     tabClicked.children[0].focus();
-    console.log (tabClicked.children[0])
+    tabClicked.id = "__tab_isEditting";
   } else if (button == "Удалить") {
     console.log("delete");
     tabClicked.remove();
-    menu.classList.add("hidden");
+    menu.classList.add("_hidden");
   }
 });
 
-const addTab = document.querySelector(".add-tab");
+const addTab = document.querySelector(".tabs-container__add-tab");
 // Add new Tabs
 addTab.addEventListener("click", (e) => {
-  let tab = newTabTemplate.cloneNode(true);
-  let activeList = newActiveTemplate.cloneNode(true);
-  let doneList = newDoneTemplate.cloneNode(true);
+  const tab = tabTemplate.cloneNode(true);
+  const activeList = activeTemplate.cloneNode(true);
+  const doneList = doneTemplate.cloneNode(true);
 
-  let index = tabSection.children.length - 1;
-  let className = `list-new${index}`;
+  const index = tabSection.children.length - 1;
+  const className = `_list-new${index}`;
 
   tabSection.insertBefore(tab, addTab);
   tab.classList.add(className);
-  tab.querySelector(".tab-name").value = "Новый";
-  let notice = activeSection.querySelector("p");
-  activeSection.children[1].insertBefore(activeList, notice);
+  tab.querySelector(".tabs-container__tab-name").value = "Новый";
+  activeSection.children[1].appendChild(activeList);
   activeList.classList.add(className);
+  activeList.classList.add("_hidden");
   doneSection.children[1].appendChild(doneList);
   doneList.classList.add(className);
+  doneList.classList.add("_hidden");
 });
 
 // Удаление задачи
 const container = document.querySelector("main");
 container.addEventListener("click", (e) => {
-  const isRemoveButton = e.target.classList.contains("delete-button");
+  const isRemoveButton = e.target.classList.contains(
+    "active-section__delete-button"
+  );
   if (isRemoveButton) {
-    e.target.parentNode.parentNode.parentNode.remove();
+    const deletePlace = e.target.parentNode;
+    if (deletePlace.classList.contains("active-section__settings-field")) {
+      console.log(e.target.parentNode.parentNode.parentNode);
+      e.target.parentNode.parentNode.parentNode.remove();
+    } else {
+      e.target.parentNode.parentNode.remove();
+      console.log(e.target.parentNode.parentNode);
+    }
     setCounter(activeCounter, activeSection);
     setCounter(doneCounter, doneSection);
+    toggleEmptyListMessage();
   }
 });
 
 //!Manipulating active tasks
 activeSection.addEventListener("click", (e) => {
+  console.log(e.target);
   // Стикеры
   // Show stickers section
-  const isStickerButton = e.target.classList.contains("add-sticker-button");
+  const isStickerButton = e.target.classList.contains(
+    "active-section__sticker-button"
+  );
   if (isStickerButton) {
-    if (e.target.parentElement.nextElementSibling.children.length == 0) {
-      let stickers = newStickersTemplate.cloneNode(true);
-      e.target.parentElement.nextElementSibling.appendChild(stickers);
+    const stickersContainer = e.target.nextElementSibling;
+    if (stickersContainer.children.length == 0) {
+      const stickers = stickersTemplate.cloneNode(true);
+      stickersContainer.appendChild(stickers);
     }
-    e.target.parentNode.nextElementSibling.classList.toggle("hidden");
+    e.target.nextElementSibling.classList.toggle("_hidden");
   }
 
   // Set sticker to the task
-  const isSticker = e.target.classList.contains("sticker_item");
+  const isSticker = e.target.classList.contains(
+    "stickers-container__sticker_item"
+  );
   if (isSticker) {
     const children = e.target.parentElement.children;
     for (let i = 0; i < children.length; i++) {
-      children[i].classList.remove("sticker_item-active");
+      children[i].classList.remove("stickers-container__sticker_item_active");
     }
-    let defaultSticker =
+    const defaultSticker =
       e.target.parentElement.parentElement.previousElementSibling;
-    let swap = e.target.childNodes[1].getAttribute("xlink:href");
+    const swap = e.target.childNodes[1].getAttribute("xlink:href");
     if (
       swap ==
       defaultSticker.childNodes[1].childNodes[1].getAttribute("xlink:href")
     ) {
-      e.target.classList.remove("sticker_item-active");
+      e.target.classList.remove("stickers-container__sticker_item_active");
       defaultSticker.childNodes[1].childNodes[1].setAttribute(
         "xlink:href",
-        "media/stickers/sticker-default.svg#sticker"
+        "sprite.svg#sticker-default"
       );
     } else {
       defaultSticker.childNodes[1].childNodes[1].setAttribute(
         "xlink:href",
         swap
       );
-      e.target.classList.add("sticker_item-active");
+      e.target.classList.add("stickers-container__sticker_item_active");
     }
   }
 
   // Перенос задачи в выполненное
-  const isDoneButton = e.target.classList.contains("done-button");
-  const isEditButton = e.target.classList.contains("edit-button");
+  const isDoneButton = e.target.classList.contains(
+    "active-section__done-button"
+  );
   if (isDoneButton) {
     let insertPlace;
-    let activeList = () => {
-      let a = doneSection.children[1].children;
+    const activeList = () => {
+      const a = doneSection.children[1].children;
       for (let i = 0; i < a.length; i++) {
-        if (!a[i].classList.contains("hidden")) {
+        if (!a[i].classList.contains("_hidden")) {
           insertPlace = a[i];
         }
       }
     };
     activeList();
+    const targetTask = e.target.parentNode.parentNode;
+    insertPlace.appendChild(targetTask);
+    targetTask.classList.remove("__list-item_active-todo");
+    targetTask.classList.add("finished-task");
+    //Show delete btn only
+    const settingsButton = e.target.parentNode.children[4];
+    settingsButton.insertAdjacentHTML("beforebegin", deleteBtnTemplate);
+    settingsButton.remove();
 
-    insertPlace.appendChild(e.target.parentNode.parentNode.parentNode);
-    e.target.parentNode.parentNode.parentNode.classList.remove("active-todo");
-    e.target.parentNode.parentNode.parentNode.classList.add("finished-task");
-    // e.target.remove();
+    //Hide sticker if default
+    const sticker = e.target.parentNode.children[0].children[0];
+    if (
+      sticker.children[0].getAttribute("xlink:href") ==
+      "sprite.svg#sticker-default"
+    ) {
+      sticker.style.color = "transparent";
+    }
+
     setCounter(activeCounter, activeSection);
     setCounter(doneCounter, doneSection);
     toggleEmptyListMessage();
   }
 
   // Редактирование задачи
+  const isSettingsButton = e.target.classList.contains(
+    "active-section__settings-button"
+  );
+  if (isSettingsButton) {
+    e.target.nextElementSibling.classList.toggle("_hidden");
+  }
+
+  const isEditButton = e.target.classList.contains(
+    "active-section__edit-button"
+  );
   if (isEditButton) {
-    const editingField = e.target.parentNode.previousElementSibling.children[0];
-    editingField.addEventListener("input", resizeInput(editingField), false);
-    if (e.target.classList.contains("unclicked")) {
+    let editingField;
+    if (e.target.innerText == "Редактировать") {
+      e.target.parentNode.classList.add("_hidden");
+      editingField =
+        e.target.parentNode.previousElementSibling.previousElementSibling
+          .children[0];
       editingField.removeAttribute("readonly");
       editingField.focus();
-      e.target.classList.remove("unclicked");
-      e.target.classList.add("clicked");
-      e.target.children[0].setAttribute(
+      const button = e.target.parentNode.previousElementSibling;
+      button.children[0].children[0].setAttribute(
         "xlink:href",
-        "media/main-sprite.svg#edit-button_active"
+        "sprite.svg#done-button"
       );
-    } else if (e.target.classList.contains("clicked")) {
+      button.classList.remove("active-section__settings-button");
+      button.classList.add("active-section__edit-button");
+    } else {
+      editingField = e.target.previousElementSibling.children[0];
       editingField.setAttribute("readonly", "readonly");
-      e.target.classList.remove("clicked");
-      e.target.classList.add("unclicked");
-      e.target.children[0].setAttribute(
+      e.target.classList.remove("active-section__edit-button");
+      e.target.classList.add("active-section__settings-button");
+      e.target.children[0].children[0].setAttribute(
         "xlink:href",
-        "media/main-sprite.svg#edit"
+        "sprite.svg#settings-button"
       );
     }
+    editingField.addEventListener("input", resizeInput(editingField), false);
   }
 });
 
@@ -337,26 +431,26 @@ activeSection.addEventListener("click", (e) => {
 newItemForm.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  let taskText = newItemTitle.value;
-  let task = newItemTemplate.cloneNode(true);
-  let taskDescription = task.querySelector("textarea");
+  const taskText = newItemTitle.value;
+  const task = taskTemplate.cloneNode(true);
+  const taskDescription = task.querySelector("textarea");
   taskDescription.value = taskText;
 
   //Проверка на повторы задач
-  let tasksArray = Array.from(list.children).map(
+  const tasksArray = Array.from(list.children).map(
     (child) => child.children[0].children[3].children[0].value
   );
-  let arrayCheck = tasksArray.includes(taskText);
+  const arrayCheck = tasksArray.includes(taskText);
 
   newItemTitle.addEventListener("change", () => {});
 
   if (arrayCheck == true) {
-    existedTask.classList.remove("hidden");
+    existedTask.classList.remove("_hidden");
   } else if (newItemTitle.value == "") {
     // убрать когда строка очищена
-    existedTask.classList.add("hidden");
+    existedTask.classList.add("_hidden");
   } else {
-    existedTask.classList.add("hidden");
+    existedTask.classList.add("_hidden");
 
     // Таймер
     const showDate = task.childNodes[3].childNodes[1];
@@ -368,34 +462,42 @@ newItemForm.addEventListener("submit", function (e) {
       if (userDate - dateNow > 60000) {
         //Расчет разницы и обновление документа
         function updateCountdown() {
-          let innitialDate = new Date(userDate);
+          const innitialDate = new Date(userDate);
 
-          let currentDate = new Date();
-          let delta = (innitialDate - currentDate) / 1000;
+          const currentDate = new Date();
+          const delta = (innitialDate - currentDate) / 1000;
           if (delta < 0) {
             showDate.innerHTML = "Время вышло";
             return;
           }
 
-          let days = Math.floor(delta / 86400);
+          const days = Math.floor(delta / 86400);
           delta -= days * 86400;
 
-          let months = Math.floor(days / 31);
+          const months = Math.floor(days / 31);
           days -= months * 31;
 
-          let hours = Math.floor(delta / 3600) % 24;
+          const hours = Math.floor(delta / 3600) % 24;
           delta -= hours * 3600;
 
-          let minutes = Math.floor(delta / 60) % 60;
+          const minutes = Math.floor(delta / 60) % 60;
           delta -= minutes * 60;
 
-          let seconds = Math.round(delta % 60);
+          const seconds = Math.round(delta % 60);
 
           if (months <= 0) {
             if (days <= 0) {
               if (hours <= 0) {
                 if (seconds <= 0 && minutes <= 0) {
                   showDate.innerHTML = "Время вышло";
+                  const settingsButton = task.querySelector(
+                    ".active-section__settings-button"
+                  );
+                  settingsButton.insertAdjacentHTML(
+                    "beforebegin",
+                    deleteBtnTemplate
+                  );
+                  settingsButton.remove();
                 } else {
                   showDate.innerHTML = `${minutes + 1} мин.`;
                 }
@@ -417,6 +519,8 @@ newItemForm.addEventListener("submit", function (e) {
         }
 
         setInterval(updateCountdown, 1000);
+        task.querySelector(".active-section__settings-button").style.color =
+          "transparent";
       }
     } else {
       showDate.innerHTML = "";
@@ -425,14 +529,14 @@ newItemForm.addEventListener("submit", function (e) {
     //Добавление важной задачи
 
     let insertPlace;
-    let activeList = () => {
-      let a = activeSection.children[1].children;
-      for (let i = 0; i < a.length; i++) {
+    const activeList = () => {
+      const arr = activeSection.children[1].children;
+      for (let i = 0; i < arr.length; i++) {
         if (
-          !a[i].classList.contains("hidden") &&
-          a[i].classList.contains("active-tasks")
+          !arr[i].classList.contains("_hidden") &&
+          arr[i].classList.contains("_active-tasks")
         ) {
-          insertPlace = a[i];
+          insertPlace = arr[i];
         }
       }
     };
@@ -445,6 +549,18 @@ newItemForm.addEventListener("submit", function (e) {
       setCounter(activeCounter, activeSection);
       toggleEmptyListMessage();
       newItemTitle.value = "";
+      //Замена стикера на важное
+      const sticker = task.querySelector(".active-section__sticker-button");
+      console.log(sticker);
+      sticker.insertAdjacentHTML(
+        "beforebegin",
+        `<div class="task-form__important-button __button_inactive">
+        <svg class="__icon">
+          <use xlink:href="sprite.svg#important"></use>
+        </svg>
+        </div>`
+      );
+      sticker.remove();
     } else {
       //Вставка в DOM в конец
       insertPlace.appendChild(task);
@@ -454,9 +570,11 @@ newItemForm.addEventListener("submit", function (e) {
       newItemTitle.value = "";
     }
   }
-  dateInput.value = new Date();
+  AirDatepicker.selectedDates = [new Date()];
+  dateInput.value = "";
+  timerIcon.setAttribute("xlink:href", "sprite.svg#timer-inactive");
   timerButton.classList.remove("timer_active");
-  datePicker.classList.add("hidden");
+  datePicker.classList.add("_hidden");
   importantCheckbox.checked = false;
   resizeInput(taskDescription);
 });
@@ -466,22 +584,16 @@ window.addEventListener("load", () => {});
 
 // TODO themes
 
-let iconRef = colorIcon.children[0].children[0];
+const iconRef = colorIcon.children[0].children[0];
 colorIcon.onclick = () => {
   document.body.classList.toggle("dark-theme");
   if (document.body.classList.contains("dark-theme")) {
     console.log(iconRef);
-    iconRef.setAttribute(
-      "xlink:href",
-      "media/main-sprite.svg#to_light-theme_inactive"
-    );
+    iconRef.setAttribute("xlink:href", "sprite.svg#to_light-theme_inactive");
     colorIcon.classList.add("dark-theme");
   } else {
     console.log(iconRef);
-    iconRef.setAttribute(
-      "xlink:href",
-      "media/main-sprite.svg#to-dark-theme_inactive"
-    );
+    iconRef.setAttribute("xlink:href", "sprite.svg#to-dark-theme_inactive");
     colorIcon.classList.remove("dark-theme");
   }
 };
@@ -489,41 +601,32 @@ colorIcon.onclick = () => {
 // Hover effects
 colorIcon.onmouseover = () => {
   if (colorIcon.classList.contains("dark-theme")) {
-    iconRef.setAttribute(
-      "xlink:href",
-      "media/main-sprite.svg#to_light-theme_active"
-    );
+    iconRef.setAttribute("xlink:href", "sprite.svg#to_light-theme_active");
   } else {
-    iconRef.setAttribute("xlink:href", "media/main-sprite.svg#to_dark_theme");
+    iconRef.setAttribute("xlink:href", "sprite.svg#to_dark_theme");
   }
 };
 
 colorIcon.onmouseout = () => {
   if (colorIcon.classList.contains("dark-theme")) {
-    iconRef.setAttribute(
-      "xlink:href",
-      "media/main-sprite.svg#to_light-theme_inactive"
-    );
+    iconRef.setAttribute("xlink:href", "sprite.svg#to_light-theme_inactive");
   } else {
-    iconRef.setAttribute(
-      "xlink:href",
-      "media/main-sprite.svg#to-dark-theme_inactive"
-    );
+    iconRef.setAttribute("xlink:href", "sprite.svg#to-dark-theme_inactive");
   }
 };
 
-let goblinRef = langIcon.children[1].children[0];
+const goblinRef = langIcon.children[1].children[0];
 langIcon.onmouseover = () => {
-  goblinRef.setAttribute("xlink:href", "media/main-sprite.svg#goblin-active");
+  goblinRef.setAttribute("xlink:href", "sprite.svg#goblin-active");
 };
 
 langIcon.onmouseout = () => {
-  goblinRef.setAttribute("xlink:href", "media/main-sprite.svg#goblin-inactive");
+  goblinRef.setAttribute("xlink:href", "sprite.svg#goblin-inactive");
 };
 
 const langArr = {
   maintab: {
-    ru: "Основной",
+    ru: "Главный",
     gb: "Херня",
   },
 
@@ -531,28 +634,42 @@ const langArr = {
     ru: "Работа",
     gb: "Хуета",
   },
+
+  activecounter: {
+    ru: "Активные задачи:",
+    gb: "Запары:",
+  },
 };
 
+// const langArr = JSON.parse(json);
+
 langIcon.onclick = () => {
-  if (langIcon.children[0].classList == "hidden") {
+  if (langIcon.children[0].classList == "_hidden") {
     console.log("Toggled");
     for (let key in langArr) {
-      let element = document.querySelector(".lang-" + key);
+      const element = document.querySelector("._lang-" + key);
+      console.log(element);
       if (element) {
+        element.value != "underfined"
+          ? (element.value = langArr[key]["gb"])
+          : (element.value = "underfined");
         element.innerHTML = langArr[key]["gb"];
       }
     }
-    langIcon.children[1].classList.add("hidden");
-    langIcon.children[0].classList.remove("hidden");
+    langIcon.children[1].classList.add("_hidden");
+    langIcon.children[0].classList.remove("_hidden");
   } else {
     console.log("Toggled2");
     for (let key in langArr) {
-      let element = document.querySelector(".lang-" + key);
+      const element = document.querySelector("._lang-" + key);
       if (element) {
+        element.value != "underfined"
+          ? (element.value = langArr[key]["ru"])
+          : (element.value = "underfined");
         element.innerHTML = langArr[key]["ru"];
       }
     }
-    langIcon.children[1].classList.remove("hidden");
-    langIcon.children[0].classList.add("hidden");
+    langIcon.children[1].classList.remove("_hidden");
+    langIcon.children[0].classList.add("_hidden");
   }
 };
