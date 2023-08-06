@@ -157,7 +157,7 @@ function resizeTab(x) {
   }
 }
 
-let tabChosen;
+let tabChosen = document.querySelector("._active-tab");
 let tabClicked;
 const menu = document.getElementById("context-menu");
 
@@ -219,13 +219,11 @@ tabSection.addEventListener("contextmenu", (e) => {
   const isTab = e.target.classList.contains("tabs-container__tab");
   const mainTab = e.target.classList.contains("_list-main");
   if (isTab && !mainTab) {
-    console.log("contextmenu");
     e.preventDefault();
     setTabMenuPosition(e);
     // Hide the menu
     const documentOuterClickHandler = function (e) {
       const isClickedOutside = !menu.contains(e.target);
-      console.log(e.target);
       if (isClickedOutside) {
         menu.classList.add("_hidden");
         document.removeEventListener("click", documentOuterClickHandler);
@@ -235,25 +233,26 @@ tabSection.addEventListener("contextmenu", (e) => {
   }
 
   e.target.addEventListener("keypress", function (e) {
-    console.log(e.target);
+    console.log(tabChosen);
+    console.log(tabChosen.children);
     if (e.key === "Enter") {
       e.preventDefault();
-      tabClicked.children[0].setAttribute("readonly", "readonly");
+      tabClicked.children[0].children[0].setAttribute("readonly", "readonly");
       tabClicked.id = "";
-      tabChosen.children[0].setAttribute("readonly", "readonly");
+      tabChosen.children[0].children[0].setAttribute("readonly", "readonly");
       tabChosen.id = "";
     }
   });
 });
 
 menu.addEventListener("click", (e) => {
-  const button = e.target.innerHTML;
+  const button = e.target.innerText;
   if (button == "Редактировать") {
-    tabClicked.children[0].removeAttribute("readonly");
-    tabClicked.children[0].focus();
+    tabClicked.children[0].children[0].removeAttribute("readonly");
+    tabClicked.children[0].children[0].focus();
     tabClicked.id = "__tab_isEditting";
+    menu.classList.add("_hidden");
   } else if (button == "Удалить") {
-    console.log("delete");
     tabClicked.remove();
     menu.classList.add("_hidden");
   }
@@ -273,11 +272,11 @@ addTab.addEventListener("click", (e) => {
   tab.classList.add(className);
   tab.querySelector(".tabs-container__tab-name").value = "Новый";
   activeSection.children[1].appendChild(activeList);
-  activeList.classList.add(className);
-  activeList.classList.add("_hidden");
+  activeList.classList.add(`${className}`, "_hidden");
+  // activeList.classList.add("_hidden");
   doneSection.children[1].appendChild(doneList);
-  doneList.classList.add(className);
-  doneList.classList.add("_hidden");
+  doneList.classList.add(`${className}`, "_hidden");
+  // doneList.classList.add("_hidden");
 });
 
 // Удаление задачи
@@ -365,8 +364,9 @@ activeSection.addEventListener("click", (e) => {
     activeList();
     const targetTask = e.target.parentNode.parentNode;
     insertPlace.appendChild(targetTask);
-    targetTask.classList.remove("__list-item_active-todo");
-    targetTask.classList.add("finished-task");
+    targetTask.classList.replace("__list-item_active-todo", "finished-task");
+    // targetTask.classList.remove("__list-item_active-todo");
+    // targetTask.classList.add("finished-task");
     //Show delete btn only
     const settingsButton = e.target.parentNode.children[4];
     settingsButton.insertAdjacentHTML("beforebegin", deleteBtnTemplate);
@@ -411,13 +411,21 @@ activeSection.addEventListener("click", (e) => {
         "xlink:href",
         "sprite.svg#done-button"
       );
-      button.classList.remove("active-section__settings-button");
-      button.classList.add("active-section__edit-button");
+      button.classList.replace(
+        "active-section__settings-button",
+        "active-section__edit-button"
+      );
+      // button.classList.remove("active-section__settings-button");
+      // button.classList.add("active-section__edit-button");
     } else {
       editingField = e.target.previousElementSibling.children[0];
       editingField.setAttribute("readonly", "readonly");
-      e.target.classList.remove("active-section__edit-button");
-      e.target.classList.add("active-section__settings-button");
+      e.target.classList.replace(
+        "active-section__edit-button",
+        "active-section__settings-button"
+      );
+      // e.target.classList.remove("active-section__edit-button");
+      // e.target.classList.add("active-section__settings-button");
       e.target.children[0].children[0].setAttribute(
         "xlink:href",
         "sprite.svg#settings-button"
@@ -453,12 +461,12 @@ newItemForm.addEventListener("submit", function (e) {
     existedTask.classList.add("_hidden");
 
     // Таймер
+    inputValue = dateInput.value;
+    dateNow = new Date();
+    const userDate = getUserDate(inputValue);
     const showDate = task.childNodes[3].childNodes[1];
-
-    if (inputValue != "") {
-      inputValue = dateInput.value;
-      dateNow = new Date();
-      const userDate = getUserDate(inputValue);
+    console.log(inputValue)
+    if (inputValue != "" && inputValue != userDate) {
       if (userDate - dateNow > 60000) {
         //Расчет разницы и обновление документа
         function updateCountdown() {
@@ -541,6 +549,7 @@ newItemForm.addEventListener("submit", function (e) {
       }
     };
     activeList();
+    console.log(insertPlace);
 
     if (importantCheckbox.checked === true) {
       task.classList.add("important");

@@ -1063,6 +1063,12 @@ body {
   font-size: 1.5rem;
   z-index: 10;
 }
+#context-menu span {
+  font-family: "Comfortaa";
+  font-weight: 300;
+  font-size: 1.5rem;
+  pointer-events: none;
+}
 
 .task-form > .__tasks-container {
   align-items: center;
