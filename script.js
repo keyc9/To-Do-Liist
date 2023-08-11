@@ -63,28 +63,6 @@ for (let i = 0; i < tx.length; i++) {
   resizeInput(tx[i]);
 }
 
-const getUserDate = function (data) {
-  const a = data.split(" ");
-
-  const b = a[0].split(".");
-
-  const d = b[0];
-  const m = b[1];
-  const y = b[2];
-
-  const c = a[1].split(":");
-  const h = c[0];
-  const mm = c[1];
-
-  let userDate = new Date();
-  userDate.setFullYear(y);
-  userDate.setMonth(m - 1);
-  userDate.setDate(d);
-  userDate.setHours(h);
-  userDate.setMinutes(mm);
-  return userDate;
-};
-
 const onSelectEvent = function () {
   inputValue = dateInput.value;
   dateNow = new Date();
@@ -222,7 +200,7 @@ tabSection.addEventListener("click", (e) => {
   toggleEmptyListMessage();
 });
 
-//TODO: Tab menu
+// //TODO: Tab menu
 tabSection.addEventListener("contextmenu", (e) => {
   tabClicked = e.target;
   const isTab = e.target.classList.contains("tabs-container__tab");
@@ -303,7 +281,7 @@ container.addEventListener("click", (e) => {
   }
 });
 
-//!Manipulating active tasks
+// //!Manipulating active tasks
 activeSection.addEventListener("click", (e) => {
   // Стикеры
   // Show stickers section
@@ -488,7 +466,7 @@ newItemForm.addEventListener("submit", function (e) {
     if (inputValue != "") {
       const userDate = getUserDate(inputValue);
       if (userDate - dateNow > 60000 && inputValue != userDate) {
-        //Расчет разницы и обновление документа
+        // Расчет разницы и обновление документа
         function updateCountdown() {
           const innitialDate = new Date(userDate);
 
