@@ -1149,9 +1149,10 @@ body {
   opacity: 50%;
 }
 
-.active-section .__list-container {
-  margin-bottom: 1.5rem;
+.__list-item {
+  margin-bottom: 2rem;
 }
+
 .active-section__sticker-button, .active-section__done-button {
   padding: 1rem 1rem 0 0;
 }
@@ -1277,6 +1278,24 @@ body {
 }
 .__notifs_time {
   color: var(--time-color);
+}
+.__notifs-container {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  margin-left: 6rem;
+  align-items: center;
+  margin-top: -1.25rem;
+}
+.__notifs-sticker {
+  width: 2rem;
+  height: 2rem;
+}
+.__notifs-text {
+  font-family: "Comfortaa";
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding-top: 0.25rem;
 }
 
 .date-picker {

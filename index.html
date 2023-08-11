@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Список дел</title>
   <!-- <link href="style.css" rel="stylesheet" /> -->
   <link href="CSS/style.css" rel="stylesheet" />
@@ -13,12 +14,12 @@
   <div class="theme-buttons">
     <button type="button" class="theme-buttons__color-theme">
       <svg class="__icon">
-        <use xlink:href="sprite.svg#to-dark-theme_inactive"></use>
+        <use xlink:href="media/sprite.svg#to-dark-theme_inactive"></use>
       </svg> </button>
     <button type="button" class="theme-buttons__goblin-theme">
       <span class="_hidden">RU</span>
       <svg class="__icon">
-        <use xlink:href="sprite.svg#goblin-inactive"></use>
+        <use xlink:href="media/sprite.svg#goblin-inactive"></use>
       </svg>
     </button>
   </div>
@@ -30,21 +31,21 @@
   <div class="tabs-container">
     <div class="tabs-container__tab _list-main _active-tab ">
       <div class="tabs-container__tab-flex-container">
-      <input class="tabs-container__tab-name _lang-maintab" value="Главный" type="text" readonly
-        oninput="resizeTab(this)"></input>
+        <input class="tabs-container__tab-name _lang-maintab" value="Главный" type="text" readonly
+          oninput="resizeTab(this)"></input>
       </div>
       <div class="tabs-container__tabs-decoration"></div>
     </div>
 
     <div class="tabs-container__tab _list-work">
       <div class="tabs-container__tab-flex-container">
-      <input class="tabs-container__tab-name  _lang-worktab" value="Работа" type="text" readonly
-        oninput="resizeTab(this)"></input>
+        <input class="tabs-container__tab-name  _lang-worktab" value="Работа" type="text" readonly
+          oninput="resizeTab(this)"></input>
         <button class="tabs-container__tab-settings">
-        <svg class="__icon">
-          <use xlink:href="sprite.svg#settings-mobile"></use>
-        </svg>
-      </button>
+          <svg class="__icon">
+            <use xlink:href="media/sprite.svg#settings-mobile"></use>
+          </svg>
+        </button>
       </div>
       <div class="tabs-container__tabs-decoration"></div>
     </div>
@@ -52,7 +53,7 @@
     <div class="tabs-container__tab tabs-container__add-tab">
       <button>
         <svg class="__icon tabs-container__add-tab-icon">
-          <use xlink:href="sprite.svg#add-tub"></use>
+          <use xlink:href="media/sprite.svg#add-tub"></use>
         </svg>
       </button>
       <div class="tabs-container__tabs-decoration"></div>
@@ -60,7 +61,7 @@
 
     <div id="context-menu" class="_hidden">
       <button class="context-menu__item"><span class="active-section__settings-text">Редактировать</span></butt>
-      <button class="context-menu__item"><span class="active-section__settings-text">Удалить</span></button>
+        <button class="context-menu__item"><span class="active-section__settings-text">Удалить</span></button>
     </div>
   </div>
 
@@ -73,51 +74,50 @@
             <input type="checkbox" id="input-1" class="task-form__important-button" />
             <label for="input-1" class="_checkbox">
               <svg class="__icon">
-                <use class="important-mark" xlink:href="sprite.svg#important"></use>
-                <use class="important-circle" xlink:href="sprite.svg#important-mark"></use>
+                <use class="important-mark" xlink:href="media/sprite.svg#important"></use>
+                <use class="important-circle" xlink:href="media/sprite.svg#important-mark"></use>
               </svg>
             </label>
           </div>
           <button class="task-form__timer-button" type="button">
             <svg class="__icon">
-              <use xlink:href="sprite.svg#timer-inactive"></use>
+              <use xlink:href="media/sprite.svg#timer-inactive"></use>
             </svg>
           </button>
 
           <div class="task-form__text-container">
-            <input class="task-form__input" type="text" aria-label="Описание задачи"
-              placeholder="Поработить мир" required />
+            <input class="task-form__input" type="text" aria-label="Описание задачи" placeholder="Поработить мир"
+              required />
             <div class="tabs-container__tabs-decoration task-form__input-decoration"></div>
           </div>
           <button class="task-form__submit" type="submit">
             <svg class="task-form__submit-circle __icon">
-              <use xlink:href="sprite.svg#submit_circle"></use>
+              <use xlink:href="media/sprite.svg#submit_circle"></use>
             </svg>
             <svg class="task-form__submit-arrow __icon">
-              <use xlink:href="sprite.svg#submit-arrow"></use>
+              <use xlink:href="media/sprite.svg#submit-arrow"></use>
             </svg>
           </button>
         </div>
       </div>
       <div class="date-picker _hidden">
-        <input type="text" inputmode="numeric" id="airdatepicker" value="" readonly oninput="inputEvent" />
+        <input type="text" inputmode="numeric" id="airdatepicker" readonly oninput="inputEvent" />
       </div>
     </form>
 
-    <p class="__notifs __notifs __notifs__task-exists _hidden">Такая задача уже есть, придумай новую.</p>
-
+    <p class="__notifs __notifs__task-exists _hidden">Такая задача уже есть, придумай новую.</p>
     <!-- !------------------------------------>
 
     <section class="active-section">
       <h2 class="__tasks-counter _lang-activecounter">Активные задачи: <span id="active-counter"></span></h2>
       <div class="__tasks-container">
-        <p class="__notifs __notifs__empty-tasks-tasks _hidden">Все задачи выполнены. Новых задач нет.</p>
+        <p class="__notifs __notifs__empty-tasks-tasks _hidden">Ты выполнил все задачи, Молодец! Жду тебя с новыми.</p>
         <ul class="__todo-list _active-tasks _list-main">
           <li class="__list-item __list-item_active-todo">
             <div class="__list-container">
               <button class="active-section__sticker-button">
                 <svg class="__icon">
-                  <use xlink:href="sprite.svg#sticker-default"></use>
+                  <use xlink:href="media/sprite.svg#sticker-default"></use>
                 </svg>
               </button>
               <div class="_hidden stickers-container"></div>
@@ -141,7 +141,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, 
 
               <button class="active-section__settings-button">
                 <svg class="__icon">
-                  <use xlink:href="sprite.svg#settings-button"></use>
+                  <use xlink:href="media/sprite.svg#settings-button"></use>
                 </svg>
               </button>
               <div class="active-section__settings-field _hidden">
@@ -159,15 +159,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, 
             <div class="__list-container">
               <button class="active-section__sticker-button">
                 <svg class="__icon">
-                  <use xlink:href="sprite.svg#sticker-default"></use>
+                  <use xlink:href="media/sprite.svg#sticker-default"></use>
                 </svg>
               </button>
               <div class="stickers-container _hidden"></div>
 
               <button class="active-section__done-button">
                 <svg class="__icon">
-                  <use xlink:href="sprite.svg#done-button_circle"></use>
-                  <use class="active-section__done-button_checkmark" xlink:href="sprite.svg#done-button_tick"></use>
+                  <use xlink:href="media/sprite.svg#done-button_circle"></use>
+                  <use class="active-section__done-button_checkmark" xlink:href="media/sprite.svg#done-button_tick"></use>
                 </svg>
               </button>
 
@@ -178,7 +178,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, 
 
               <button class="active-section__settings-button">
                 <svg class="__icon">
-                  <use xlink:href="sprite.svg#settings-button"></use>
+                  <use xlink:href="media/sprite.svg#settings-button"></use>
                 </svg>
               </button>
               <div class="active-section__settings-field _hidden">
@@ -196,7 +196,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, 
             <div class="__list-container">
               <button class="active-section__sticker-button">
                 <svg class="__icon">
-                  <use xlink:href="sprite.svg#sticker-default"></use>
+                  <use xlink:href="media/sprite.svg#sticker-default"></use>
                 </svg>
               </button>
               <div class="stickers-container _hidden"></div>
@@ -220,7 +220,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, 
 
               <button class="active-section__settings-button">
                 <svg class="__icon">
-                  <use xlink:href="sprite.svg#settings-button"></use>
+                  <use xlink:href="media/sprite.svg#settings-button"></use>
                 </svg>
               </button>
               <div class="active-section__settings-field _hidden">
@@ -240,7 +240,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, 
             <div class="__list-container">
               <button class="active-section__sticker-button">
                 <svg class="__icon">
-                  <use xlink:href="sprite.svg#sticker-default"></use>
+                  <use xlink:href="media/sprite.svg#sticker-default"></use>
                 </svg>
               </button>
               <div class="stickers-container _hidden"></div>
@@ -264,7 +264,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, 
 
               <button class="active-section__settings-button">
                 <svg class="__icon">
-                  <use xlink:href="sprite.svg#settings-button"></use>
+                  <use xlink:href="media/sprite.svg#settings-button"></use>
                 </svg>
               </button>
               <div class="active-section__settings-field _hidden">
@@ -300,10 +300,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, 
       <div class="__list-container">
         <button class="active-section__sticker-button">
           <svg class="__icon">
-            <use xlink:href="sprite.svg#sticker-default"></use>
+            <use xlink:href="media/sprite.svg#sticker-default"></use>
           </svg>
         </button>
-        <div class="_hidden"></div>
 
         <button class="active-section__done-button">
           <svg class="__icon" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -323,10 +322,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, 
 
         <button class="active-section__settings-button">
           <svg class="__icon">
-            <use xlink:href="sprite.svg#settings-button"></use>
+            <use xlink:href="media/sprite.svg#settings-button"></use>
           </svg>
         </button>
-        <div class="active-section__settings-field">
+        <div class="active-section__settings-field _hidden">
           <button class="active-section__edit-button _unclicked">
             <span class="active-section__settings-text">Редактировать</span>
           </button>
@@ -335,8 +334,11 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, 
           </button>
         </div>
       </div>
-      <div class="countdown">
-        <span class="countdown__date"></span>
+      <div class="__notifs_countdown __notifs_time __notifs-container">
+        <svg class="__notifs-sticker">
+          <use xlink:href="media/stickers-sprite.svg#clock"></use>
+        </svg>
+        <span class="__notifs__countdown-date __notifs-text"></span>
       </div>
     </li>
   </template>
@@ -344,109 +346,109 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, 
   <template id="stickers-template">
     <div class="active-section__stickers-section">
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#bandaid"></use>
+        <use xlink:href="media/stickers-sprite.svg#bandaid"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#bicycling"></use>
+        <use xlink:href="media/stickers-sprite.svg#bicycling"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#bone"></use>
+        <use xlink:href="media/stickers-sprite.svg#bone"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#book"></use>
+        <use xlink:href="media/stickers-sprite.svg#book"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#bonfire"></use>
+        <use xlink:href="media/stickers-sprite.svg#bonfire"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#bottle"></use>
+        <use xlink:href="media/stickers-sprite.svg#bottle"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#calendar"></use>
+        <use xlink:href="media/stickers-sprite.svg#calendar"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#call-chat"></use>
+        <use xlink:href="media/stickers-sprite.svg#call-chat"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#camera"></use>
+        <use xlink:href="media/stickers-sprite.svg#camera"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#cart"></use>
+        <use xlink:href="media/stickers-sprite.svg#cart"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#case"></use>
+        <use xlink:href="media/stickers-sprite.svg#case"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#cat"></use>
+        <use xlink:href="media/stickers-sprite.svg#cat"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#clothes"></use>
+        <use xlink:href="media/stickers-sprite.svg#clothes"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#computer"></use>
+        <use xlink:href="media/stickers-sprite.svg#computer"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#confetti"></use>
+        <use xlink:href="media/stickers-sprite.svg#confetti"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#cup"></use>
+        <use xlink:href="media/stickers-sprite.svg#cup"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#dollar"></use>
+        <use xlink:href="media/stickers-sprite.svg#dollar"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#earphones"></use>
+        <use xlink:href="media/stickers-sprite.svg#earphones"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#gamepad"></use>
+        <use xlink:href="media/stickers-sprite.svg#gamepad"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#globe"></use>
+        <use xlink:href="media/stickers-sprite.svg#globe"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#heart"></use>
+        <use xlink:href="media/stickers-sprite.svg#heart"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#home"></use>
+        <use xlink:href="media/stickers-sprite.svg#home"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#letter"></use>
+        <use xlink:href="media/stickers-sprite.svg#letter"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#location"></use>
+        <use xlink:href="media/stickers-sprite.svg#location"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#map"></use>
+        <use xlink:href="media/stickers-sprite.svg#map"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#meditation"></use>
+        <use xlink:href="media/stickers-sprite.svg#meditation"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#photo"></use>
+        <use xlink:href="media/stickers-sprite.svg#photo"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#pills"></use>
+        <use xlink:href="media/stickers-sprite.svg#pills"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#study"></use>
+        <use xlink:href="media/stickers-sprite.svg#study"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#tea"></use>
+        <use xlink:href="media/stickers-sprite.svg#tea"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#tram"></use>
+        <use xlink:href="media/stickers-sprite.svg#tram"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#volleyball"></use>
+        <use xlink:href="media/stickers-sprite.svg#volleyball"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#walking"></use>
+        <use xlink:href="media/stickers-sprite.svg#walking"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#wineglass"></use>
+        <use xlink:href="media/stickers-sprite.svg#wineglass"></use>
       </svg>
       <svg class="stickers-container__sticker_item">
-        <use xlink:href="sprite.svg#workout"></use>
+        <use xlink:href="media/stickers-sprite.svg#workout"></use>
       </svg>
     </div>
   </template>
@@ -461,6 +463,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, 
 
   <template id="active-template">
     <ul class="__todo-list _active-tasks">
+      <p class="__notifs __notifs__new-list">В этом списке пока нет задач, давай это исправим!</p>
     </ul>
   </template>
 

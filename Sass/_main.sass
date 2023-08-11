@@ -258,10 +258,10 @@ body
         opacity: 50%
 
 // Tasks
-.active-section
-    & .__list-container
-        margin-bottom: 1.5rem
+.__list-item
+    margin-bottom: 2rem
 
+.active-section
     &__sticker-button, &__done-button
         padding: 1rem 1rem 0 0
     &__settings-button, &__delete-button, &__edit-button
@@ -356,6 +356,21 @@ body
         color: var(--important-color)
     &_time
         color: var(--time-color)
+    &-container
+        display: flex
+        flex-direction: row
+        gap: .5rem
+        margin-left: 6rem
+        align-items: center
+        margin-top: -1.25rem
+    &-sticker
+        width: 2rem
+        height: 2rem
+    &-text
+        @include config.font(1.5rem, 600)
+        padding-top: .25rem
+
+// Calendar
 
 .date-picker
     position: absolute
@@ -385,3 +400,5 @@ body
     & input, & .tabs-container__tabs-decoration
         color: var(--secondary-color)
         border-color: var(--secondary-color)
+
+

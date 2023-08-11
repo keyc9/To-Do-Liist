@@ -25,9 +25,10 @@ const doneTemplate = document
   .content.querySelector(".__todo-list");
 const deleteBtnTemplate = `<button class="active-section__delete-button">
 <svg class="__icon ">
-   <use xlink:href="sprite.svg#delete"></use>
+   <use xlink:href="media/sprite.svg#delete"></use>
 </svg>
 </button>`;
+const timerEndMessage = "Время выполнения задачи вышло, закончи её скорее!";
 
 //Разделы
 const activeSection = document.querySelector(".active-section");
@@ -89,12 +90,12 @@ const onSelectEvent = function () {
   dateNow = new Date();
   if (inputValue != "") {
     if (getUserDate(inputValue) - dateNow > 60000) {
-      timerIcon.setAttribute("xlink:href", "sprite.svg#timer-active");
+      timerIcon.setAttribute("xlink:href", "media/sprite.svg#timer-active");
     } else {
-      timerIcon.setAttribute("xlink:href", "sprite.svg#timer-inactive");
+      timerIcon.setAttribute("xlink:href", "media/sprite.svg#timer-inactive");
     }
   } else {
-    timerIcon.setAttribute("xlink:href", "sprite.svg#timer-inactive");
+    timerIcon.setAttribute("xlink:href", "media/sprite.svg#timer-inactive");
   }
 };
 
@@ -119,7 +120,11 @@ const setCounter = function (counter, array) {
       arr[i].classList.contains("_active-tasks") &&
       !arr[i].classList.contains("_hidden")
     ) {
-      count = arr[i].children.length;
+      if (arr[i].children.length != 0 && arr[i].children[0].nodeName == "P") {
+        count = 0;
+      } else {
+        count = arr[i].children.length;
+      }
     } else if (
       arr[i].classList.contains("_finished-tasks") &&
       !arr[i].classList.contains("_hidden")
@@ -138,7 +143,12 @@ setCounter(doneCounter, doneSection);
 //Сообщение о выполнении всех задач
 const toggleEmptyListMessage = function () {
   if (activeCounter.textContent == "0") {
-    emptyListMessage.classList.remove("_hidden");
+    const newNotif = document.querySelector(".__notifs__new-list");
+    if (!newNotif) {
+      emptyListMessage.classList.remove("_hidden");
+    } else {
+      emptyListMessage.classList.add("_hidden");
+    }
   } else {
     emptyListMessage.classList.add("_hidden");
   }
@@ -198,7 +208,6 @@ tabSection.addEventListener("click", (e) => {
   );
   if (isTabSettings) {
     tabClicked = e.target.parentNode.parentNode;
-    console.log(menu);
     setTabMenuPosition(e);
   }
   for (let i = 0; i < tx.length; i++) {
@@ -233,8 +242,6 @@ tabSection.addEventListener("contextmenu", (e) => {
   }
 
   e.target.addEventListener("keypress", function (e) {
-    console.log(tabChosen);
-    console.log(tabChosen.children);
     if (e.key === "Enter") {
       e.preventDefault();
       tabClicked.children[0].children[0].setAttribute("readonly", "readonly");
@@ -273,10 +280,8 @@ addTab.addEventListener("click", (e) => {
   tab.querySelector(".tabs-container__tab-name").value = "Новый";
   activeSection.children[1].appendChild(activeList);
   activeList.classList.add(`${className}`, "_hidden");
-  // activeList.classList.add("_hidden");
   doneSection.children[1].appendChild(doneList);
   doneList.classList.add(`${className}`, "_hidden");
-  // doneList.classList.add("_hidden");
 });
 
 // Удаление задачи
@@ -288,11 +293,9 @@ container.addEventListener("click", (e) => {
   if (isRemoveButton) {
     const deletePlace = e.target.parentNode;
     if (deletePlace.classList.contains("active-section__settings-field")) {
-      console.log(e.target.parentNode.parentNode.parentNode);
       e.target.parentNode.parentNode.parentNode.remove();
     } else {
       e.target.parentNode.parentNode.remove();
-      console.log(e.target.parentNode.parentNode);
     }
     setCounter(activeCounter, activeSection);
     setCounter(doneCounter, doneSection);
@@ -302,7 +305,6 @@ container.addEventListener("click", (e) => {
 
 //!Manipulating active tasks
 activeSection.addEventListener("click", (e) => {
-  console.log(e.target);
   // Стикеры
   // Show stickers section
   const isStickerButton = e.target.classList.contains(
@@ -336,7 +338,7 @@ activeSection.addEventListener("click", (e) => {
       e.target.classList.remove("stickers-container__sticker_item_active");
       defaultSticker.childNodes[1].childNodes[1].setAttribute(
         "xlink:href",
-        "sprite.svg#sticker-default"
+        "media/sprite.svg#sticker-default"
       );
     } else {
       defaultSticker.childNodes[1].childNodes[1].setAttribute(
@@ -365,8 +367,26 @@ activeSection.addEventListener("click", (e) => {
     const targetTask = e.target.parentNode.parentNode;
     insertPlace.appendChild(targetTask);
     targetTask.classList.replace("__list-item_active-todo", "finished-task");
-    // targetTask.classList.remove("__list-item_active-todo");
-    // targetTask.classList.add("finished-task");
+    //Show the message for timers
+    const notif = targetTask.children[1];
+    const beforeEndMessage = "А ты умничка, сделал всё в срок!";
+    const afterEndMessage =
+      "Ты выполнил задачу после дедлайна, но молодец, что вообще выполнил.";
+    const beforeEndSticker = "media/stickers-sprite.svg#sucessful-timer";
+    const afterEndSticker = "media/stickers-sprite.svg#timer-after-deadline";
+
+    console.log(notif.children[1].innerHTML)
+
+    if (notif != null && notif.innerHTML == timerEndMessage) {
+      clearInterval(interval)
+      notif.children[1].innerHTML = afterEndMessage;
+      notif.children[0].children[0].setAttribute("xlink:href", afterEndSticker);
+    } else if (notif != null && notif.innerHTML != timerEndMessage) {
+      clearInterval(interval)
+      notif.children[1].innerHTML = beforeEndMessage;
+      notif.children[0].children[0].setAttribute("xlink:href", beforeEndSticker);
+    }
+
     //Show delete btn only
     const settingsButton = e.target.parentNode.children[4];
     settingsButton.insertAdjacentHTML("beforebegin", deleteBtnTemplate);
@@ -376,7 +396,7 @@ activeSection.addEventListener("click", (e) => {
     const sticker = e.target.parentNode.children[0].children[0];
     if (
       sticker.children[0].getAttribute("xlink:href") ==
-      "sprite.svg#sticker-default"
+      "media/sprite.svg#sticker-default"
     ) {
       sticker.style.color = "transparent";
     }
@@ -409,14 +429,12 @@ activeSection.addEventListener("click", (e) => {
       const button = e.target.parentNode.previousElementSibling;
       button.children[0].children[0].setAttribute(
         "xlink:href",
-        "sprite.svg#done-button"
+        "media/sprite.svg#done-button"
       );
       button.classList.replace(
         "active-section__settings-button",
         "active-section__edit-button"
       );
-      // button.classList.remove("active-section__settings-button");
-      // button.classList.add("active-section__edit-button");
     } else {
       editingField = e.target.previousElementSibling.children[0];
       editingField.setAttribute("readonly", "readonly");
@@ -428,7 +446,7 @@ activeSection.addEventListener("click", (e) => {
       // e.target.classList.add("active-section__settings-button");
       e.target.children[0].children[0].setAttribute(
         "xlink:href",
-        "sprite.svg#settings-button"
+        "media/sprite.svg#settings-button"
       );
     }
     editingField.addEventListener("input", resizeInput(editingField), false);
@@ -463,77 +481,85 @@ newItemForm.addEventListener("submit", function (e) {
     // Таймер
     inputValue = dateInput.value;
     dateNow = new Date();
-    const userDate = getUserDate(inputValue);
-    const showDate = task.childNodes[3].childNodes[1];
-    console.log(inputValue)
-    if (inputValue != "" && inputValue != userDate) {
-      if (userDate - dateNow > 60000) {
+    const showDate = task.querySelector(".__notifs_countdown");
+    const showDateText = showDate.children[1];
+    const showDateSticker = showDate.children[0];
+
+    if (inputValue != "") {
+      const userDate = getUserDate(inputValue);
+      if (userDate - dateNow > 60000 && inputValue != userDate) {
         //Расчет разницы и обновление документа
         function updateCountdown() {
           const innitialDate = new Date(userDate);
 
           const currentDate = new Date();
-          const delta = (innitialDate - currentDate) / 1000;
+          let delta = (innitialDate - currentDate) / 1000;
+
           if (delta < 0) {
-            showDate.innerHTML = "Время вышло";
-            return;
-          }
+            showDateText.innerHTML = timerEndMessage;
+            showDateSticker.children[0].setAttribute(
+              "xlink:href",
+              "media/stickers-sprite.svg#deadline"
+            );
+            showDate.classList.replace("__notifs_time", "__notifs_failure");
+            clearInterval(interval);
+          } else {
+            let days = Math.floor(delta / 86400);
+            delta -= days * 86400;
 
-          const days = Math.floor(delta / 86400);
-          delta -= days * 86400;
+            let months = Math.floor(days / 31);
+            days -= months * 31;
 
-          const months = Math.floor(days / 31);
-          days -= months * 31;
+            let hours = Math.floor(delta / 3600) % 24;
+            delta -= hours * 3600;
 
-          const hours = Math.floor(delta / 3600) % 24;
-          delta -= hours * 3600;
+            let minutes = Math.floor(delta / 60) % 60;
+            delta -= minutes * 60;
 
-          const minutes = Math.floor(delta / 60) % 60;
-          delta -= minutes * 60;
+            let seconds = Math.round(delta % 60);
 
-          const seconds = Math.round(delta % 60);
-
-          if (months <= 0) {
-            if (days <= 0) {
-              if (hours <= 0) {
-                if (seconds <= 0 && minutes <= 0) {
-                  showDate.innerHTML = "Время вышло";
-                  const settingsButton = task.querySelector(
-                    ".active-section__settings-button"
-                  );
-                  settingsButton.insertAdjacentHTML(
-                    "beforebegin",
-                    deleteBtnTemplate
-                  );
-                  settingsButton.remove();
+            if (months <= 0) {
+              if (days <= 0) {
+                if (hours <= 0) {
+                  if (seconds <= 0 && minutes <= 0) {
+                    showDateText.innerHTML = timerEndMessage;
+                    const settingsButton = task.querySelector(
+                      ".active-section__settings-button"
+                    );
+                    settingsButton.insertAdjacentHTML(
+                      "beforebegin",
+                      deleteBtnTemplate
+                    );
+                    settingsButton.remove();
+                  } else {
+                    showDateText.innerHTML = `${minutes + 1} мин.`;
+                  }
                 } else {
-                  showDate.innerHTML = `${minutes + 1} мин.`;
+                  showDateText.innerHTML = `${
+                    hours + Math.floor(minutes / 60)
+                  } ч. ${minutes + 1} мин.`;
                 }
               } else {
-                showDate.innerHTML = `${hours + Math.floor(minutes / 60)} ч. ${
-                  minutes + 1
-                } мин.`;
+                showDateText.innerHTML = `${days} д. ${
+                  hours + Math.floor(minutes / 60)
+                } ч. ${minutes + 1} мин.`;
               }
             } else {
-              showDate.innerHTML = `${days} д. ${
+              showDateText.innerHTML = `${months} мес. ${days} д. ${
                 hours + Math.floor(minutes / 60)
               } ч. ${minutes + 1} мин.`;
             }
-          } else {
-            showDate.innerHTML = `${months} мес. ${days} д. ${
-              hours + Math.floor(minutes / 60)
-            } ч. ${minutes + 1} мин.`;
           }
         }
-
-        setInterval(updateCountdown, 1000);
+        let interval = setInterval(updateCountdown, 1000);
         task.querySelector(".active-section__settings-button").style.color =
           "transparent";
+      } else {
+        task.querySelector(".__notifs_countdown").classList.add("_hidden");
       }
     } else {
-      showDate.innerHTML = "";
+      task.querySelector(".__notifs_countdown").classList.add("_hidden");
     }
-
     //Добавление важной задачи
 
     let insertPlace;
@@ -549,23 +575,18 @@ newItemForm.addEventListener("submit", function (e) {
       }
     };
     activeList();
-    console.log(insertPlace);
 
     if (importantCheckbox.checked === true) {
       task.classList.add("important");
       //Вставка в DOM в начало
       insertPlace.insertBefore(task, insertPlace.firstChild);
-      setCounter(activeCounter, activeSection);
-      toggleEmptyListMessage();
-      newItemTitle.value = "";
       //Замена стикера на важное
       const sticker = task.querySelector(".active-section__sticker-button");
-      console.log(sticker);
       sticker.insertAdjacentHTML(
         "beforebegin",
         `<div class="task-form__important-button __button_inactive">
         <svg class="__icon">
-          <use xlink:href="sprite.svg#important"></use>
+          <use xlink:href="media/sprite.svg#important"></use>
         </svg>
         </div>`
       );
@@ -573,15 +594,18 @@ newItemForm.addEventListener("submit", function (e) {
     } else {
       //Вставка в DOM в конец
       insertPlace.appendChild(task);
-      setCounter(activeCounter, activeSection);
-      toggleEmptyListMessage();
-
-      newItemTitle.value = "";
     }
+    const newNotif = insertPlace.querySelector(".__notifs__new-list");
+    if (newNotif) {
+      newNotif.remove();
+    }
+    setCounter(activeCounter, activeSection);
+    toggleEmptyListMessage();
+    newItemTitle.value = "";
   }
   AirDatepicker.selectedDates = [new Date()];
   dateInput.value = "";
-  timerIcon.setAttribute("xlink:href", "sprite.svg#timer-inactive");
+  timerIcon.setAttribute("xlink:href", "media/sprite.svg#timer-inactive");
   timerButton.classList.remove("timer_active");
   datePicker.classList.add("_hidden");
   importantCheckbox.checked = false;
@@ -597,12 +621,16 @@ const iconRef = colorIcon.children[0].children[0];
 colorIcon.onclick = () => {
   document.body.classList.toggle("dark-theme");
   if (document.body.classList.contains("dark-theme")) {
-    console.log(iconRef);
-    iconRef.setAttribute("xlink:href", "sprite.svg#to_light-theme_inactive");
+    iconRef.setAttribute(
+      "xlink:href",
+      "media/sprite.svg#to_light-theme_inactive"
+    );
     colorIcon.classList.add("dark-theme");
   } else {
-    console.log(iconRef);
-    iconRef.setAttribute("xlink:href", "sprite.svg#to-dark-theme_inactive");
+    iconRef.setAttribute(
+      "xlink:href",
+      "media/sprite.svg#to-dark-theme_inactive"
+    );
     colorIcon.classList.remove("dark-theme");
   }
 };
@@ -610,27 +638,36 @@ colorIcon.onclick = () => {
 // Hover effects
 colorIcon.onmouseover = () => {
   if (colorIcon.classList.contains("dark-theme")) {
-    iconRef.setAttribute("xlink:href", "sprite.svg#to_light-theme_active");
+    iconRef.setAttribute(
+      "xlink:href",
+      "media/sprite.svg#to_light-theme_active"
+    );
   } else {
-    iconRef.setAttribute("xlink:href", "sprite.svg#to_dark_theme");
+    iconRef.setAttribute("xlink:href", "media/sprite.svg#to_dark_theme");
   }
 };
 
 colorIcon.onmouseout = () => {
   if (colorIcon.classList.contains("dark-theme")) {
-    iconRef.setAttribute("xlink:href", "sprite.svg#to_light-theme_inactive");
+    iconRef.setAttribute(
+      "xlink:href",
+      "media/sprite.svg#to_light-theme_inactive"
+    );
   } else {
-    iconRef.setAttribute("xlink:href", "sprite.svg#to-dark-theme_inactive");
+    iconRef.setAttribute(
+      "xlink:href",
+      "media/sprite.svg#to-dark-theme_inactive"
+    );
   }
 };
 
 const goblinRef = langIcon.children[1].children[0];
 langIcon.onmouseover = () => {
-  goblinRef.setAttribute("xlink:href", "sprite.svg#goblin-active");
+  goblinRef.setAttribute("xlink:href", "media/sprite.svg#goblin-active");
 };
 
 langIcon.onmouseout = () => {
-  goblinRef.setAttribute("xlink:href", "sprite.svg#goblin-inactive");
+  goblinRef.setAttribute("xlink:href", "media/sprite.svg#goblin-inactive");
 };
 
 const langArr = {
@@ -654,10 +691,8 @@ const langArr = {
 
 langIcon.onclick = () => {
   if (langIcon.children[0].classList == "_hidden") {
-    console.log("Toggled");
     for (let key in langArr) {
       const element = document.querySelector("._lang-" + key);
-      console.log(element);
       if (element) {
         element.value != "underfined"
           ? (element.value = langArr[key]["gb"])
@@ -668,7 +703,6 @@ langIcon.onclick = () => {
     langIcon.children[1].classList.add("_hidden");
     langIcon.children[0].classList.remove("_hidden");
   } else {
-    console.log("Toggled2");
     for (let key in langArr) {
       const element = document.querySelector("._lang-" + key);
       if (element) {
