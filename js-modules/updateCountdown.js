@@ -1,8 +1,17 @@
-const updateCountdown = () => {
-    const innitialDate = new Date(userDate);
+import getUserDate from "./getUserDate.js";
+
+const updateCountdown = (userDate, elem) => {
+  const inputValue = document.getElementById("airdatepicker").value;
+  // const userDate = getUserDate(inputValue);
+  const innitialDate = new Date(userDate);
 
     const currentDate = new Date();
     let delta = (innitialDate - currentDate) / 1000;
+
+    const task = elem;
+    const showDate = task.querySelector(".__notifs_countdown");
+    const showDateText = showDate.children[1];
+    const showDateSticker = showDate.children[0];
 
     if (delta < 0) {
       showDateText.innerHTML = timerEndMessage;
@@ -11,7 +20,8 @@ const updateCountdown = () => {
         "media/stickers-sprite.svg#deadline"
       );
       showDate.classList.replace("__notifs_time", "__notifs_failure");
-      clearInterval(interval);
+      // clearInterval(interval);
+      console.log("interval cleared")
     } else {
       let days = Math.floor(delta / 86400);
       delta -= days * 86400;
@@ -35,6 +45,11 @@ const updateCountdown = () => {
               const settingsButton = task.querySelector(
                 ".active-section__settings-button"
               );
+              const deleteBtnTemplate = `<button class="active-section__delete-button">
+<svg class="__icon ">
+   <use xlink:href="media/sprite.svg#delete"></use>
+</svg>
+</button>`;
               settingsButton.insertAdjacentHTML(
                 "beforebegin",
                 deleteBtnTemplate
@@ -60,7 +75,5 @@ const updateCountdown = () => {
       }
     }
   };
-
-updateCountdown();
 
 export default updateCountdown;

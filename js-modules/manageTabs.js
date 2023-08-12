@@ -1,17 +1,22 @@
-import setCounter from "js-modules/./setCounter";
-import toggleEmptyListMessage from "js-modules/toggleEmptyListMessage.js";
-import resizeInput from "js-modules/resizeInput.js";
+import setCounter from "./setCounter.js";
+import toggleEmptyListMessage from "./toggleEmptyListMessage.js";
+import resizeInput from "./resizeInput.js";
 
 const manageTabs = () => {
   
 
-function resizeTab(x) {
+  function resizeTab(x) {
     let numberOfCharacters = x.value.length;
     if (numberOfCharacters >= 10) {
       let length = numberOfCharacters + "ch";
       x.style.width = length;
     }
-  }
+  } 
+
+  const activeSection = document.querySelector(".active-section");
+  const activeCounter = document.getElementById("active-counter");
+  const doneSection = document.querySelector(".done-tasks_section");
+  const doneCounter = document.getElementById("done-counter");
   
   let tabChosen = document.querySelector("._active-tab");
   let tabClicked;
@@ -34,7 +39,7 @@ function resizeTab(x) {
     if (isTab) {
       tabChosen = e.target;
       const tabs = e.target.parentElement.children;
-      for (i = 0; i < tabs.length; i++) {
+      for (let i = 0; i < tabs.length; i++) {
         if (tabs[i].classList.contains("_active-tab"))
           tabs[i].classList.remove("_active-tab");
       }
@@ -57,6 +62,8 @@ function resizeTab(x) {
       tabClicked = e.target.parentNode.parentNode;
       setTabMenuPosition(e);
     }
+
+  const tx = document.getElementsByTagName("textarea");
     for (let i = 0; i < tx.length; i++) {
       tx[i].setAttribute(
         "style",
@@ -64,6 +71,7 @@ function resizeTab(x) {
       );
       resizeInput(tx[i]);
     }
+
     setCounter(activeCounter, activeSection);
     setCounter(doneCounter, doneSection);
     toggleEmptyListMessage();
@@ -114,6 +122,16 @@ function resizeTab(x) {
   
   const addTab = document.querySelector(".tabs-container__add-tab");
   // Add new Tabs
+  const tabTemplate = document
+  .querySelector("#tab-template")
+  .content.querySelector(".tabs-container__tab");
+  const activeTemplate = document
+  .querySelector("#active-template")
+  .content.querySelector(".__todo-list");
+const doneTemplate = document
+  .querySelector("#done-template")
+  .content.querySelector(".__todo-list");
+
   addTab.addEventListener("click", (e) => {
     const tab = tabTemplate.cloneNode(true);
     const activeList = activeTemplate.cloneNode(true);

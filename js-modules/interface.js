@@ -1,6 +1,6 @@
-  import resizeInput from "js-modules/resizeInput.js";
-  import getUserDate from "js-modules/getUserDate.js";
-  import setCounter from "js-modules/./setCounter";
+  import resizeInput from "./resizeInput.js";
+  import getUserDate from "./getUserDate.js";
+  import setCounter from "./setCounter.js";
   
   //Input resize
   const tx = document.getElementsByTagName("textarea");
@@ -13,7 +13,9 @@
   }
 
   //Tasks counter initialization
+  const activeSection = document.querySelector(".active-section");
   const activeCounter = document.getElementById("active-counter");
+  const doneSection = document.querySelector(".done-tasks_section");
   const doneCounter = document.getElementById("done-counter");
   setCounter(activeCounter, activeSection);
   setCounter(doneCounter, doneSection);

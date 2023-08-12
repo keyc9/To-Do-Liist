@@ -1,6 +1,6 @@
-import setCounter from "js-modules/./setCounter";
-import toggleEmptyListMessage from "js-modules/toggleEmptyListMessage.js";
-import resizeInput from "js-modules/resizeInput.js";
+import setCounter from "./setCounter.js";
+import toggleEmptyListMessage from "./toggleEmptyListMessage.js";
+import resizeInput from "./resizeInput.js";
 
 const manageTasks = () => {
     //TODO: is needed?
@@ -22,6 +22,7 @@ const manageTasks = () => {
             } else {
                 e.target.parentNode.parentNode.remove();
             }
+
             setCounter(activeCounter, activeSection);
             setCounter(doneCounter, doneSection);
             toggleEmptyListMessage();
@@ -31,6 +32,10 @@ const manageTasks = () => {
     activeSection.addEventListener("click", (e) => {
         // !Стикеры
         // Show stickers section
+        const stickersTemplate = document
+  .querySelector("#stickers-template")
+  .content.querySelector(".active-section__stickers-section");
+
         const isStickerButton = e.target.classList.contains(
             "active-section__sticker-button"
         );
@@ -102,25 +107,31 @@ const manageTasks = () => {
             console.log(notif.children[1].innerHTML);
 
             //TODO: Clearing interval
-            if (notif != null && notif.innerHTML == timerEndMessage) {
-                clearInterval(interval);
-                notif.children[1].innerHTML = afterEndMessage;
-                notif.children[0].children[0].setAttribute(
-                    "xlink:href",
-                    afterEndSticker
-                );
-            } else if (notif != null && notif.innerHTML != timerEndMessage) {
-                clearInterval(interval);
-                notif.children[1].innerHTML = beforeEndMessage;
-                notif.children[0].children[0].setAttribute(
-                    "xlink:href",
-                    beforeEndSticker
-                );
-            }
+            // if (notif != null && notif.innerHTML == timerEndMessage) {
+            //     clearInterval(interval);
+            //     notif.children[1].innerHTML = afterEndMessage;
+            //     notif.children[0].children[0].setAttribute(
+            //         "xlink:href",
+            //         afterEndSticker
+            //     );
+            // } else if (notif != null && notif.innerHTML != timerEndMessage) {
+            //     clearInterval(interval);
+            //     notif.children[1].innerHTML = beforeEndMessage;
+            //     notif.children[0].children[0].setAttribute(
+            //         "xlink:href",
+            //         beforeEndSticker
+            //     );
+            // }
 
             //! Changing icons
             //Show delete btn only
             const settingsButton = e.target.parentNode.children[4];
+            const deleteBtnTemplate = `<button class="active-section__delete-button">
+<svg class="__icon ">
+   <use xlink:href="media/sprite.svg#delete"></use>
+</svg>
+</button>`;
+
             settingsButton.insertAdjacentHTML("beforebegin", deleteBtnTemplate);
             settingsButton.remove();
 
