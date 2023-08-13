@@ -4,8 +4,11 @@ import setCounter from "./setCounter.js";
 import toggleEmptyListMessage from "./toggleEmptyListMessage.js";
 import updateCountdown from "./updateCountdown.js";
 
-const addTask = () => {
+const addTask = () => { 
   const newItemForm = document.querySelector(".task-form");
+
+  newItemForm.addEventListener("submit", function (e) {
+    e.preventDefault();
   const importantCheckbox = document.querySelector(
     ".task-form__important-button"
   );
@@ -18,9 +21,6 @@ const addTask = () => {
     const task = taskTemplate.cloneNode(true);
     const taskDescription = task.querySelector("textarea");
     taskDescription.value = taskText;
-  newItemForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-  
     //Проверка на повторы задач
     const list = document.querySelector(".__todo-list");
     const tasksArray = Array.from(list.children).map(
@@ -48,9 +48,10 @@ const addTask = () => {
 
       if (inputValue != "") {
         const userDate = getUserDate(inputValue);
-        if (userDate - dateNow > 60000 && inputValue != userDate) {
-          let interval = setInterval(updateCountdown, 1000);
-          updateCountdown(userDate, task);
+        if (userDate - dateNow > 60000 && inputValue != userDate) {  
+
+          let interval = setInterval(updateCountdown, 1000, userDate, task, showDate, showDateText, showDateSticker); 
+
           console.log("interval set")
           task.querySelector(".active-section__settings-button").style.color =
             "transparent";

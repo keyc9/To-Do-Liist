@@ -1,27 +1,22 @@
 import getUserDate from "./getUserDate.js";
 
-const updateCountdown = (userDate, elem) => {
-  const inputValue = document.getElementById("airdatepicker").value;
-  // const userDate = getUserDate(inputValue);
+const updateCountdown = (userDate, task, showDate, showDateText, showDateSticker) => {
   const innitialDate = new Date(userDate);
 
     const currentDate = new Date();
     let delta = (innitialDate - currentDate) / 1000;
 
-    const task = elem;
-    const showDate = task.querySelector(".__notifs_countdown");
-    const showDateText = showDate.children[1];
-    const showDateSticker = showDate.children[0];
 
     if (delta < 0) {
+      const timerEndMessage = "Время выполнения задачи вышло, закончи её скорее!";
+
       showDateText.innerHTML = timerEndMessage;
       showDateSticker.children[0].setAttribute(
         "xlink:href",
         "media/stickers-sprite.svg#deadline"
       );
       showDate.classList.replace("__notifs_time", "__notifs_failure");
-      // clearInterval(interval);
-      console.log("interval cleared")
+      showDateText.remove();
     } else {
       let days = Math.floor(delta / 86400);
       delta -= days * 86400;
