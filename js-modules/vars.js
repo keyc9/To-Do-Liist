@@ -12,3 +12,5 @@ export const notifNode = `
 <span class="__notifs__countdown-date __notifs-text"></span>
 
 `
+
+export let interval;

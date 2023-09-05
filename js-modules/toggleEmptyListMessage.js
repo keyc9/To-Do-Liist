@@ -1,5 +1,5 @@
 const toggleEmptyListMessage = () => {
-    const emptyListMessage = document.querySelector(".__notifs__empty-tasks-tasks");
+    const emptyListMessage = document.querySelector(".__notifs__empty-tasks");
   const activeCounter = document.getElementById("active-counter");
 
     if (activeCounter.textContent == "0") {

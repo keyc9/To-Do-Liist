@@ -5,7 +5,7 @@ import manageTabs from "./manageTabs.js";
 import manageTasks from "./manageTasks.js";
 import resizeText from "./resizeText.js";
 import setCounter from "./setCounter.js";
-import updateCountdown from "./updateCountdown.js";
+// import updateCountdown from "./updateCountdown.js";
 import toggleEmptyListMessage from "./toggleEmptyListMessage.js";
 
 resizeText();

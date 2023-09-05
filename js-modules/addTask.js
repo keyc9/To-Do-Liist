@@ -2,17 +2,17 @@ import resizeInput from "./resizeInput.js";
 import getUserDate from "./getUserDate.js";
 import setCounter from "./setCounter.js";
 import toggleEmptyListMessage from "./toggleEmptyListMessage.js";
-import updateCountdown from "./updateCountdown.js";
+import {updateCountdown} from "./updateCountdown.js";
 
-const addTask = () => { 
+const addTask = () => {
   const newItemForm = document.querySelector(".task-form");
 
   newItemForm.addEventListener("submit", function (e) {
     e.preventDefault();
-  const importantCheckbox = document.querySelector(
-    ".task-form__important-button"
-  );
-  const newItemTitle = newItemForm.querySelector(".task-form__input");
+    const importantCheckbox = document.querySelector(
+      ".task-form__important-button"
+    );
+    const newItemTitle = newItemForm.querySelector(".task-form__input");
     const taskTemplate = document
       .querySelector("#task-template")
       .content.querySelector(".__list-item");
@@ -42,17 +42,18 @@ const addTask = () => {
       const dateInput = document.getElementById("airdatepicker");
       let inputValue = dateInput.value;
       let dateNow = new Date();
-      const showDate = task.querySelector(".__notifs_countdown");
-      const showDateText = showDate.children[1];
-      const showDateSticker = showDate.children[0];
+      let showDate = task.querySelector(".__notifs_countdown");
 
       if (inputValue != "") {
         const userDate = getUserDate(inputValue);
-        if (userDate - dateNow > 60000 && inputValue != userDate) {  
+        if (userDate - dateNow > 60000 && inputValue != userDate) {
+          updateCountdown(
+            userDate,
+            task,
+            showDate
+          );
 
-          let interval = setInterval(updateCountdown, 1000, userDate, task, showDate, showDateText, showDateSticker); 
-
-          console.log("interval set")
+          console.log("interval set");
           task.querySelector(".active-section__settings-button").style.color =
             "transparent";
         } else {
@@ -102,7 +103,7 @@ const addTask = () => {
         newNotif.remove();
       }
       const activeSection = document.querySelector(".active-section");
-  const activeCounter = document.getElementById("active-counter");
+      const activeCounter = document.getElementById("active-counter");
       setCounter(activeCounter, activeSection);
       toggleEmptyListMessage();
       newItemTitle.value = "";

@@ -1,6 +1,8 @@
 import setCounter from "./setCounter.js";
 import toggleEmptyListMessage from "./toggleEmptyListMessage.js";
 import resizeInput from "./resizeInput.js";
+// import {updateCountdown, interval} from "./updateCountdown.js";
+import {timerEndMessage, beforeEndMessage, afterEndMessage} from "./vars.js";
 
 const manageTasks = () => {
     //TODO: is needed?
@@ -93,39 +95,42 @@ const manageTasks = () => {
                 }
             };
             activeList();
-            const targetTask = e.target.parentNode.parentNode;
+            const targetTask = e.target.parentNode.parentNode; 
+                       console.dir(targetTask)
+
+            // console.dir(e.target.parentNode.parentNode)
             insertPlace.appendChild(targetTask);
             targetTask.classList.replace("__list-item_active-todo", "finished-task");
             //Show the message for timers
             const notif = targetTask.children[1];
-            const beforeEndMessage = "А ты умничка, сделал всё в срок!";
-            const afterEndMessage =
-                "Ты выполнил задачу после дедлайна, но молодец, что вообще выполнил.";
+
             const beforeEndSticker = "media/stickers-sprite.svg#sucessful-timer";
             const afterEndSticker = "media/stickers-sprite.svg#timer-after-deadline";
 
-            console.log(notif.children[1].innerHTML);
-
             //TODO: Clearing interval
-            // if (notif != null && notif.innerHTML == timerEndMessage) {
-            //     clearInterval(interval);
-            //     notif.children[1].innerHTML = afterEndMessage;
-            //     notif.children[0].children[0].setAttribute(
-            //         "xlink:href",
-            //         afterEndSticker
-            //     );
-            // } else if (notif != null && notif.innerHTML != timerEndMessage) {
-            //     clearInterval(interval);
-            //     notif.children[1].innerHTML = beforeEndMessage;
-            //     notif.children[0].children[0].setAttribute(
-            //         "xlink:href",
-            //         beforeEndSticker
-            //     );
-            // }
+            let timerEnd = document.createElement("span");
+            timerEnd.classList.add("__notifs__countdown-date", "__notifs-text");
+
+            if (notif != null && notif.children[1].innerHTML == timerEndMessage) {
+                console.log("we are here")
+                notif.children[1].innerHTML = afterEndMessage;
+                notif.classList.replace("__notifs_failure", "__notifs_success-after-timer");
+                notif.children[0].children[0].setAttribute(
+                    "xlink:href",
+                    afterEndSticker
+                );
+            } else if (notif != null && notif.children[1].innerHTML != timerEndMessage) {
+                notif.children[1].innerHTML = beforeEndMessage;
+                notif.classList.replace("__notifs_time", "__notifs_success");
+                notif.children[0].children[0].setAttribute(
+                    "xlink:href",
+                    beforeEndSticker
+                );
+            }
 
             //! Changing icons
             //Show delete btn only
-            const settingsButton = e.target.parentNode.children[4];
+            const settingsButton = e.target.parentNode.children[3];
             const deleteBtnTemplate = `<button class="active-section__delete-button">
 <svg class="__icon ">
    <use xlink:href="media/sprite.svg#delete"></use>

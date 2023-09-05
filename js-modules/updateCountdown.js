@@ -1,23 +1,25 @@
-import getUserDate from "./getUserDate.js";
-
-const updateCountdown = (userDate, task, showDate, showDateText, showDateSticker) => {
-  const innitialDate = new Date(userDate);
-
+import { timerEndMessage, beforeEndMessage } from "./vars.js";
+export function updateCountdown(userDate, task, showDate) {
+  let interval = setInterval(function () {
+    const innitialDate = new Date(userDate);
     const currentDate = new Date();
+    const showDateText = showDate.children[1];
+    const showDateSticker = showDate.children[0];
     let delta = (innitialDate - currentDate) / 1000;
 
-
     if (delta < 0) {
-      const timerEndMessage = "Время выполнения задачи вышло, закончи её скорее!";
-
+      console.log("я в дельте ниже 0");
       showDateText.innerHTML = timerEndMessage;
       showDateSticker.children[0].setAttribute(
         "xlink:href",
         "media/stickers-sprite.svg#deadline"
       );
       showDate.classList.replace("__notifs_time", "__notifs_failure");
-      showDateText.remove();
+      clearInterval(interval);
+    } else if (showDateText.innerHTML == beforeEndMessage) {
+      clearInterval(interval);
     } else {
+      console.log("я в подсчетах");
       let days = Math.floor(delta / 86400);
       delta -= days * 86400;
 
@@ -36,7 +38,16 @@ const updateCountdown = (userDate, task, showDate, showDateText, showDateSticker
         if (days <= 0) {
           if (hours <= 0) {
             if (seconds <= 0 && minutes <= 0) {
+              //! is needed?
+              console.log("я в жопке");
               showDateText.innerHTML = timerEndMessage;
+              showDateSticker.children[0].setAttribute(
+                "xlink:href",
+                "media/stickers-sprite.svg#deadline"
+              );
+              showDate.classList.replace("__notifs_time", "__notifs_failure");
+              clearInterval(interval);
+
               const settingsButton = task.querySelector(
                 ".active-section__settings-button"
               );
@@ -54,9 +65,9 @@ const updateCountdown = (userDate, task, showDate, showDateText, showDateSticker
               showDateText.innerHTML = `${minutes + 1} мин.`;
             }
           } else {
-            showDateText.innerHTML = `${
-              hours + Math.floor(minutes / 60)
-            } ч. ${minutes + 1} мин.`;
+            showDateText.innerHTML = `${hours + Math.floor(minutes / 60)} ч. ${
+              minutes + 1
+            } мин.`;
           }
         } else {
           showDateText.innerHTML = `${days} д. ${
@@ -69,6 +80,8 @@ const updateCountdown = (userDate, task, showDate, showDateText, showDateSticker
         } ч. ${minutes + 1} мин.`;
       }
     }
-  };
+  }, 1000);
+  // return interval;
+}
 
-export default updateCountdown;
+// export {interval}
