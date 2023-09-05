@@ -8,6 +8,7 @@
     --important-color: #{colortheme.$important-color}
     --time-color: #{colortheme.$time-color}
     --done-color: #{colortheme.$done-color}
+    --done-after-timer: #{colortheme.$done-after-timer}
     --calendar-highlight: #{colortheme.$calendar-highlight}
     --calendar-hover: #{colortheme.$calendar-hover}
     --calendar-non-active: #{colortheme.$calendar-non-active}
@@ -350,8 +351,15 @@ body
 
 .__notifs
     @include config.font(1.5rem, 600)
+    &_countdown 
+    padding-lef: 3rem
+    width: 26rem
+    line-height: 2rem
+    word-break: break-all
     &_success
         color: var(--done-color)
+    &_success-after-timer
+        color: var(--done-after-timer)
     &_failure
         color: var(--important-color)
     &_time
@@ -366,6 +374,7 @@ body
     &-sticker
         width: 2rem
         height: 2rem
+        display: none
     &-text
         @include config.font(1.5rem, 600)
         padding-top: .25rem
@@ -400,5 +409,4 @@ body
     & input, & .tabs-container__tabs-decoration
         color: var(--secondary-color)
         border-color: var(--secondary-color)
-
 

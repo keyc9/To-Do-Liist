@@ -849,6 +849,7 @@
   --important-color: #ff2424;
   --time-color: #f2762e;
   --done-color: #347318;
+  --done-after-timer: #347318;
   --calendar-highlight: #7d7c7c;
   --calendar-hover: #f0f0f0;
   --calendar-non-active: #262626;
@@ -1269,9 +1270,16 @@ body {
   font-family: "Comfortaa";
   font-size: 1.5rem;
   font-weight: 600;
+  padding-lef: 3rem;
+  width: 26rem;
+  line-height: 2rem;
+  word-break: break-all;
 }
 .__notifs_success {
   color: var(--done-color);
+}
+.__notifs_success-after-timer {
+  color: var(--done-after-timer);
 }
 .__notifs_failure {
   color: var(--important-color);
@@ -1290,6 +1298,7 @@ body {
 .__notifs-sticker {
   width: 2rem;
   height: 2rem;
+  display: none;
 }
 .__notifs-text {
   font-family: "Comfortaa";
