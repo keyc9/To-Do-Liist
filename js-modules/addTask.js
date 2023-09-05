@@ -2,7 +2,7 @@ import resizeInput from "./resizeInput.js";
 import getUserDate from "./getUserDate.js";
 import setCounter from "./setCounter.js";
 import toggleEmptyListMessage from "./toggleEmptyListMessage.js";
-import updateCountdown from "./updateCountdown.js";
+import {updateCountdown} from "./updateCountdown.js";
 
 const addTask = () => { 
   const newItemForm = document.querySelector(".task-form");
@@ -43,14 +43,15 @@ const addTask = () => {
       let inputValue = dateInput.value;
       let dateNow = new Date();
       const showDate = task.querySelector(".__notifs_countdown");
-      const showDateText = showDate.children[1];
-      const showDateSticker = showDate.children[0];
 
       if (inputValue != "") {
         const userDate = getUserDate(inputValue);
-        if (userDate - dateNow > 60000 && inputValue != userDate) {  
-
-          let interval = setInterval(updateCountdown, 1000, userDate, task, showDate, showDateText, showDateSticker); 
+        if (userDate - dateNow > 60000 && inputValue != userDate) {
+          updateCountdown(
+            userDate,
+            task,
+            showDate
+          );
 
           console.log("interval set")
           task.querySelector(".active-section__settings-button").style.color =
