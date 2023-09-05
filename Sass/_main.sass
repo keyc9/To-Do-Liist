@@ -113,6 +113,7 @@ body
     float: none
     left: -2.875rem
     z-index: -5
+    opacity: 20%
 
     &__text
     @include config.title(20rem)
@@ -182,17 +183,14 @@ body
 
 #context-menu
     @include config.contextmenu
-    span
-        font-family: config.$main-font
-        font-weight: 300
-        font-size: 1.5rem
-        pointer-events: none
 
 // Form
 .task-form
     & > .__tasks-container
         align-items: center
         margin-top: 3rem
+        & > .__list-container
+            align-items: center
 
     &__submit
         position: relative
@@ -223,7 +221,7 @@ body
             background-color: var(--important-color)
 
     &__timer-button
-        padding: 0 1rem 1rem 0
+        padding: 0.2rem 1rem 1rem 0
         & .__icon
             color: var(--time-color)
         &:hover .__icon
@@ -316,8 +314,7 @@ body
         line-height: 3rem
         position: relative
         text-align: start
-        margin: 0 0 0 .5rem
-        padding-left: 1rem
+        padding-left: 0.5rem
         @include config.font(2rem, 400)
         @include config.gradient
 
@@ -352,10 +349,11 @@ body
 .__notifs
     @include config.font(1.5rem, 600)
     &_countdown 
-    padding-lef: 3rem
-    width: 26rem
-    line-height: 2rem
-    word-break: break-all
+        max-width: 232px
+        padding-left: 0.5rem
+        padding-top: 0.5rem
+        line-height: 2rem
+        word-break: break
     &_success
         color: var(--done-color)
     &_success-after-timer
