@@ -3,15 +3,6 @@ import toggleEmptyListMessage from "./toggleEmptyListMessage.js";
 import resizeInput from "./resizeInput.js";
 
 const manageTabs = () => {
-  
-
-  function resizeTab(x) {
-    let numberOfCharacters = x.value.length;
-    if (numberOfCharacters >= 10) {
-      let length = numberOfCharacters + "ch";
-      x.style.width = length;
-    }
-  } 
 
   const activeSection = document.querySelector(".active-section");
   const activeCounter = document.getElementById("active-counter");
@@ -80,6 +71,7 @@ const manageTabs = () => {
   //TODO: Tab menu
   tabSection.addEventListener("contextmenu", (e) => {
     tabClicked = e.target;
+    console.dir(e.target)
     const isTab = e.target.classList.contains("tabs-container__tab");
     const mainTab = e.target.classList.contains("_list-main");
     if (isTab && !mainTab) {
@@ -95,25 +87,40 @@ const manageTabs = () => {
       };
       document.addEventListener("click", documentOuterClickHandler);
     }
-  
-    e.target.addEventListener("keypress", function (e) {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        tabClicked.children[0].children[0].setAttribute("readonly", "readonly");
-        tabClicked.id = "";
-        tabChosen.children[0].children[0].setAttribute("readonly", "readonly");
-        tabChosen.id = "";
-      }
-    });
-  });
+    }); 
+    
+
   
   menu.addEventListener("click", (e) => {
     const button = e.target.innerText;
+    let tabInput = tabClicked.children[0].children[0]
+    console.log(tabInput);
     if (button == "Редактировать") {
-      tabClicked.children[0].children[0].removeAttribute("readonly");
-      tabClicked.children[0].children[0].focus();
+      tabInput.removeAttribute("readonly");
+      tabInput.focus();
       tabClicked.id = "__tab_isEditting";
       menu.classList.add("_hidden");
+
+      tabInput.addEventListener("input", (e) => {
+        console.log("resize");
+        let numberOfCharacters = e.target.value.length;
+        if (numberOfCharacters >= 10) {
+          let length = numberOfCharacters + "ch";
+          e.target.style.width = length;
+        }
+      } )
+    
+      tabInput.addEventListener("keypress", (e) => {
+        console.log("Something is pressed");
+        if (e.key === "Enter") {
+            e.preventDefault();
+            console.log("Enter key pressed");
+            tabInput.setAttribute("readonly", "readonly");
+            tabClicked.id = "";
+            tabChosen.children[0].children[0].setAttribute("readonly", "readonly");
+            tabChosen.id = "";
+          }
+        })
     } else if (button == "Удалить") {
       tabClicked.remove();
       menu.classList.add("_hidden");

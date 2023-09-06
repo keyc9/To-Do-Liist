@@ -32,7 +32,7 @@
     <div class="tabs-container__tab _list-main _active-tab ">
       <div class="tabs-container__tab-flex-container">
         <input class="tabs-container__tab-name _lang-maintab" value="Главный" type="text" readonly
-          oninput="resizeTab(this)"></input>
+          ></input>
       </div>
       <div class="tabs-container__tabs-decoration"></div>
     </div>
@@ -40,7 +40,7 @@
     <div class="tabs-container__tab _list-work">
       <div class="tabs-container__tab-flex-container">
         <input class="tabs-container__tab-name  _lang-worktab" value="Работа" type="text" readonly
-          oninput="resizeTab(this)"></input>
+          ></input>
         <button class="tabs-container__tab-settings">
           <svg class="__icon">
             <use xlink:href="media/sprite.svg#settings-mobile"></use>
@@ -456,7 +456,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit.Phasellus sapien magna, 
 
   <template id="tab-template">
     <div class="tabs-container__tab">
-      <input class="tabs-container__tab-name" value="" type="text" readonly oninput="resizeTab(this)"></input>
+      <div class="tabs-container__tab-flex-container">
+        <input class="tabs-container__tab-name" value="" type="text" readonly
+          ></input>
+        <button class="tabs-container__tab-settings">
+          <svg class="__icon">
+            <use xlink:href="media/sprite.svg#settings-mobile"></use>
+          </svg>
+        </button>
+      </div>
       <div class="tabs-container__tabs-decoration"></div>
     </div>
 
