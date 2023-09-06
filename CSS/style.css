@@ -1344,6 +1344,14 @@ body {
   display: none !important;
 }
 
+._visible {
+  opacity: 100;
+}
+
+._visible_inactive {
+  color: var(--secondary-color);
+}
+
 ._active-tab input, ._active-tab .tabs-container__tabs-decoration {
   color: var(--secondary-color);
   border-color: var(--secondary-color);

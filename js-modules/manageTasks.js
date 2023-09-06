@@ -94,6 +94,13 @@ const manageTasks = () => {
                     }
                 }
             };
+
+            e.target.classList.add("__button_inactive");
+            e.target.previousElementSibling.previousElementSibling.classList.add("__button_inactive");
+            // e.target.previousElementSibling.previousElementSibling.children[0].classList.add("_visible_inactive");
+            e.target.children[0].classList.add("__notifs_success");
+            e.target.children[0].children[1].classList.add("_visible");
+
             activeList();
             const targetTask = e.target.parentNode.parentNode;
             insertPlace.appendChild(targetTask);
