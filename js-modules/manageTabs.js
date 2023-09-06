@@ -104,8 +104,8 @@ const manageTabs = () => {
       tabInput.addEventListener("input", (e) => {
         console.log("resize");
         let numberOfCharacters = e.target.value.length;
-        if (numberOfCharacters >= 10) {
-          let length = numberOfCharacters + "ch";
+        if (numberOfCharacters >= 8) {
+          let length = numberOfCharacters + 2 + "ch";
           e.target.style.width = length;
         }
       } )
