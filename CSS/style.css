@@ -1159,7 +1159,7 @@ body {
   margin-bottom: 2rem;
 }
 
-.active-section__sticker-button, .active-section__done-button {
+.active-section__sticker-button, .active-section__done-button, .active-section__important-sticker {
   padding: 1rem 1rem 0 0;
 }
 .active-section__settings-button, .active-section__delete-button, .active-section__edit-button {
@@ -1170,6 +1170,13 @@ body {
 }
 .active-section__sticker-button:hover svg {
   color: var(--secondary-color);
+}
+.active-section__important-sticker {
+  display: inline-flex;
+  padding-top: 0.9rem;
+}
+.active-section__important-sticker svg {
+  color: var(--important-color);
 }
 .active-section__stickers-section {
   border: 1.5px solid var(--secondary-color);

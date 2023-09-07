@@ -261,7 +261,7 @@ body
     margin-bottom: 2rem
 
 .active-section
-    &__sticker-button, &__done-button
+    &__sticker-button, &__done-button, &__important-sticker
         padding: 1rem 1rem 0 0
     &__settings-button, &__delete-button, &__edit-button
         padding: 1rem 0 0 1rem
@@ -270,6 +270,13 @@ body
         color: var(--secondary-color-inactive)
     &__sticker-button:hover svg
         color: var(--secondary-color)
+
+    &__important-sticker
+        display: inline-flex
+        padding-top: 0.9rem
+
+    &__important-sticker svg
+        color: var(--important-color)
 
     &__stickers-section
         border: 1.5px solid var(--secondary-color)
