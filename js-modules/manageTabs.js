@@ -71,7 +71,6 @@ const manageTabs = () => {
   //TODO: Tab menu
   tabSection.addEventListener("contextmenu", (e) => {
     tabClicked = e.target;
-    console.dir(e.target)
     const isTab = e.target.classList.contains("tabs-container__tab");
     const mainTab = e.target.classList.contains("_list-main");
     if (isTab && !mainTab) {
@@ -94,7 +93,6 @@ const manageTabs = () => {
   menu.addEventListener("click", (e) => {
     const button = e.target.innerText;
     let tabInput = tabClicked.children[0].children[0]
-    console.log(tabInput);
     if (button == "Редактировать") {
       tabInput.removeAttribute("readonly");
       tabInput.focus();
@@ -102,7 +100,6 @@ const manageTabs = () => {
       menu.classList.add("_hidden");
 
       tabInput.addEventListener("input", (e) => {
-        console.log("resize");
         let numberOfCharacters = e.target.value.length;
         if (numberOfCharacters >= 8) {
           let length = numberOfCharacters + 2 + "ch";
@@ -111,10 +108,8 @@ const manageTabs = () => {
       } )
     
       tabInput.addEventListener("keypress", (e) => {
-        console.log("Something is pressed");
         if (e.key === "Enter") {
             e.preventDefault();
-            console.log("Enter key pressed");
             tabInput.setAttribute("readonly", "readonly");
             tabClicked.id = "";
             tabChosen.children[0].children[0].setAttribute("readonly", "readonly");

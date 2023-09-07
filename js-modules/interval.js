@@ -16,10 +16,8 @@ export function interval(
     showDateText,
     showDateSticker
   );
-  console.log("interval in innerfunc")
 }
 
 export function stopInterval() {
-    console.log("stopinterval")
   clearInterval(interval);
 }

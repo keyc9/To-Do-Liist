@@ -2,7 +2,6 @@ import getUserDate from "./getUserDate.js";
 
 const onSelectTimer = () => {
     const timerButton = document.querySelector(".task-form__timer-button");
-    console.log("timer button")
     const dateInput = document.getElementById("airdatepicker");
     const timerIcon = timerButton.children[0].children[0];
     let inputValue = dateInput.value;

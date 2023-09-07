@@ -116,7 +116,6 @@ const manageTasks = () => {
             timerEnd.classList.add("__notifs__countdown-date", "__notifs-text");
 
             if (notif != null && notif.children[1].innerHTML == timerEndMessage) {
-                console.log("we are here")
                 notif.children[1].innerHTML = afterEndMessage;
                 notif.classList.replace("__notifs_failure", "__notifs_success-after-timer");
                 notif.children[0].children[0].setAttribute(
@@ -135,7 +134,6 @@ const manageTasks = () => {
             //! Changing icons
             //Show delete btn only
             const settingsButton = e.target.parentNode.children[4];
-            console.dir(settingsButton);
             const deleteBtnTemplate = `<button class="active-section__delete-button">
 <svg class="__icon ">
    <use xlink:href="media/sprite.svg#delete"></use>

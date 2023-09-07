@@ -53,7 +53,6 @@ const addTask = () => {
             showDate
           );
 
-          console.log("interval set")
           task.querySelector(".active-section__settings-button").style.color =
             "transparent";
         } else {
