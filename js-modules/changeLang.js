@@ -1,10 +1,8 @@
+import data from '../translations.json' assert {type: 'json'};
 
 const chageLang = () => {
 
-fetch('../translations.json')
-        .then((response) => response.json())
-        .then((data) => {
-            const langIcon = document.querySelector(".theme-buttons__goblin-theme");
+const langIcon = document.querySelector(".theme-buttons__goblin-theme");
 
   langIcon.onclick = () => {
     if (langIcon.children[0].classList == "_hidden") {
@@ -33,7 +31,6 @@ fetch('../translations.json')
       langIcon.children[0].classList.add("_hidden");
     }
   }
-        })
   };
 
   export default chageLang;
