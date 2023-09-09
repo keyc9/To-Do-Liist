@@ -11,12 +11,10 @@ fetch('../translations.json')
       for (let key in data) {
         const element = document.querySelector("._lang-" + key);
         if (element) {
-          console.dir(element)
           element.value != "underfined"
             ? (element.value = data[key]["gb"])
             : (element.value = "underfined");
           element.innerHTML = data[key]["gb"];
-          console.log(element.innerHTML)
         }
       }
       langIcon.children[1].classList.add("_hidden");

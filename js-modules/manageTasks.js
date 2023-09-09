@@ -186,6 +186,15 @@ const manageTasks = () => {
                     "active-section__settings-button",
                     "active-section__edit-button"
                 );
+
+                editingField.addEventListener("input", (e) => {
+                    e.target.setAttribute(
+                  "style",
+                  "height:" + e.target.scrollHeight + "px;overflow-y:_hidden;"
+                );
+                resizeInput(e.target);
+              });
+
             } else {
                 editingField = e.target.previousElementSibling.children[0];
                 editingField.setAttribute("readonly", "readonly");
@@ -198,7 +207,7 @@ const manageTasks = () => {
                     "media/sprite.svg#settings-button"
                 );
             }
-            editingField.addEventListener("input", resizeInput(editingField), false);
+            
         }
     });
 };

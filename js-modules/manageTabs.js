@@ -26,8 +26,8 @@ const manageTabs = () => {
   
   tabSection.addEventListener("click", (e) => {
     //Changing between Tabs
-    const isTab = e.target.classList.contains("tabs-container__tab");
-    if (isTab) {
+    const isTab = e.target.classList;
+    if (isTab.contains("tabs-container__tab") && !isTab.contains("tabs-container__add-tab") ) {
       tabChosen = e.target;
       const tabs = e.target.parentElement.children;
       for (let i = 0; i < tabs.length; i++) {
@@ -41,8 +41,10 @@ const manageTabs = () => {
       for (let i = 0; i < lists.length; i++) {
         if (lists[i].classList.contains(key)) {
           lists[i].classList.remove("_hidden");
+          lists[i].classList.add("_active-section");
         } else {
           lists[i].classList.add("_hidden");
+          lists[i].classList.remove("_active-section");
         }
       }
     }
@@ -68,7 +70,7 @@ const manageTabs = () => {
     toggleEmptyListMessage();
   });
   
-  //TODO: Tab menu
+  //Tab menu
   tabSection.addEventListener("contextmenu", (e) => {
     tabClicked = e.target;
     const isTab = e.target.classList.contains("tabs-container__tab");
@@ -141,14 +143,27 @@ const doneTemplate = document
   
     const index = tabSection.children.length - 1;
     const className = `_list-new${index}`;
-  
+
+    document.querySelectorAll("._active-tab").forEach((e) => e.classList.remove("_active-tab"));
+    document.querySelectorAll("._active-section").forEach((e) => {
+     e.classList.remove("_active-section")
+     e.classList.add("_hidden");
+    })
+
     tabSection.insertBefore(tab, addTab);
     tab.classList.add(className);
+    tab.classList.add("_active-tab");
     tab.querySelector(".tabs-container__tab-name").value = "Новый";
+
+    // TODO: Make other sections hidden
+  
+
     activeSection.children[1].appendChild(activeList);
-    activeList.classList.add(`${className}`, "_hidden");
+    activeList.classList.add(`${className}`, "_active-section");
     doneSection.children[1].appendChild(doneList);
-    doneList.classList.add(`${className}`, "_hidden");
-  })}
+    doneList.classList.add(`${className}`, "_active-section");
+    toggleEmptyListMessage();
+  })
+}
 
   export default manageTabs;
