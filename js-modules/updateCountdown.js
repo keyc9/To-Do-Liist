@@ -8,7 +8,6 @@ export function updateCountdown(userDate, task, showDate) {
     let delta = (innitialDate - currentDate) / 1000;
 
     if (delta < 0) {
-      console.log("я в дельте ниже 0");
       showDateText.innerHTML = timerEndMessage;
       showDateSticker.children[0].setAttribute(
         "xlink:href",
@@ -19,7 +18,6 @@ export function updateCountdown(userDate, task, showDate) {
     } else if (showDateText.innerHTML == beforeEndMessage) {
       clearInterval(interval);
     } else {
-      console.log("я в подсчетах");
       let days = Math.floor(delta / 86400);
       delta -= days * 86400;
 
@@ -39,7 +37,6 @@ export function updateCountdown(userDate, task, showDate) {
           if (hours <= 0) {
             if (seconds <= 0 && minutes <= 0) {
               //! is needed?
-              console.log("я в жопке");
               showDateText.innerHTML = timerEndMessage;
               showDateSticker.children[0].setAttribute(
                 "xlink:href",

@@ -969,6 +969,7 @@ body {
   float: none;
   left: -2.875rem;
   z-index: -5;
+  opacity: 20%;
   font-family: "Londrina Outline";
   line-height: 0;
   font-size: 20rem;
@@ -1008,10 +1009,12 @@ body {
   width: 3rem;
   height: 3rem;
   padding: 0;
+  margin-top: 0.25rem;
 }
-.tabs-container__tab-settings .__icon {
+.tabs-container__tab-settings svg {
   color: var(--secondary-color-inactive);
   height: 1.25rem;
+  aspect-ratio: 1/5;
 }
 .tabs-container__tab-settings:active .__icon {
   color: var(--secondary-color);
@@ -1031,7 +1034,13 @@ body {
   color: var(--secondary-color-inactive);
 }
 .tabs-container__add-tab {
-  margin-top: 1.25rem;
+  margin-top: -0.1rem;
+}
+.tabs-container__add-tab span {
+  font-family: Comfortaa;
+  font-size: 3rem;
+  font-style: normal;
+  font-weight: 700;
 }
 .tabs-container__add-tab-icon {
   width: 2rem;
@@ -1069,11 +1078,15 @@ body {
   font-weight: 300;
   font-size: 1.5rem;
   pointer-events: none;
+  color: var(--secondary-color);
 }
 
 .task-form > .__tasks-container {
   align-items: center;
   margin-top: 3rem;
+}
+.task-form > .__tasks-container > .__list-container {
+  align-items: center;
 }
 .task-form__submit {
   position: relative;
@@ -1107,7 +1120,7 @@ body {
   background-color: var(--important-color);
 }
 .task-form__timer-button {
-  padding: 0 1rem 1rem 0;
+  padding: 0.2rem 1rem 1rem 0;
 }
 .task-form__timer-button .__icon {
   color: var(--time-color);
@@ -1154,7 +1167,7 @@ body {
   margin-bottom: 2rem;
 }
 
-.active-section__sticker-button, .active-section__done-button {
+.active-section__sticker-button, .active-section__done-button, .active-section__important-sticker {
   padding: 1rem 1rem 0 0;
 }
 .active-section__settings-button, .active-section__delete-button, .active-section__edit-button {
@@ -1165,6 +1178,13 @@ body {
 }
 .active-section__sticker-button:hover svg {
   color: var(--secondary-color);
+}
+.active-section__important-sticker {
+  display: inline-flex;
+  padding-top: 0.9rem;
+}
+.active-section__important-sticker svg {
+  color: var(--important-color);
 }
 .active-section__stickers-section {
   border: 1.5px solid var(--secondary-color);
@@ -1210,8 +1230,7 @@ body {
   line-height: 3rem;
   position: relative;
   text-align: start;
-  margin: 0 0 0 0.5rem;
-  padding-left: 1rem;
+  padding-left: 0.5rem;
   font-family: "Comfortaa";
   font-size: 2rem;
   font-weight: 400;
@@ -1234,6 +1253,13 @@ body {
   z-index: 10;
   right: 0;
   top: 10%;
+}
+.active-section__settings-field span {
+  font-family: "Comfortaa";
+  font-weight: 300;
+  font-size: 1.5rem;
+  pointer-events: none;
+  color: var(--secondary-color);
 }
 .active-section__settings-field span {
   font-family: "Comfortaa";
@@ -1270,10 +1296,13 @@ body {
   font-family: "Comfortaa";
   font-size: 1.5rem;
   font-weight: 600;
-  padding-lef: 3rem;
-  width: 26rem;
+}
+.__notifs_countdown {
+  max-width: 232px;
+  padding-left: 0.5rem;
+  padding-top: 0.5rem;
   line-height: 2rem;
-  word-break: break-all;
+  word-break: break;
 }
 .__notifs_success {
   color: var(--done-color);
@@ -1328,6 +1357,14 @@ body {
 
 ._hidden {
   display: none !important;
+}
+
+._visible {
+  opacity: 100;
+}
+
+._visible_inactive {
+  color: var(--secondary-color);
 }
 
 ._active-tab input, ._active-tab .tabs-container__tabs-decoration {

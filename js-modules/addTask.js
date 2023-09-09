@@ -53,7 +53,6 @@ const addTask = () => {
             showDate
           );
 
-          console.log("interval set")
           task.querySelector(".active-section__settings-button").style.color =
             "transparent";
         } else {
@@ -87,9 +86,9 @@ const addTask = () => {
         const sticker = task.querySelector(".active-section__sticker-button");
         sticker.insertAdjacentHTML(
           "beforebegin",
-          `<div class="task-form__important-button __button_inactive">
+          `<div class="active-section__important-sticker __button_inactive">
           <svg class="__icon">
-            <use xlink:href="media/sprite.svg#important"></use>
+            <use xlink:href="media/sprite.svg#important-sticker"></use>
           </svg>
           </div>`
         );

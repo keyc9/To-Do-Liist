@@ -9,6 +9,7 @@ for (let i = 0; i < tx.length; i++) {
     "height:" + tx[i].scrollHeight + "px;overflow-y:_hidden;"
   );
   resizeInput(tx[i]);
+  console.log("Resize text")
 }
 }
 

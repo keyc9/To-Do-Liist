@@ -113,6 +113,7 @@ body
     float: none
     left: -2.875rem
     z-index: -5
+    opacity: 20%
 
     &__text
     @include config.title(20rem)
@@ -148,9 +149,11 @@ body
             width: 3rem
             height: 3rem
             padding: 0
-            & .__icon
+            margin-top: .25rem
+            & svg
                 color: var(--secondary-color-inactive)
                 height: 1.25rem
+                aspect-ratio: 1/5
             &:active .__icon
                 color: var(--secondary-color)
 
@@ -167,7 +170,13 @@ body
         color: var(--secondary-color-inactive)
 
     &__add-tab
-        margin-top: 1.25rem
+        margin-top: -0.1rem
+        & span
+            font-family: Comfortaa
+            font-size: 3rem
+            font-style: normal
+            font-weight: 700
+
         &-icon
             width: 2rem
             height: 2rem
@@ -182,17 +191,14 @@ body
 
 #context-menu
     @include config.contextmenu
-    span
-        font-family: config.$main-font
-        font-weight: 300
-        font-size: 1.5rem
-        pointer-events: none
 
 // Form
 .task-form
     & > .__tasks-container
         align-items: center
         margin-top: 3rem
+        & > .__list-container
+            align-items: center
 
     &__submit
         position: relative
@@ -223,7 +229,7 @@ body
             background-color: var(--important-color)
 
     &__timer-button
-        padding: 0 1rem 1rem 0
+        padding: 0.2rem 1rem 1rem 0
         & .__icon
             color: var(--time-color)
         &:hover .__icon
@@ -263,7 +269,7 @@ body
     margin-bottom: 2rem
 
 .active-section
-    &__sticker-button, &__done-button
+    &__sticker-button, &__done-button, &__important-sticker
         padding: 1rem 1rem 0 0
     &__settings-button, &__delete-button, &__edit-button
         padding: 1rem 0 0 1rem
@@ -272,6 +278,13 @@ body
         color: var(--secondary-color-inactive)
     &__sticker-button:hover svg
         color: var(--secondary-color)
+
+    &__important-sticker
+        display: inline-flex
+        padding-top: 0.9rem
+
+    &__important-sticker svg
+        color: var(--important-color)
 
     &__stickers-section
         border: 1.5px solid var(--secondary-color)
@@ -316,8 +329,7 @@ body
         line-height: 3rem
         position: relative
         text-align: start
-        margin: 0 0 0 .5rem
-        padding-left: 1rem
+        padding-left: 0.5rem
         @include config.font(2rem, 400)
         @include config.gradient
 
@@ -351,11 +363,12 @@ body
 
 .__notifs
     @include config.font(1.5rem, 600)
-    &_countdown 
-    padding-lef: 3rem
-    width: 26rem
-    line-height: 2rem
-    word-break: break-all
+    &_countdown
+        max-width: 232px
+        padding-left: 0.5rem
+        padding-top: 0.5rem
+        line-height: 2rem
+        word-break: break
     &_success
         color: var(--done-color)
     &_success-after-timer
@@ -405,8 +418,13 @@ body
 ._hidden
     display: none !important
 
+._visible
+    opacity: 100
+
+._visible_inactive
+    color: var(--secondary-color)
+
 ._active-tab
     & input, & .tabs-container__tabs-decoration
         color: var(--secondary-color)
         border-color: var(--secondary-color)
-
