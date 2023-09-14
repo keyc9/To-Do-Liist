@@ -1,6 +1,7 @@
 import setCounter from "./setCounter.js";
 import toggleEmptyListMessage from "./toggleEmptyListMessage.js";
 import resizeInput from "./resizeInput.js";
+import clickOutside from "./clickOutside.js";
 
 const manageTabs = () => {
 
@@ -79,6 +80,7 @@ const manageTabs = () => {
       e.preventDefault();
       setTabMenuPosition(e);
       // Hide the menu
+      
       const documentOuterClickHandler = function (e) {
         const isClickedOutside = !menu.contains(e.target);
         if (isClickedOutside) {
@@ -86,7 +88,7 @@ const manageTabs = () => {
           document.removeEventListener("click", documentOuterClickHandler);
         }
       };
-      document.addEventListener("click", documentOuterClickHandler);
+      document.addEventListener("click", documentOuterClickHandler());
     }
     }); 
     

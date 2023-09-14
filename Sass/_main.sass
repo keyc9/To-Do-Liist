@@ -52,15 +52,16 @@ button
 // ====================================
 html
     font-size: 8px
-
 body
-    position: relative
-    margin: 0 auto
-    max-width: 37.5rem
     @include config.font(2rem, 400)
     line-height: 150%
     color: var(--secondary-color)
     background-color: var(--main-color)
+
+.container
+    position: relative
+    margin: 0 auto
+    max-width: 37.5rem
 
 .__tasks-container
     max-width: 37.5rem
@@ -106,14 +107,18 @@ body
         font-weight: 500
 
 .title
+    width: 41.875rem
+    top: 11.5rem
+    left: 0
+    right: 0
+    bottom: 0
+    margin: auto
     position: absolute
-    width: 47.5rem
-    top: -3rem
     display: block
     float: none
-    left: -2.875rem
     z-index: -5
     opacity: 20%
+    overflow-x: clip
 
     &__text
     @include config.title(20rem)
@@ -205,7 +210,8 @@ body
         width: 3rem
         height: 3rem
         margin: 0 -.5rem -1rem .5rem
-
+        user-select: none
+        touch-action: manipulation
         &-arrow
             position: absolute
             margin-left: -10%
@@ -218,10 +224,6 @@ body
 
         &:hover &-arrow
             margin-left: 0
-
-    &__submit
-        user-select: none
-        touch-action: manipulation
 
     &__important-button
         display: none
@@ -273,7 +275,8 @@ body
         padding: 1rem 1rem 0 0
     &__settings-button, &__delete-button, &__edit-button
         padding: 1rem 0 0 1rem
-
+    &__sticker-button, &__done-button, &__important-sticker, &__settings-button, &__delete-button, &__edit-button
+        margin-top: 0.3rem
     &__sticker-button svg
         color: var(--secondary-color-inactive)
     &__sticker-button:hover svg
@@ -409,8 +412,50 @@ body
         font-size: 18px
         font-weight: 400
 
-// Modifiers
+// !Responsive styles
+   //Break-points 
+$phone: 330px
+$tablet-mini: 744px
+$tablet: 1024px
+$desktop: 1440px
 
+@media( min-width: $phone)
+    .__list-container
+        gap: 1rem
+    .active-section
+        &__sticker-button, &__done-button, &__important-sticker
+            padding: 0
+        &__settings-button, &__delete-button, &__edit-button
+            padding: 0
+    .__icon
+        width: 3rem
+        height: 3rem
+
+    .task-form
+        &__timer-button
+            padding: 0
+
+        &__submit
+            position: relative
+            width: 3rem
+            height: 3rem
+            margin: 0
+            padding: 0
+            user-select: none
+            touch-action: manipulation
+        &-arrow
+            position: absolute
+            margin-left: -10%
+            transition: margin-left 0.3s
+            color: var(--secondary-color)
+
+        &-circle
+            position: absolute
+            color: var(--secondary-color)
+                
+
+
+// Modifiers
 .__button_inactive
     cursor: default
     display: inline-block
