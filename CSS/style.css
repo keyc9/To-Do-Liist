@@ -1067,7 +1067,7 @@ body {
 #context-menu {
   position: absolute;
   padding: 0.5rem 1rem;
-  border: 0.25rem solid var(--secondary-color);
+  border: 0.125rem solid var(--secondary-color);
   border-radius: 1.25rem;
   background: var(--main-color);
   display: flex;
@@ -1247,7 +1247,7 @@ body {
 .active-section__settings-field {
   position: absolute;
   padding: 0.5rem 1rem;
-  border: 0.25rem solid var(--secondary-color);
+  border: 0.125rem solid var(--secondary-color);
   border-radius: 1.25rem;
   background: var(--main-color);
   display: flex;
@@ -1260,7 +1260,7 @@ body {
   font-size: 1.5rem;
   z-index: 10;
   right: 0;
-  top: 10%;
+  top: 2.85rem;
 }
 .active-section__settings-field span {
   font-family: "Comfortaa";
@@ -1395,6 +1395,10 @@ body {
   .task-form-circle {
     position: absolute;
     color: var(--secondary-color);
+  }
+  .__notifs_countdown {
+    max-width: 70%;
+    padding-left: 2.5rem;
   }
 }
 .__button_inactive {

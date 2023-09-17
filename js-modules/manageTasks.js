@@ -160,7 +160,9 @@ const manageTasks = () => {
         //! Редактирование задачи
         const isSettingsButton = e.target.classList.contains(
             "active-section__settings-button"
+        
         );
+        
         if (isSettingsButton) {
             e.target.nextElementSibling.classList.toggle("_hidden");
         }

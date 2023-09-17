@@ -1,7 +1,6 @@
 import setCounter from "./setCounter.js";
 import toggleEmptyListMessage from "./toggleEmptyListMessage.js";
 import resizeInput from "./resizeInput.js";
-import clickOutside from "./clickOutside.js";
 
 const manageTabs = () => {
 
@@ -25,6 +24,16 @@ const manageTabs = () => {
     menu.classList.toggle("_hidden");
   };
   
+  // Hide the menu
+  const documentOuterClickHandler = function (e) {
+    console.log(e)
+    const isClickedOutside = !menu.contains(e.target);
+    if (isClickedOutside) {
+      menu.classList.add("_hidden");
+      document.removeEventListener("click", documentOuterClickHandler);
+    }
+  };
+
   tabSection.addEventListener("click", (e) => {
     //Changing between Tabs
     const isTab = e.target.classList;
@@ -52,9 +61,13 @@ const manageTabs = () => {
     const isTabSettings = e.target.classList.contains(
       "tabs-container__tab-settings"
     );
+
     if (isTabSettings) {
       tabClicked = e.target.parentNode.parentNode;
       setTabMenuPosition(e);
+
+      // TODO;
+      // document.addEventListener("click", documentOuterClickHandler);
     }
 
   const tx = document.getElementsByTagName("textarea");
@@ -80,20 +93,11 @@ const manageTabs = () => {
       e.preventDefault();
       setTabMenuPosition(e);
       // Hide the menu
-      
-      const documentOuterClickHandler = function (e) {
-        const isClickedOutside = !menu.contains(e.target);
-        if (isClickedOutside) {
-          menu.classList.add("_hidden");
-          document.removeEventListener("click", documentOuterClickHandler);
-        }
-      };
-      document.addEventListener("click", documentOuterClickHandler());
+      document.addEventListener("click", documentOuterClickHandler);
     }
     }); 
     
 
-  
   menu.addEventListener("click", (e) => {
     const button = e.target.innerText;
     let tabInput = tabClicked.children[0].children[0]
@@ -125,9 +129,8 @@ const manageTabs = () => {
       menu.classList.add("_hidden");
     }
   });
-  
-  const addTab = document.querySelector(".tabs-container__add-tab");
   // Add new Tabs
+  const addTab = document.querySelector(".tabs-container__add-tab");
   const tabTemplate = document
   .querySelector("#tab-template")
   .content.querySelector(".tabs-container__tab");
@@ -142,7 +145,6 @@ const doneTemplate = document
     const tab = tabTemplate.cloneNode(true);
     const activeList = activeTemplate.cloneNode(true);
     const doneList = doneTemplate.cloneNode(true);
-  
     const index = tabSection.children.length - 1;
     const className = `_list-new${index}`;
 
@@ -157,9 +159,7 @@ const doneTemplate = document
     tab.classList.add("_active-tab");
     tab.querySelector(".tabs-container__tab-name").value = "Новый";
 
-    // TODO: Make other sections hidden
-  
-
+    //Make other sections hidden
     activeSection.children[1].appendChild(activeList);
     activeList.classList.add(`${className}`, "_active-section");
     doneSection.children[1].appendChild(doneList);

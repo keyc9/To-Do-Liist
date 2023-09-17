@@ -195,7 +195,7 @@ body
     display: none
 
 #context-menu
-    @include config.contextmenu
+    @include config.contextmenu(.125rem)
 
 // Form
 .task-form
@@ -337,9 +337,9 @@ body
         @include config.gradient
 
     &__settings-field
-        @include config.contextmenu
+        @include config.contextmenu(.125rem)
         right: 0
-        top: 10%
+        top: 2.85rem
         & span
             font-family: config.$main-font
             font-weight: 300
@@ -452,7 +452,10 @@ $desktop: 1440px
         &-circle
             position: absolute
             color: var(--secondary-color)
-                
+    .__notifs
+        &_countdown
+            max-width: 70%
+            padding-left: 2.5rem         
 
 
 // Modifiers
