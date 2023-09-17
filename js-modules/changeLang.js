@@ -1,30 +1,30 @@
+import data from '../translations.json' assert {type: 'json'};
 
 const chageLang = () => {
 
-// TODO const langArr = fetch;
 const langIcon = document.querySelector(".theme-buttons__goblin-theme");
 
   langIcon.onclick = () => {
     if (langIcon.children[0].classList == "_hidden") {
-      for (let key in langArr) {
+      for (let key in data) {
         const element = document.querySelector("._lang-" + key);
         if (element) {
           element.value != "underfined"
-            ? (element.value = langArr[key]["gb"])
+            ? (element.value = data[key]["gb"])
             : (element.value = "underfined");
-          element.innerHTML = langArr[key]["gb"];
+          element.innerHTML = data[key]["gb"];
         }
       }
       langIcon.children[1].classList.add("_hidden");
       langIcon.children[0].classList.remove("_hidden");
     } else {
-      for (let key in langArr) {
+      for (let key in data) {
         const element = document.querySelector("._lang-" + key);
         if (element) {
           element.value != "underfined"
-            ? (element.value = langArr[key]["ru"])
+            ? (element.value = data[key]["ru"])
             : (element.value = "underfined");
-          element.innerHTML = langArr[key]["ru"];
+          element.innerHTML = data[key]["ru"];
         }
       }
       langIcon.children[1].classList.remove("_hidden");

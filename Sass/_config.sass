@@ -53,10 +53,10 @@ $list: transparent, transparent 23px, var(--secondary-color) 23px, var(--seconda
 @mixin gradient
   background: repeating-linear-gradient($list)
 
-@mixin contextmenu
+@mixin contextmenu ($border)
     position: absolute
     padding: .5rem 1rem 
-    border: 0.25rem solid var(--secondary-color)
+    border: $border solid var(--secondary-color)
     border-radius: 1.25rem
     background: var(--main-color)
     display: flex
@@ -68,4 +68,11 @@ $list: transparent, transparent 23px, var(--secondary-color) 23px, var(--seconda
     font-weight: 300
     font-size: 1.5rem
     z-index: 10
+    & span
+        font-family: $main-font
+        font-weight: 300
+        font-size: 1.5rem
+        pointer-events: none
+        color: var(--secondary-color)
+
 

@@ -4,9 +4,7 @@ import changeLang from "./changeLang.js";
 import manageTabs from "./manageTabs.js";
 import manageTasks from "./manageTasks.js";
 import resizeText from "./resizeText.js";
-import setCounter from "./setCounter.js";
-import {updateCountdown} from "./updateCountdown.js";
-import toggleEmptyListMessage from "./toggleEmptyListMessage.js";
+import onSelectTimer from "./onSelectTimer.js";
 
 resizeText();
 changeLang();
@@ -21,7 +19,7 @@ new AirDatepicker("#airdatepicker", {
     buttons: ["today", "clear"],
     keyboardNav: true,
     minDate: new Date(),
-    // onSelect: onSelectEvent,
+    onSelect: onSelectTimer,
   });
   
   getUserDate();

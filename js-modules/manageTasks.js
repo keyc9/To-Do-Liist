@@ -94,6 +94,13 @@ const manageTasks = () => {
                     }
                 }
             };
+
+            e.target.classList.add("__button_inactive");
+            e.target.previousElementSibling.previousElementSibling.classList.add("__button_inactive");
+            // e.target.previousElementSibling.previousElementSibling.children[0].classList.add("_visible_inactive");
+            e.target.children[0].classList.add("__notifs_success");
+            e.target.children[0].children[1].classList.add("_visible");
+
             activeList();
             const targetTask = e.target.parentNode.parentNode;
             insertPlace.appendChild(targetTask);
@@ -109,7 +116,6 @@ const manageTasks = () => {
             timerEnd.classList.add("__notifs__countdown-date", "__notifs-text");
 
             if (notif != null && notif.children[1].innerHTML == timerEndMessage) {
-                console.log("we are here")
                 notif.children[1].innerHTML = afterEndMessage;
                 notif.classList.replace("__notifs_failure", "__notifs_success-after-timer");
                 notif.children[0].children[0].setAttribute(
@@ -128,7 +134,6 @@ const manageTasks = () => {
             //! Changing icons
             //Show delete btn only
             const settingsButton = e.target.parentNode.children[4];
-            console.dir(settingsButton);
             const deleteBtnTemplate = `<button class="active-section__delete-button">
 <svg class="__icon ">
    <use xlink:href="media/sprite.svg#delete"></use>
@@ -155,7 +160,9 @@ const manageTasks = () => {
         //! Редактирование задачи
         const isSettingsButton = e.target.classList.contains(
             "active-section__settings-button"
+        
         );
+        
         if (isSettingsButton) {
             e.target.nextElementSibling.classList.toggle("_hidden");
         }
@@ -181,6 +188,15 @@ const manageTasks = () => {
                     "active-section__settings-button",
                     "active-section__edit-button"
                 );
+
+                editingField.addEventListener("input", (e) => {
+                    e.target.setAttribute(
+                  "style",
+                  "height:" + e.target.scrollHeight + "px;overflow-y:_hidden;"
+                );
+                resizeInput(e.target);
+              });
+
             } else {
                 editingField = e.target.previousElementSibling.children[0];
                 editingField.setAttribute("readonly", "readonly");
@@ -193,7 +209,7 @@ const manageTasks = () => {
                     "media/sprite.svg#settings-button"
                 );
             }
-            editingField.addEventListener("input", resizeInput(editingField), false);
+            
         }
     });
 };

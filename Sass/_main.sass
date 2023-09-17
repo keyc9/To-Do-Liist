@@ -52,15 +52,16 @@ button
 // ====================================
 html
     font-size: 8px
-
 body
-    position: relative
-    margin: 0 auto
-    max-width: 37.5rem
     @include config.font(2rem, 400)
     line-height: 150%
     color: var(--secondary-color)
     background-color: var(--main-color)
+
+.container
+    position: relative
+    margin: 0 auto
+    max-width: 37.5rem
 
 .__tasks-container
     max-width: 37.5rem
@@ -106,13 +107,18 @@ body
         font-weight: 500
 
 .title
+    width: 41.875rem
+    top: 11.5rem
+    left: 0
+    right: 0
+    bottom: 0
+    margin: auto
     position: absolute
-    width: 47.5rem
-    top: -3rem
     display: block
     float: none
-    left: -2.875rem
     z-index: -5
+    opacity: 20%
+    overflow-x: clip
 
     &__text
     @include config.title(20rem)
@@ -148,9 +154,11 @@ body
             width: 3rem
             height: 3rem
             padding: 0
-            & .__icon
+            margin-top: .25rem
+            & svg
                 color: var(--secondary-color-inactive)
                 height: 1.25rem
+                aspect-ratio: 1/5
             &:active .__icon
                 color: var(--secondary-color)
 
@@ -167,7 +175,13 @@ body
         color: var(--secondary-color-inactive)
 
     &__add-tab
-        margin-top: 1.25rem
+        margin-top: -0.1rem
+        & span
+            font-family: Comfortaa
+            font-size: 3rem
+            font-style: normal
+            font-weight: 700
+
         &-icon
             width: 2rem
             height: 2rem
@@ -181,25 +195,23 @@ body
     display: none
 
 #context-menu
-    @include config.contextmenu
-    span
-        font-family: config.$main-font
-        font-weight: 300
-        font-size: 1.5rem
-        pointer-events: none
+    @include config.contextmenu(.125rem)
 
 // Form
 .task-form
     & > .__tasks-container
         align-items: center
         margin-top: 3rem
+        & > .__list-container
+            align-items: center
 
     &__submit
         position: relative
         width: 3rem
         height: 3rem
         margin: 0 -.5rem -1rem .5rem
-
+        user-select: none
+        touch-action: manipulation
         &-arrow
             position: absolute
             margin-left: -10%
@@ -213,17 +225,13 @@ body
         &:hover &-arrow
             margin-left: 0
 
-    &__submit
-        user-select: none
-        touch-action: manipulation
-
     &__important-button
         display: none
         &:checked + ._checkbox
             background-color: var(--important-color)
 
     &__timer-button
-        padding: 0 1rem 1rem 0
+        padding: 0.2rem 1rem 1rem 0
         & .__icon
             color: var(--time-color)
         &:hover .__icon
@@ -263,15 +271,23 @@ body
     margin-bottom: 2rem
 
 .active-section
-    &__sticker-button, &__done-button
+    &__sticker-button, &__done-button, &__important-sticker
         padding: 1rem 1rem 0 0
     &__settings-button, &__delete-button, &__edit-button
         padding: 1rem 0 0 1rem
-
+    &__sticker-button, &__done-button, &__important-sticker, &__settings-button, &__delete-button, &__edit-button
+        margin-top: 0.3rem
     &__sticker-button svg
         color: var(--secondary-color-inactive)
     &__sticker-button:hover svg
         color: var(--secondary-color)
+
+    &__important-sticker
+        display: inline-flex
+        padding-top: 0.9rem
+
+    &__important-sticker svg
+        color: var(--important-color)
 
     &__stickers-section
         border: 1.5px solid var(--secondary-color)
@@ -316,15 +332,14 @@ body
         line-height: 3rem
         position: relative
         text-align: start
-        margin: 0 0 0 .5rem
-        padding-left: 1rem
+        padding-left: 0.5rem
         @include config.font(2rem, 400)
         @include config.gradient
 
     &__settings-field
-        @include config.contextmenu
+        @include config.contextmenu(.125rem)
         right: 0
-        top: 10%
+        top: 2.85rem
         & span
             font-family: config.$main-font
             font-weight: 300
@@ -351,11 +366,12 @@ body
 
 .__notifs
     @include config.font(1.5rem, 600)
-    &_countdown 
-    padding-lef: 3rem
-    width: 26rem
-    line-height: 2rem
-    word-break: break-all
+    &_countdown
+        max-width: 232px
+        padding-left: 0.5rem
+        padding-top: 0.5rem
+        line-height: 2rem
+        word-break: break
     &_success
         color: var(--done-color)
     &_success-after-timer
@@ -396,8 +412,53 @@ body
         font-size: 18px
         font-weight: 400
 
-// Modifiers
+// !Responsive styles
+   //Break-points 
+$phone: 330px
+$tablet-mini: 744px
+$tablet: 1024px
+$desktop: 1440px
 
+@media( min-width: $phone)
+    .__list-container
+        gap: 1rem
+    .active-section
+        &__sticker-button, &__done-button, &__important-sticker
+            padding: 0
+        &__settings-button, &__delete-button, &__edit-button
+            padding: 0
+    .__icon
+        width: 3rem
+        height: 3rem
+
+    .task-form
+        &__timer-button
+            padding: 0
+
+        &__submit
+            position: relative
+            width: 3rem
+            height: 3rem
+            margin: 0
+            padding: 0
+            user-select: none
+            touch-action: manipulation
+        &-arrow
+            position: absolute
+            margin-left: -10%
+            transition: margin-left 0.3s
+            color: var(--secondary-color)
+
+        &-circle
+            position: absolute
+            color: var(--secondary-color)
+    .__notifs
+        &_countdown
+            max-width: 70%
+            padding-left: 2.5rem         
+
+
+// Modifiers
 .__button_inactive
     cursor: default
     display: inline-block
@@ -405,8 +466,13 @@ body
 ._hidden
     display: none !important
 
+._visible
+    opacity: 100
+
+._visible_inactive
+    color: var(--secondary-color)
+
 ._active-tab
     & input, & .tabs-container__tabs-decoration
         color: var(--secondary-color)
         border-color: var(--secondary-color)
-
